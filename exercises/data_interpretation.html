@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Interpretation Exercises - Grade 5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{font-family: Arial, sans-serif; max-width:900px; margin:20px auto; padding:10px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .img{max-width:100%; height:auto; border:1px solid #ccc; padding:6px;}
+  .options label{display:block; margin:6px 0; cursor:pointer;}
+  .nav{margin-top:12px;}
+  .correct{color:green;}
+  .wrong{color:red;}
+  .result-row{padding:6px; border-bottom:1px solid #eee;}
+  .question-title{font-weight:600;}
+  .center{text-align:center;}
+  .btn{padding:8px 12px; margin:6px; cursor:pointer;}
+</style>
+</head>
+<body>
+<h1>Data Interpretation — Grade 5 Level</h1>
+<p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
+<div id="container"></div>
+<script>
+const exercises = [{'title': 'Fruit Basket', 'img': '../images/img1.png', 'questions': [{'q': 'Which fruit has the biggest share?', 'opts': ['Apples', 'Bananas', 'Cherries', 'Dates'], 'ans': 'Apples'}, {'q': 'What is the percentage of Bananas?', 'opts': ['20%', '25%', '30%', '35%'], 'ans': '25%'}, {'q': 'Which two fruits together make 50%?', 'opts': ['Apples and Bananas', 'Cherries and Dates', 'Bananas and Cherries', 'Apples and Dates'], 'ans': 'Apples and Bananas'}, {'q': 'Which fruit has the smallest share?', 'opts': ['Apples', 'Bananas', 'Cherries', 'Dates'], 'ans': 'Dates'}, {'q': 'If there are 100 fruits, how many are Cherries?', 'opts': ['20', '25', '30', '35'], 'ans': '25'}]}, {'title': 'Book Sales', 'img': '../images/img2.png', 'questions': [{'q': 'In which month were the most books sold?', 'opts': ['Jan', 'Feb', 'Mar', 'Apr', 'May'], 'ans': 'May'}, {'q': 'How many books were sold in March?', 'opts': ['20', '25', '28', '30'], 'ans': '30'}, {'q': 'Between which months did sales drop?', 'opts': ['Feb to Mar', 'Mar to Apr', 'Apr to May', 'Jan to Feb'], 'ans': 'Mar to Apr'}, {'q': 'What is the difference in sales between Jan and May?', 'opts': ['10', '15', '20', '25'], 'ans': '15'}, {'q': 'How many books were sold in February?', 'opts': ['20', '25', '28', '30'], 'ans': '25'}]}, {'title': 'Pets', 'img': '../images/img3.png', 'questions': [{'q': 'Which pet is most common?', 'opts': ['Dogs', 'Cats', 'Rabbits', 'Hamsters'], 'ans': 'Dogs'}, {'q': 'How many cats are there?', 'opts': ['8', '10', '12', '15'], 'ans': '10'}, {'q': 'Which two pets together have the same number as dogs?', 'opts': ['Cats and Rabbits', 'Cats and Hamsters', 'Rabbits and Hamsters', 'Dogs and Rabbits'], 'ans': 'Cats and Rabbits'}, {'q': 'How many more dogs than hamsters are there?', 'opts': ['5', '6', '7', '8'], 'ans': '7'}, {'q': 'How many pets are there in total?', 'opts': ['38', '40', '45', '50'], 'ans': '38'}]}, {'title': 'Test Scores', 'img': '../images/img4.png', 'questions': [{'q': 'Which class has the highest top score?', 'opts': ['Class A', 'Class B', 'Class C'], 'ans': 'Class A'}, {'q': 'Which class has the lowest score?', 'opts': ['Class A', 'Class B', 'Class C'], 'ans': 'Class B'}, {'q': "Which class's scores are most spread out?", 'opts': ['Class A', 'Class B', 'Class C'], 'ans': 'Class A'}, {'q': 'Which two classes have similar average scores?', 'opts': ['A and B', 'B and C', 'A and C'], 'ans': 'B and C'}, {'q': 'Which class has the smallest range of scores?', 'opts': ['Class A', 'Class B', 'Class C'], 'ans': 'Class C'}]}, {'title': 'Class Participation', 'img': '../images/img5.png', 'questions': [{'q': 'In which subject are there the most students?', 'opts': ['Math', 'Science', 'English'], 'ans': 'English'}, {'q': 'How many boys take Science?', 'opts': ['12', '14', '15', '16'], 'ans': '15'}, {'q': 'How many girls take English?', 'opts': ['12', '14', '15', '16'], 'ans': '16'}, {'q': 'In which subject are there equal boys and girls?', 'opts': ['Math', 'Science', 'English'], 'ans': 'Science'}, {'q': 'Which subject has the fewest students?', 'opts': ['Math', 'Science', 'English'], 'ans': 'Math'}]}];
+
+function createPage(ex, idx) {
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-' + idx;
+  let html = '<h2>Exercise ' + (idx+1) + ': ' + ex.title + '</h2>';
+  html += '<img class="img" src="' + ex.img + '" alt="chart">';
+  ex.questions.forEach((q, qi) => {
+    const qid = 'e' + idx + 'q' + qi;
+    html += `<div class="question" id="${qid}"><p class="question-title">${qi+1}. ${q.q}</p>`;
+    html += '<div class="options">';
+    for (let i=0;i<q.opts.length;i++) {
+      const opt = q.opts[i];
+      const oid = qid + '_opt' + i;
+      html += `<label><input type="radio" name="${qid}" value="${opt}" id="${oid}"> ${opt}</label>`;
+    }
+    html += '</div></div><hr/>';
+  });
+  html += '<div class="nav">';
+  if (idx>0) html += '<button class="btn" onclick="showPage(' + (idx-1) + ')">Previous</button>';
+  if (idx < exercises.length-1) html += '<button class="btn" onclick="showPage(' + (idx+1) + ')">Next</button>';
+  if (idx === exercises.length-1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
+  html += '</div>';
+  div.innerHTML = html;
+  return div;
+}
+
+function init() {
+  const container = document.getElementById('container');
+  exercises.forEach((ex, i) => container.appendChild(createPage(ex,i)));
+  showPage(0);
+}
+
+function showPage(i) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-' + i).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showResults() {
+  const resultsDiv = document.createElement('div');
+  resultsDiv.id = 'results';
+  let html = '<h2>Results</h2>';
+  let total=0, correct=0;
+  exercises.forEach((ex, ei) => {
+    html += `<h3>Exercise ${ei+1}: ${ex.title}</h3>`;
+    ex.questions.forEach((q, qi) => {
+      total++;
+      const qid = 'e' + ei + 'q' + qi;
+      const els = document.getElementsByName(qid);
+      let selected = null;
+      for (const r of els) if (r.checked) selected = r.value;
+      const isCorrect = (selected === q.ans);
+      if (isCorrect) correct++;
+      html += `<div class="result-row">`;
+      html += `<div class="question-title">${ei+1}.${qi+1} ${q.q}</div>`;
+      if (selected === null) {
+        html += `<div class="wrong">No answer — Correct: ${q.ans}</div>`;
+      } else if (isCorrect) {
+        html += `<div class="correct">Your answer: ${selected} — Correct</div>`;
+      } else {
+        html += `<div class="wrong">Your answer: ${selected} — Incorrect. Correct: ${q.ans}</div>`;
+      }
+      html += `</div>`;
+    });
+  });
+  html += `<h3 class="center">Score: ${correct} / ${total}</h3>`;
+  resultsDiv.innerHTML = html;
+  document.body.appendChild(resultsDiv);
+  resultsDiv.scrollIntoView();
+  const btn = document.getElementById('submitBtn');
+  if (btn) btn.disabled = true;
+}
+
+init();
+</script>
+</body>
+</html>
