@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Logical Fallacies Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .question-container { display: none; }
+    .question { font-weight: bold; margin-bottom: 10px; }
+    .options label { display: block; margin: 5px 0; }
+    .navigation { margin-top: 20px; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+    .explanation { font-style: italic; margin-left: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>Logical Fallacies Quiz</h1>
+
+<div id="quiz"></div>
+
+<div class="navigation">
+  <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+  <button id="nextBtn" onclick="nextQuestion()">Next</button>
+  <button id="submitBtn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<div id="results"></div>
+
+<script>
+const questions = [
+  // Q1–Q15 (with meanings)
+  {
+    q: "Alex says, “Dogs are better than cats because everyone I know says so.”",
+    options: [
+      "Appeal to Popularity – saying something is true because many people believe it",
+      "Cause and Effect – attributing cause and effect the wrong way",
+      "Strawman – creating an easier target to attack than addressing the real argument",
+      "Circular Reasoning – using the answer as the reason"
+    ],
+    answer: 0,
+    explanation: "Appeal to Popularity – many people believing something doesn’t make it true."
+  },
+  {
+    q: "Jamie says, “If we don’t buy this toy today, our whole weekend will be ruined!”",
+    options: [
+      "Slippery Slope – saying one small thing will lead to a chain of big bad things",
+      "Appeal to Popularity – many people believing something makes it true",
+      "Ad Hominem – attacking the person instead of the idea",
+      "Red Herring – distracting from the topic with something unrelated"
+    ],
+    answer: 0,
+    explanation: "Slippery Slope – assuming a small step will cause a big chain reaction."
+  },
+  {
+    q: "Taylor says, “We should not listen to Sam’s idea about recycling because Sam is messy.”",
+    options: [
+      "Circular Reasoning – using the answer as the reason",
+      "Ad Hominem – attacking the person instead of the idea",
+      "Strawman – making an easier target to attack instead of the real idea",
+      "False Cause – thinking one thing caused another without proof"
+    ],
+    answer: 1,
+    explanation: "Ad Hominem – attacking the person instead of discussing the idea."
+  },
+  {
+    q: "Chris says, “My lucky socks helped me win the game.”",
+    options: [
+      "False Cause – thinking one thing caused another without proof",
+      "Slippery Slope – small thing leading to big unrelated problems",
+      "Strawman – changing the argument to attack it",
+      "Appeal to Emotion – using feelings instead of facts"
+    ],
+    answer: 0,
+    explanation: "False Cause – assuming a cause-and-effect without real evidence."
+  },
+  {
+    q: "Ava says, “You should eat more carrots because eating more carrots is healthy.”",
+    options: [
+      "Circular Reasoning – using the answer as the reason",
+      "Appeal to Emotion – trying to make you feel something instead of think",
+      "Slippery Slope – assuming small actions will lead to extreme results",
+      "Ad Hominem – attacking the person not the argument"
+    ],
+    answer: 0,
+    explanation: "Circular Reasoning – the reason and the claim are the same."
+  },
+  {
+    q: "Liam says, “If you don’t let me go to the party, I’ll be sad forever.”",
+    options: [
+      "Appeal to Emotion – using feelings instead of facts",
+      "Strawman – changing the argument to attack it",
+      "Ad Hominem – attacking the person not the argument",
+      "False Cause – assuming wrong cause and effect"
+    ],
+    answer: 0,
+    explanation: "Appeal to Emotion – using feelings to make the argument stronger."
+  },
+  {
+    q: "Noah says, “You only think reading is fun because you’re a nerd.”",
+    options: [
+      "Strawman – making an easier target to attack",
+      "Ad Hominem – attacking the person instead of the idea",
+      "Slippery Slope – small action leads to big bad outcome",
+      "Circular Reasoning – using the answer as the reason"
+    ],
+    answer: 1,
+    explanation: "Ad Hominem – insult instead of counterargument."
+  },
+  {
+    q: "Ella says, “We should not eat apples because they are red.”",
+    options: [
+      "Non Sequitur – the reason doesn’t connect to the argument",
+      "Appeal to Popularity – many believe it so it’s true",
+      "Slippery Slope – small step leads to big bad",
+      "Ad Hominem – attacking the person instead of the idea"
+    ],
+    answer: 0,
+    explanation: "Non Sequitur – conclusion doesn’t follow the reason."
+  },
+  {
+    q: "Oliver says, “If we let kids choose their bedtime, soon they won’t follow any rules at all.”",
+    options: [
+      "Strawman – changing the argument to attack it",
+      "Slippery Slope – small step leads to extreme result",
+      "Appeal to Popularity – many believe it so it’s true",
+      "False Cause – incorrect link between cause and effect"
+    ],
+    answer: 1,
+    explanation: "Slippery Slope – assuming small change will lead to huge problems."
+  },
+  {
+    q: "Sophie says, “My brother’s friend’s cousin saw a ghost, so ghosts are real.”",
+    options: [
+      "Appeal to Authority – believing something because an expert said it",
+      "Anecdotal Evidence – using a story instead of proof",
+      "Ad Hominem – attacking the person not the idea",
+      "Circular Reasoning – using the answer as the reason"
+    ],
+    answer: 1,
+    explanation: "Anecdotal Evidence – one story is not enough proof."
+  },
+  {
+    q: "Lucas says, “You can’t say cheating is wrong because everyone cheats sometimes.”",
+    options: [
+      "Appeal to Popularity – many people do it so it’s okay",
+      "Red Herring – changing the topic",
+      "Strawman – attacking a different version of the argument",
+      "False Cause – wrong cause and effect"
+    ],
+    answer: 0,
+    explanation: "Appeal to Popularity – popularity doesn’t equal correctness."
+  },
+  {
+    q: "Mia says, “We should buy the new video game because it will make us cool.”",
+    options: [
+      "Ad Hominem – attacking the person",
+      "Appeal to Emotion – using feelings instead of logic",
+      "Appeal to Popularity – many people like it so it’s good",
+      "Strawman – changing the argument"
+    ],
+    answer: 2,
+    explanation: "Appeal to Popularity – popularity doesn’t prove value."
+  },
+  {
+    q: "Ethan says, “If we plant a garden, the house will fall apart because we’ll be too busy.”",
+    options: [
+      "Slippery Slope – small step leads to big bad result",
+      "Circular Reasoning – using the answer as the reason",
+      "False Cause – wrong link between cause and effect",
+      "Red Herring – distraction from the topic"
+    ],
+    answer: 0,
+    explanation: "Slippery Slope – small unrelated thing leads to huge problem."
+  },
+  {
+    q: "Isla says, “Either you love sports or you hate all fun.”",
+    options: [
+      "False Dilemma – saying only two options when more exist",
+      "Strawman – changing the argument",
+      "Ad Hominem – attacking the person",
+      "Circular Reasoning – using the answer as the reason"
+    ],
+    answer: 0,
+    explanation: "False Dilemma – ignores other possibilities."
+  },
+  {
+    q: "Leo says, “We must not believe her about science because she never got good grades in school.”",
+    options: [
+      "Ad Hominem – attacking the person instead of the idea",
+      "Strawman – changing the argument",
+      "False Cause – wrong cause and effect",
+      "Appeal to Authority – trusting only because of status"
+    ],
+    answer: 0,
+    explanation: "Ad Hominem – judging based on person not evidence."
+  },
+
+  // Q16–Q20 (no meanings)
+  {
+    q: "A friend says, “If we allow one person to break the rules, soon no one will follow any rules at all.”",
+    options: ["Slippery Slope", "Appeal to Authority", "Circular Reasoning", "Strawman"],
+    answer: 0,
+    explanation: "Slippery Slope – predicting extreme results from a small action."
+  },
+  {
+    q: "Jordan says, “We should believe aliens exist because a famous movie director says they are real.”",
+    options: ["Appeal to Authority", "Anecdotal Evidence", "Red Herring", "Strawman"],
+    answer: 0,
+    explanation: "Appeal to Authority – believing because an important person says it."
+  },
+  {
+    q: "A student says, “We shouldn’t listen to your opinion about homework because you’re not a teacher.”",
+    options: ["Ad Hominem", "Strawman", "False Dilemma", "Appeal to Popularity"],
+    answer: 0,
+    explanation: "Ad Hominem – attacking the person rather than the argument."
+  },
+  {
+    q: "Taylor says, “If I don’t win this game, I’ll never be happy again.”",
+    options: ["Appeal to Emotion", "False Cause", "Circular Reasoning", "Slippery Slope"],
+    answer: 0,
+    explanation: "Appeal to Emotion – relying on feelings instead of facts."
+  },
+  {
+    q: "Morgan says, “We can’t trust her about climate change because she once forgot to recycle.”",
+    options: ["Ad Hominem", "False Cause", "Strawman", "Appeal to Popularity"],
+    answer: 0,
+    explanation: "Ad Hominem – dismissing a claim by attacking the person."
+  }
+];
+
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+
+function renderQuestion() {
+  const quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = "";
+  const q = questions[currentQuestion];
+  const container = document.createElement("div");
+  container.className = "question-container";
+  container.style.display = "block";
+  const questionEl = document.createElement("div");
+  questionEl.className = "question";
+  questionEl.textContent = `Q${currentQuestion+1}: ${q.q}`;
+  container.appendChild(questionEl);
+
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = "options";
+  q.options.forEach((opt, idx) => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "question" + currentQuestion;
+    input.value = idx;
+    if (userAnswers[currentQuestion] === idx) input.checked = true;
+    input.onclick = () => { userAnswers[currentQuestion] = idx; };
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    optionsDiv.appendChild(label);
+  });
+  container.appendChild(optionsDiv);
+  quizDiv.appendChild(container);
+
+  document.getElementById("prevBtn").style.display = currentQuestion === 0 ? "none" : "inline";
+  document.getElementById("nextBtn").style.display = currentQuestion === questions.length - 1 ? "none" : "inline";
+  document.getElementById("submitBtn").style.display = currentQuestion === questions.length - 1 ? "inline" : "none";
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  }
+}
+
+function submitQuiz() {
+  let resultsHTML = "<h2>Results</h2>";
+  questions.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    const correct = q.answer === userAns;
+    resultsHTML += `<p><strong>Q${idx+1}:</strong> ${q.q}<br>`;
+    q.options.forEach((opt, optIdx) => {
+      if (optIdx === q.answer) {
+        resultsHTML += `<span class="correct">${opt} (Correct)</span><br>`;
+      } else if (optIdx === userAns) {
+        resultsHTML += `<span class="incorrect">${opt} (Your Answer)</span><br>`;
+      } else {
+        resultsHTML += `${opt}<br>`;
+      }
+    });
+    resultsHTML += `<span class="explanation">${q.explanation}</span></p>`;
+  });
+  document.getElementById("quiz").innerHTML = "";
+  document.getElementById("results").innerHTML = resultsHTML;
+  document.querySelector(".navigation").style.display = "none";
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
