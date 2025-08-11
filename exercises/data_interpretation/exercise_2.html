@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Interpretation Exercises - Grade 5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{font-family: Arial, sans-serif; max-width:900px; margin:20px auto; padding:10px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .img{max-width:100%; height:auto; border:1px solid #ccc; padding:6px;}
+  .options label{display:block; margin:6px 0; cursor:pointer;}
+  .nav{margin-top:12px;}
+  .correct{color:green;}
+  .wrong{color:red;}
+  .result-row{padding:6px; border-bottom:1px solid #eee;}
+  .question-title{font-weight:600;}
+  .center{text-align:center;}
+  .btn{padding:8px 12px; margin:6px; cursor:pointer;}
+</style>
+</head>
+<body>
+<h1>Data Interpretation — Grade 5 Level</h1>
+<p><a href="../../index.html">Back To Main Page</a></p>
+<p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
+<div id="container"></div>
+<script>
+const exercises = [
+  // Addition chart
+  {
+    question: "What is 3 + 4?",
+    image: "images/addition_chart.png",
+    options: ["5", "6", "7", "8"],
+    answer: "7"
+  },
+  {
+    question: "What is 6 + 9?",
+    image: "images/addition_chart.png",
+    options: ["14", "15", "16", "17"],
+    answer: "15"
+  },
+  {
+    question: "What is 12 + 15?",
+    image: "images/addition_chart.png",
+    options: ["26", "27", "28", "29"],
+    answer: "27"
+  },
+  {
+    question: "What is 24 + 18?",
+    image: "images/addition_chart.png",
+    options: ["41", "42", "43", "44"],
+    answer: "42"
+  },
+  {
+    question: "What is 45 + 37?",
+    image: "images/addition_chart.png",
+    options: ["81", "82", "83", "84"],
+    answer: "82"
+  },
+
+  // Subtraction chart
+  {
+    question: "What is 9 - 4?",
+    image: "images/subtraction_chart.png",
+    options: ["4", "5", "6", "7"],
+    answer: "5"
+  },
+  {
+    question: "What is 15 - 7?",
+    image: "images/subtraction_chart.png",
+    options: ["7", "8", "9", "10"],
+    answer: "8"
+  },
+  {
+    question: "What is 32 - 18?",
+    image: "images/subtraction_chart.png",
+    options: ["12", "13", "14", "15"],
+    answer: "14"
+  },
+  {
+    question: "What is 54 - 27?",
+    image: "images/subtraction_chart.png",
+    options: ["26", "27", "28", "29"],
+    answer: "27"
+  },
+  {
+    question: "What is 87 - 46?",
+    image: "images/subtraction_chart.png",
+    options: ["40", "41", "42", "43"],
+    answer: "41"
+  },
+
+  // Multiplication chart
+  {
+    question: "What is 3 × 6?",
+    image: "images/multiplication_chart.png",
+    options: ["16", "17", "18", "19"],
+    answer: "18"
+  },
+  {
+    question: "What is 7 × 8?",
+    image: "images/multiplication_chart.png",
+    options: ["54", "55", "56", "57"],
+    answer: "56"
+  },
+  {
+    question: "What is 9 × 12?",
+    image: "images/multiplication_chart.png",
+    options: ["106", "107", "108", "109"],
+    answer: "108"
+  },
+  {
+    question: "What is 14 × 15?",
+    image: "images/multiplication_chart.png",
+    options: ["209", "210", "211", "212"],
+    answer: "210"
+  },
+  {
+    question: "What is 18 × 24?",
+    image: "images/multiplication_chart.png",
+    options: ["431", "432", "433", "434"],
+    answer: "432"
+  },
+
+  // Division chart
+  {
+    question: "What is 18 ÷ 3?",
+    image: "images/division_chart.png",
+    options: ["5", "6", "7", "8"],
+    answer: "6"
+  },
+  {
+    question: "What is 56 ÷ 7?",
+    image: "images/division_chart.png",
+    options: ["7", "8", "9", "10"],
+    answer: "8"
+  },
+  {
+    question: "What is 96 ÷ 8?",
+    image: "images/division_chart.png",
+    options: ["10", "11", "12", "13"],
+    answer: "12"
+  },
+  {
+    question: "What is 144 ÷ 12?",
+    image: "images/division_chart.png",
+    options: ["11", "12", "13", "14"],
+    answer: "12"
+  },
+  {
+    question: "What is 225 ÷ 15?",
+    image: "images/division_chart.png",
+    options: ["14", "15", "16", "17"],
+    answer: "15"
+  },
+
+  // Mixed operations chart
+  {
+    question: "What is 5 + 8 × 2?",
+    image: "images/mixed_chart.png",
+    options: ["21", "24", "25", "26"],
+    answer: "21" // Multiplication first: 8×2=16, then 5+16=21
+  },
+  {
+    question: "What is (15 - 3) × 4?",
+    image: "images/mixed_chart.png",
+    options: ["46", "47", "48", "49"],
+    answer: "48"
+  },
+  {
+    question: "What is 64 ÷ 8 + 9?",
+    image: "images/mixed_chart.png",
+    options: ["16", "17", "18", "19"],
+    answer: "17" // Division first: 64÷8=8, then 8+9=17
+  },
+  {
+    question: "What is 45 ÷ (5 × 3)?",
+    image: "images/mixed_chart.png",
+    options: ["2", "3", "4", "5"],
+    answer: "3" // 5×3=15, then 45÷15=3
+  },
+  {
+    question: "What is (25 + 15) ÷ 5?",
+    image: "images/mixed_chart.png",
+    options: ["7", "8", "9", "10"],
+    answer: "8" // 25+15=40, then 40÷5=8
+  }
+];
+
+function createPage(ex, idx) {
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-' + idx;
+  let html = '<h2>Exercise ' + (idx+1) + ': ' + ex.title + '</h2>';
+  html += '<img class="img" src="' + ex.img + '" alt="chart">';
+  ex.questions.forEach((q, qi) => {
+    const qid = 'e' + idx + 'q' + qi;
+    html += `<div class="question" id="${qid}"><p class="question-title">${qi+1}. ${q.q}</p>`;
+    html += '<div class="options">';
+    for (let i=0;i<q.opts.length;i++) {
+      const opt = q.opts[i];
+      const oid = qid + '_opt' + i;
+      html += `<label><input type="radio" name="${qid}" value="${opt}" id="${oid}"> ${opt}</label>`;
+    }
+    html += '</div></div><hr/>';
+  });
+  html += '<div class="nav">';
+  if (idx>0) html += '<button class="btn" onclick="showPage(' + (idx-1) + ')">Previous</button>';
+  if (idx < exercises.length-1) html += '<button class="btn" onclick="showPage(' + (idx+1) + ')">Next</button>';
+  if (idx === exercises.length-1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
+  html += '</div>';
+  div.innerHTML = html;
+  return div;
+}
+
+function init() {
+  const container = document.getElementById('container');
+  exercises.forEach((ex, i) => container.appendChild(createPage(ex,i)));
+  showPage(0);
+}
+
+function showPage(i) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-' + i).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showResults() {
+  const resultsDiv = document.createElement('div');
+  resultsDiv.id = 'results';
+  let html = '<h2>Results</h2>';
+  let total=0, correct=0;
+  exercises.forEach((ex, ei) => {
+    html += `<h3>Exercise ${ei+1}: ${ex.title}</h3>`;
+    ex.questions.forEach((q, qi) => {
+      total++;
+      const qid = 'e' + ei + 'q' + qi;
+      const els = document.getElementsByName(qid);
+      let selected = null;
+      for (const r of els) if (r.checked) selected = r.value;
+      const isCorrect = (selected === q.ans);
+      if (isCorrect) correct++;
+      html += `<div class="result-row">`;
+      html += `<div class="question-title">${ei+1}.${qi+1} ${q.q}</div>`;
+      if (selected === null) {
+        html += `<div class="wrong">No answer — Correct: ${q.ans}</div>`;
+      } else if (isCorrect) {
+        html += `<div class="correct">Your answer: ${selected} — Correct</div>`;
+      } else {
+        html += `<div class="wrong">Your answer: ${selected} — Incorrect. Correct: ${q.ans}</div>`;
+      }
+      html += `</div>`;
+    });
+  });
+  html += `<h3 class="center">Score: ${correct} / ${total}</h3>`;
+  resultsDiv.innerHTML = html;
+  document.body.appendChild(resultsDiv);
+  resultsDiv.scrollIntoView();
+  const btn = document.getElementById('submitBtn');
+  if (btn) btn.disabled = true;
+}
+
+init();
+</script>
+</body>
+</html>
