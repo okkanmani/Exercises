@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Logical Fallacies Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .question-container { display: none; }
+    .question { font-weight: bold; margin-bottom: 10px; }
+    .options label { display: block; margin: 5px 0; }
+    .navigation { margin-top: 20px; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+    .explanation { font-style: italic; margin-left: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>Logical Fallacies Quiz</h1>
+<p><a href="../../index.html">Back To Main Page</a></p>
+
+<div id="quiz"></div>
+
+<div class="navigation">
+  <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+  <button id="nextBtn" onclick="nextQuestion()">Next</button>
+  <button id="submitBtn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<div id="results"></div>
+
+<script>
+var questions = [
+  {
+    q: "Liam says, “We should go to the park because everyone in our class is going.”",
+    options: [
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Appeal to Popularity",
+    explanation: "Liam's reasoning is based on what most people are doing, not on whether going to the park is actually a good idea."
+  },
+  {
+    q: "Maya says, “If we don’t buy that toy today, we will never have fun again.”",
+    options: [
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Slippery Slope - claiming one small action will lead to a chain of bad events",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Cause and Effect - attributing cause and effect the wrong way"
+    ],
+    answer: "Slippery Slope",
+    explanation: "Maya is exaggerating, making it seem like not buying the toy will cause an extreme and unlikely outcome."
+  },
+  {
+    q: "Oliver says, “This cake is the best because it’s the tastiest.”",
+    options: [
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Appeal to Popularity - saying something is true because many people believe it"
+    ],
+    answer: "Circular Reasoning",
+    explanation: "Oliver is using the claim ('best') and the reason ('tastiest') to mean the same thing, without giving real proof."
+  },
+  {
+    q: "Sophie says, “Whenever I wear my lucky socks, we win the game, so the socks must cause the wins.”",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Slippery Slope - claiming one small action will lead to a chain of bad events"
+    ],
+    answer: "Cause and Effect",
+    explanation: "Sophie is assuming the socks cause the win, when it could be just coincidence."
+  },
+  {
+    q: "Noah says, “People who don’t like soccer must hate exercise.”",
+    options: [
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Slippery Slope - claiming one small action will lead to a chain of bad events"
+    ],
+    answer: "Strawman",
+    explanation: "Noah is misrepresenting the real opinion to make it easier to argue against."
+  },
+  // 10 more with meanings...
+  {
+    q: "Emma says, “We should plant more trees because more trees will make the air cleaner.”",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Strawman - creating an easier target to attack than addressing the real argument"
+    ],
+    answer: "Cause and Effect",
+    explanation: "Emma is correct in linking trees to cleaner air, but here the focus is identifying this as cause-effect reasoning."
+  },
+  {
+    q: "Lucas says, “We should try this restaurant because it’s the most popular in town.”",
+    options: [
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Slippery Slope - claiming one small action will lead to a chain of bad events",
+      "Strawman - creating an easier target to attack than addressing the real argument"
+    ],
+    answer: "Appeal to Popularity",
+    explanation: "Lucas is relying on popularity instead of actual food quality as the reason."
+  },
+  {
+    q: "Ella says, “If I get one bad grade, I’ll never get into a good school.”",
+    options: [
+      "Slippery Slope - claiming one small action will lead to a chain of bad events",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Slippery Slope",
+    explanation: "Ella assumes one bad grade will automatically lead to an extreme consequence."
+  },
+  {
+    q: "Daniel says, “Math is easy because it’s simple.”",
+    options: [
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Cause and Effect - attributing cause and effect the wrong way"
+    ],
+    answer: "Circular Reasoning",
+    explanation: "Daniel repeats the same idea using different words without providing real evidence."
+  },
+  {
+    q: "Ava says, “People who don’t like ice cream are just strange.”",
+    options: [
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Strawman",
+    explanation: "Ava oversimplifies or changes someone’s opinion to make it easier to dismiss."
+  },
+
+  // Last 5 (no meanings in options)
+  {
+    q: "Ethan says, “If we don’t start recycling today, the whole planet will be ruined tomorrow.”",
+    options: ["Slippery Slope", "Cause and Effect", "Appeal to Popularity", "Circular Reasoning"],
+    answer: "Slippery Slope",
+    explanation: "Ethan exaggerates the results of not recycling immediately."
+  },
+  {
+    q: "Chloe says, “My favorite book is the best because I like it the most.”",
+    options: ["Circular Reasoning", "Strawman", "Cause and Effect", "Appeal to Popularity"],
+    answer: "Circular Reasoning",
+    explanation: "Chloe's reasoning just repeats her opinion without giving a new reason."
+  },
+  {
+    q: "Mason says, “When I bring my lucky pen, I always do well on tests.”",
+    options: ["Cause and Effect", "Slippery Slope", "Strawman", "Appeal to Popularity"],
+    answer: "Cause and Effect",
+    explanation: "Mason assumes the pen is the reason for his success."
+  },
+  {
+    q: "Grace says, “If you don’t eat your vegetables, you must hate being healthy.”",
+    options: ["Strawman", "Cause and Effect", "Circular Reasoning", "Appeal to Popularity"],
+    answer: "Strawman",
+    explanation: "Grace twists the statement to make it easier to argue against."
+  },
+  {
+    q: "Jack says, “We should play basketball because most kids in the neighborhood play it.”",
+    options: ["Appeal to Popularity", "Circular Reasoning", "Slippery Slope", "Cause and Effect"],
+    answer: "Appeal to Popularity",
+    explanation: "Jack bases his decision on popularity rather than actual interest or benefits."
+  }
+];
+
+
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+
+function renderQuestion() {
+  const quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = "";
+  const q = questions[currentQuestion];
+  const container = document.createElement("div");
+  container.className = "question-container";
+  container.style.display = "block";
+  const questionEl = document.createElement("div");
+  questionEl.className = "question";
+  questionEl.textContent = `Q${currentQuestion+1}: ${q.q}`;
+  container.appendChild(questionEl);
+
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = "options";
+  q.options.forEach((opt, idx) => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "question" + currentQuestion;
+    input.value = idx;
+    if (userAnswers[currentQuestion] === idx) input.checked = true;
+    input.onclick = () => { userAnswers[currentQuestion] = idx; };
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    optionsDiv.appendChild(label);
+  });
+  container.appendChild(optionsDiv);
+  quizDiv.appendChild(container);
+
+  document.getElementById("prevBtn").style.display = currentQuestion === 0 ? "none" : "inline";
+  document.getElementById("nextBtn").style.display = currentQuestion === questions.length - 1 ? "none" : "inline";
+  document.getElementById("submitBtn").style.display = currentQuestion === questions.length - 1 ? "inline" : "none";
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  }
+}
+
+function submitQuiz() {
+  let resultsHTML = "<h2>Results</h2>";
+  questions.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    const correct = q.answer === userAns;
+    resultsHTML += `<p><strong>Q${idx+1}:</strong> ${q.q}<br>`;
+    q.options.forEach((opt, optIdx) => {
+      if (optIdx === q.answer) {
+        resultsHTML += `<span class="correct">${opt} (Correct)</span><br>`;
+      } else if (optIdx === userAns) {
+        resultsHTML += `<span class="incorrect">${opt} (Your Answer)</span><br>`;
+      } else {
+        resultsHTML += `${opt}<br>`;
+      }
+    });
+    resultsHTML += `<span class="explanation">${q.explanation}</span></p>`;
+  });
+  document.getElementById("quiz").innerHTML = "";
+  document.getElementById("results").innerHTML = resultsHTML;
+  document.querySelector(".navigation").style.display = "none";
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
