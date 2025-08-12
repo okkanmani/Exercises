@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RC Quiz — Science & Nature (5 passages)</title>
+  <style>
+    :root{
+      --bg:#f4f7fb; --card:#ffffff; --accent:#0b66ff; --muted:#6b7280;
+      --good:#ecfdf5; --good-text:#064e3b; --bad:#fff1f2; --bad-text:#7f1d1d;
+      --explain-bg:#f8fafc; --max-width:1200px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#0b1220;background:var(--bg)}
+    .wrap{max-width:var(--max-width);margin:24px auto;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(12,20,40,0.06)}
+    header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+    header h1{margin:0;font-size:20px}
+    header .muted{color:var(--muted);font-size:13px}
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+    .passagePanel{padding:18px;overflow:auto;height:72vh}
+    .questionsPanel{padding:14px;overflow:auto;height:72vh}
+    .passTitle{font-size:24px;font-weight:700;margin-bottom:10px}
+    .passageText{line-height:1.7;white-space:pre-wrap}
+    .question{padding:10px;margin-bottom:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef2ff}
+    .qtext{font-weight:600;margin-bottom:8px}
+    .muted{color:var(--muted);font-size:13px}
+    label.option{display:block;padding:8px;margin:6px 0;border-radius:8px;cursor:pointer;border:1px solid transparent}
+    label.option:hover{background:#f7fbff}
+    input[type=radio]{margin-right:8px}
+    .controls{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.secondary{background:#eef2ff;color:var(--accent);font-weight:600}
+    button:disabled{opacity:0.5;cursor:default}
+    .resultBox{margin-top:12px;padding:12px;border-radius:8px}
+    .correct{background:var(--good);color:var(--good-text);padding:8px;border-radius:6px}
+    .incorrect{background:var(--bad);color:var(--bad-text);padding:8px;border-radius:6px}
+    .review-item{padding:8px;border-radius:8px;margin-bottom:8px;border:1px solid #eef2ff}
+    .explanation{background:var(--explain-bg);padding:8px;border-radius:6px;margin-top:8px;font-size:14px}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr;}.passagePanel{height:45vh}.questionsPanel{height:45vh}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Reading Comprehension — Science & Nature (Challenging)</h1>
+          <p><a href="../../index.html">Back To Main Page</a></p>
+          <div class="muted">5 passages • 6 questions each • 2 vocabulary questions per passage</div>
+        </div>
+        <div class="muted">Tip: Use <strong>Previous</strong> and <strong>Next</strong>. Submit appears on the last page.</div>
+      </header>
+
+      <div id="main" class="layout">
+        <div class="passagePanel card">
+          <div id="passageHeader" class="passTitle">Passage 1 of 5 — The Water Cycle and Why It Matters</div>
+          <div id="passageText" class="passageText"></div>
+
+          <div class="controls" style="justify-content:flex-start;margin-top:16px">
+            <button id="prevBtn" class="secondary">Previous</button>
+          </div>
+        </div>
+
+        <div class="questionsPanel card">
+          <div class="muted" id="qHeader">Questions</div>
+          <div id="questionsContainer"></div>
+
+          <div class="controls" style="margin-top:12px">
+            <button id="nextBtn" class="secondary">Next</button>
+            <button id="submitBtn" style="display:none">Submit</button>
+          </div>
+
+          <div id="feedback" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <footer class="muted">This quiz runs entirely in your browser. No data leaves your device.</footer>
+    </div>
+  </div>
+
+<script>
+/* shuffle helper */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* ===== Passages, Questions, Explanations =====
+Each passage has: title, text, questions [{q, choices[], a (index), explanation}]
+*/
+const passages = [
+  {
+    title: "Endangered Languages",
+    text: `Across the world, thousands of languages are spoken, each carrying unique stories, traditions, and ways of understanding the world. However, many of these languages are disappearing at an alarming rate. Linguists—people who study languages—estimate that nearly half of the world’s 7,000 languages could vanish within the next century. When a language disappears, it often means more than losing words; it means losing a piece of human culture.
+
+Some endangered languages are spoken only by a handful of elderly people. As younger generations adopt more widely spoken languages, like English, Spanish, or Mandarin, the old languages fade. Sometimes governments promote one language over others, believing it will help unify a country. But this can unintentionally push minority languages into extinction.
+
+Efforts to save endangered languages include recording native speakers, teaching the language in schools, and using it in modern technology like apps or social media. For example, the Māori language in New Zealand has seen a revival through immersion schools and television programs. Yet, reviving a language is difficult. It requires strong community support and resources.
+
+Some people question why saving a dying language matters, especially when global communication is easier with fewer languages. Supporters argue that languages are more than tools—they hold histories, ways of thinking, and connections to the land. When a language dies, so does a unique perspective on the world.`,
+    questions: [
+      {
+        q: "What does 'linguists' mean in the passage?",
+        choices: ["Language teachers", "Language scientists", "Travelers", "Historians"],
+        a: 1,
+        explanation: "Linguists are scientists who study languages and how they are used."
+      },
+      {
+        q: "What does the word 'revival' most likely mean as used in the passage?",
+        choices: ["End", "Return to life", "Replacement", "Translation"],
+        a: 1,
+        explanation: "'Revival' means bringing something back to life or use."
+      },
+      {
+        q: "Why do some governments promote one language over others?",
+        choices: ["To erase culture", "To unify the country", "To improve technology", "To encourage travel"],
+        a: 1,
+        explanation: "Governments may promote a common language to help unify diverse populations."
+      },
+      {
+        q: "Why is it challenging to revive a language?",
+        choices: ["It is easy to forget grammar rules", "It requires strong community support and resources", "Young people refuse to speak any language", "The internet does not allow it"],
+        a: 1,
+        explanation: "Reviving a language requires people’s commitment and resources to teach and use it."
+      },
+      {
+        q: "Why do supporters believe saving a dying language matters?",
+        choices: ["It helps sell books", "It improves tourism", "It preserves culture and unique perspectives", "It makes learning easier"],
+        a: 2,
+        explanation: "Languages carry culture, history, and ways of thinking unique to their speakers."
+      },
+      {
+        q: "What can we infer about the Māori language from the passage?",
+        choices: ["It is fully extinct", "It has completely replaced English in New Zealand", "It has been revitalized through education and media", "It is only spoken by tourists"],
+        a: 2,
+        explanation: "The Māori language is being revived through schools and TV programs."
+      }
+    ]
+  },
+  {
+    title: "Plastic in the Oceans",
+    text: `Every year, millions of tons of plastic end up in the oceans, harming marine life and ecosystems. This plastic comes from many sources: litter left on beaches, waste carried by rivers, and fishing gear lost at sea. Because plastic does not easily break down, it can stay in the environment for hundreds of years.
+
+One of the most dangerous forms of ocean plastic is microplastics—tiny particles less than five millimeters long. They are created when larger pieces of plastic break apart or when products like toothpaste and clothing release plastic fibers. Marine animals often mistake microplastics for food, which can cause injury, block digestion, or introduce toxic chemicals into their bodies.
+
+The effects of ocean plastic go beyond wildlife. Humans also face risks. Fish and shellfish consumed by people sometimes contain microplastics, though the health effects are still being studied. Economically, polluted beaches and damaged fishing industries cost communities billions of dollars.
+
+Solutions to the plastic problem include reducing single-use plastics, improving recycling systems, and developing biodegradable materials. International cooperation is crucial since ocean currents can carry plastic far from where it entered the water. While cleaning the oceans is difficult, preventing new plastic pollution offers the best hope.`,
+    questions: [
+      {
+        q: "What does 'microplastics' mean?",
+        choices: ["Large plastic bags", "Tiny plastic particles", "Plastic bottles", "Recyclable materials"],
+        a: 1,
+        explanation: "Microplastics are very small plastic pieces less than five millimeters long."
+      },
+      {
+        q: "What does 'biodegradable' most likely mean in the passage?",
+        choices: ["Able to break down naturally", "Made from plastic", "Safe to drink", "Difficult to see"],
+        a: 0,
+        explanation: "Biodegradable materials can be broken down naturally by the environment."
+      },
+      {
+        q: "Why are microplastics harmful to marine animals?",
+        choices: ["They can block digestion and introduce toxins", "They sink quickly to the bottom", "They make the water colder", "They dissolve instantly"],
+        a: 0,
+        explanation: "Marine animals mistake microplastics for food, causing injury and poisoning."
+      },
+      {
+        q: "What is the best hope for solving the ocean plastic problem?",
+        choices: ["Burning plastic waste", "Preventing new plastic pollution", "Throwing it into deep water", "Hiding it under sand"],
+        a: 1,
+        explanation: "Preventing plastic pollution is the most effective solution since cleanup is hard."
+      },
+      {
+        q: "What can we infer about the spread of ocean plastic?",
+        choices: ["It stays close to where it enters the water", "Ocean currents can carry it far away", "It only affects beaches near cities", "It disappears after a few weeks"],
+        a: 1,
+        explanation: "Ocean currents move plastic far from its source, spreading pollution widely."
+      },
+      {
+        q: "Why is international cooperation important in solving the problem?",
+        choices: ["Because plastic moves between countries", "Because recycling is expensive", "Because fish need passports", "Because plastic is banned everywhere"],
+        a: 0,
+        explanation: "Plastic pollution crosses national borders, requiring countries to work together."
+      }
+    ]
+  },
+  {
+    title: "The History of Human Flight",
+    text: `For most of human history, flying seemed impossible. People watched birds and dreamed of soaring through the skies. Ancient myths told of winged gods and heroes. But real flight required more than imagination—it needed science, engineering, and persistence.
+
+In the late 1700s, the Montgolfier brothers of France launched the first hot air balloon. It lifted a sheep, a duck, and a rooster into the air. Soon after, humans began to ride balloons. Balloons could float but were difficult to control. That problem led inventors to experiment with gliders and powered aircraft.
+
+The breakthrough came in 1903, when the Wright brothers, Orville and Wilbur, flew the first powered, controlled airplane in Kitty Hawk, North Carolina. Their flight lasted only 12 seconds but changed history forever. Airplanes quickly improved, becoming faster, safer, and able to carry more passengers.
+
+Over the 20th century, flight transformed travel, trade, and warfare. Jet engines allowed planes to fly higher and faster, shrinking the world by making faraway places accessible in hours. Today, humans are exploring new frontiers in flight, such as drones and spacecraft, continuing the centuries-long quest to conquer the skies.`,
+    questions: [
+      {
+        q: "What does 'persistence' mean in the passage?",
+        choices: ["Giving up easily", "Steady effort over time", "Flying in circles", "Quick success"],
+        a: 1,
+        explanation: "'Persistence' means continuing effort despite difficulties."
+      },
+      {
+        q: "What does 'breakthrough' most likely mean?",
+        choices: ["A sudden major advance", "A broken machine", "A type of aircraft", "A repair"],
+        a: 0,
+        explanation: "A breakthrough is an important discovery or progress."
+      },
+      {
+        q: "Why was the Wright brothers’ flight important?",
+        choices: ["It lasted the longest in history", "It was the first powered, controlled flight", "It used a hot air balloon", "It carried animals"],
+        a: 1,
+        explanation: "They achieved the first powered and controlled airplane flight."
+      },
+      {
+        q: "What problem did balloons have?",
+        choices: ["They could not carry people", "They were hard to control", "They used too much fuel", "They scared birds"],
+        a: 1,
+        explanation: "Balloons floated but could not be steered easily."
+      },
+      {
+        q: "What can we infer about jet engines?",
+        choices: ["They made planes slower", "They made planes fly higher and faster", "They were invented before balloons", "They replaced spacecraft"],
+        a: 1,
+        explanation: "Jet engines increased airplane speed and altitude."
+      },
+      {
+        q: "What is the main idea of the passage?",
+        choices: ["The development of human flight over time", "How to build a hot air balloon", "The dangers of air travel", "The myths about flying animals"],
+        a: 0,
+        explanation: "The passage explains the history and progress of human flight."
+      }
+    ]
+  },
+  {
+    title: "The Underground Railroad",
+    text: `During the 1800s in the United States, slavery was legal in the South but illegal in the North. Enslaved African Americans faced brutal conditions, no freedom, and constant danger. To escape, some turned to a secret network called the Underground Railroad.
+
+Despite its name, it was neither underground nor a railroad. Instead, it was a series of safe houses, secret routes, and courageous people—both Black and white—who helped freedom seekers travel to free states or Canada. “Conductors” guided them, “stations” provided shelter, and “passengers” were the escaping individuals.
+
+Harriet Tubman, one of the most famous conductors, escaped slavery herself and returned many times to guide others to freedom. The journey was perilous. Fugitive slave laws allowed people to be captured even in free states, so many aimed for Canada, where slavery was outlawed.
+
+The Underground Railroad was not a single organization but a loose network driven by compassion and justice. Its success depended on secrecy, trust, and the bravery of those involved. By the time slavery ended in 1865, thousands had gained their freedom thanks to this hidden pathway to hope.`,
+    questions: [
+      {
+        q: "What does 'perilous' mean?",
+        choices: ["Safe", "Dangerous", "Slow", "Exciting"],
+        a: 1,
+        explanation: "'Perilous' means very dangerous or risky."
+      },
+      {
+        q: "What does 'conductors' mean in this passage?",
+        choices: ["Train drivers", "People who guided escaping slaves", "Passengers", "Police officers"],
+        a: 1,
+        explanation: "Conductors were people who helped guide enslaved people to freedom."
+      },
+      {
+        q: "Why was the Underground Railroad not actually a railroad?",
+        choices: ["It was a secret network of routes and safe houses", "It was a train system underground", "It was a canal", "It was a type of bus"],
+        a: 0,
+        explanation: "It was a secret system, not an actual railroad with trains."
+      },
+      {
+        q: "Why did many escaping slaves aim for Canada?",
+        choices: ["Because slavery was outlawed there", "Because it was closer", "Because they liked cold weather", "Because it was easier to find jobs"],
+        a: 0,
+        explanation: "Canada did not allow slavery, offering safe refuge."
+      },
+      {
+        q: "What can we infer about Harriet Tubman’s role?",
+        choices: ["She helped many escape slavery", "She owned a railroad", "She was a slave owner", "She worked for the government"],
+        a: 0,
+        explanation: "She risked her life multiple times to guide others to freedom."
+      },
+      {
+        q: "What qualities were important for the success of the Underground Railroad?",
+        choices: ["Secrecy, trust, and bravery", "Speed and loud noises", "Money and weapons", "Trains and maps"],
+        a: 0,
+        explanation: "The network depended on people’s courage and keeping plans secret."
+      }
+    ]
+  },
+  {
+    title: "The Power of Storytelling",
+    text: `Storytelling is one of the oldest and most powerful ways humans share knowledge, culture, and emotions. Long before writing was invented, people told stories around fires, passing down lessons and traditions from generation to generation.
+
+Stories help us make sense of the world, explain natural events, and teach morals. They build empathy by allowing us to see life through others’ eyes. From ancient myths and legends to modern books and films, storytelling shapes our identities and communities.
+
+In many cultures, storytelling is a sacred art, performed by skilled storytellers who use voice, gesture, and music to bring tales to life. Stories can unite people during hard times or inspire change. With new technology, storytelling has taken many forms—from podcasts to virtual reality—expanding its reach.
+
+Ultimately, storytelling connects us all. It preserves history, celebrates culture, and sparks imagination, reminding us that our shared human experience is richer when told and heard.`,
+    questions: [
+      {
+        q: "What is storytelling described as?",
+        choices: ["A modern invention", "One of the oldest ways humans share knowledge", "A scientific method", "A type of writing only"],
+        a: 1,
+        explanation: "Storytelling has existed long before writing and is very old."
+      },
+      {
+        q: "Why are stories important according to the passage?",
+        choices: ["They help make sense of the world and teach morals", "They are only for entertainment", "They are written down only", "They only teach science"],
+        a: 0,
+        explanation: "Stories explain events and teach lessons and morals."
+      },
+      {
+        q: "What does storytelling build?",
+        choices: ["Empathy", "Confusion", "Wealth", "Fame"],
+        a: 0,
+        explanation: "Stories help people understand others’ feelings and viewpoints."
+      },
+      {
+        q: "How is storytelling performed in many cultures?",
+        choices: ["Using voice, gesture, and music", "Only by reading silently", "By writing essays", "By painting pictures"],
+        a: 0,
+        explanation: "Storytellers use multiple ways to bring stories alive."
+      },
+      {
+        q: "What effect can stories have during hard times?",
+        choices: ["They can unite people", "They cause fights", "They are ignored", "They make people sad"],
+        a: 0,
+        explanation: "Stories can bring people together and inspire hope."
+      },
+      {
+        q: "How has technology changed storytelling?",
+        choices: ["It has created new forms like podcasts and virtual reality", "It stopped storytelling", "It made stories shorter", "It only uses books now"],
+        a: 0,
+        explanation: "Technology allows stories to be told in new, immersive ways."
+      }
+    ]
+  }
+];
+
+
+
+
+/* ===== State & UI elements ===== */
+let page = 0;
+const totalPages = passages.length;
+const answers = {}; // store selected original index per question, e.g., 'p0q1': 2
+
+const passageHeader = document.getElementById('passageHeader');
+const passageText = document.getElementById('passageText');
+const qsContainer = document.getElementById('questionsContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const feedback = document.getElementById('feedback');
+const qHeader = document.getElementById('qHeader');
+
+const renderedQuestionNodes = {}; // track rendered nodes for inserting explanations
+
+/* Render page */
+function renderPage(idx) {
+  const p = passages[idx];
+  passageHeader.textContent = `Passage ${idx+1} of ${totalPages} — ${p.title}`;
+  passageText.textContent = p.text;
+  qsContainer.innerHTML = '';
+  qHeader.textContent = `Questions — Passage ${idx+1}`;
+  // clear rendered map
+  for (const k in renderedQuestionNodes) delete renderedQuestionNodes[k];
+
+  p.questions.forEach((q, qi) => {
+    const qKey = `p${idx}q${qi}`;
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.id = qKey;
+
+    const qTitle = document.createElement('div');
+    qTitle.className = 'qtext';
+    qTitle.textContent = `Q${qi+1}. ${q.q}`;
+    qDiv.appendChild(qTitle);
+
+    // Shuffle display order but keep original indices
+    const choiceObjs = q.choices.map((c, i) => ({ text: c, origIndex: i }));
+    shuffle(choiceObjs);
+
+    const labels = [];
+    choiceObjs.forEach((ch, ci) => {
+      const id = `${qKey}c${ci}`;
+      const label = document.createElement('label');
+      label.className = 'option';
+      label.htmlFor = id;
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = qKey;
+      radio.id = id;
+      radio.value = ch.origIndex; // store original index for grading
+
+      if (answers[qKey] !== undefined && answers[qKey] === ch.origIndex) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener('change', () => {
+        answers[qKey] = Number(radio.value);
+      });
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(ch.text));
+      qDiv.appendChild(label);
+      labels.push(label);
+    });
+
+    qsContainer.appendChild(qDiv);
+    renderedQuestionNodes[qKey] = { container: qDiv, labels: labels, questionObj: q };
+  });
+
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === totalPages - 1;
+  submitBtn.style.display = (idx === totalPages - 1) ? 'inline-block' : 'none';
+  feedback.innerHTML = '';
+}
+
+/* Grading and explanations insertion */
+function gradeAllAndShow() {
+  let total = 0, score = 0;
+  const fullReview = document.createElement('div');
+
+  passages.forEach((p, pi) => {
+    const passBlock = document.createElement('div');
+    passBlock.style.marginBottom = '12px';
+    const passTitle = document.createElement('div');
+    passTitle.style.fontWeight = '700';
+    passTitle.textContent = `Passage ${pi+1}: ${p.title}`;
+    passBlock.appendChild(passTitle);
+
+    p.questions.forEach((q, qi) => {
+      total++;
+      const key = `p${pi}q${qi}`;
+      const chosen = answers[key] !== undefined ? Number(answers[key]) : null;
+      const isCorrect = chosen === q.a;
+      if (isCorrect) score++;
+
+      // If this question is currently visible, insert explanation directly under it
+      const rendered = renderedQuestionNodes[key];
+      if (rendered && rendered.container) {
+        const oldExpl = rendered.container.querySelector('.explanation');
+        if (oldExpl) oldExpl.remove();
+
+        const expl = document.createElement('div');
+        expl.className = 'explanation';
+
+        const status = document.createElement('div');
+        status.style.fontWeight = '700';
+        status.style.marginBottom = '6px';
+        if (isCorrect) {
+          status.textContent = `✅ Correct — You chose: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+          status.style.color = 'var(--good-text)';
+        } else {
+          status.textContent = `❌ ${chosen === null ? 'Unanswered' : 'Incorrect'} — Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}; Correct: ${q.choices[q.a]}`;
+          status.style.color = 'var(--bad-text)';
+        }
+        expl.appendChild(status);
+
+        const expt = document.createElement('div');
+        expt.textContent = q.explanation || '';
+        expl.appendChild(expt);
+
+        rendered.container.appendChild(expl);
+
+        // highlight labels
+        rendered.labels.forEach(lbl => {
+          const inp = lbl.querySelector('input[type=radio]');
+          if (!inp) return;
+          const val = Number(inp.value);
+          if (val === q.a) {
+            lbl.style.border = '1px solid #bfe6c8';
+            lbl.style.background = '#f0fff4';
+          }
+          if (chosen !== null && val === chosen && chosen !== q.a) {
+            lbl.style.border = '1px solid #ffd6d6';
+            lbl.style.background = '#fff6f6';
+          }
+        });
+      }
+
+      // Build full-review item
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const qn = document.createElement('div');
+      qn.className = 'qtext';
+      qn.textContent = `Passage ${pi+1} — Q${qi+1}. ${q.q}`;
+      item.appendChild(qn);
+
+      const your = document.createElement('div');
+      your.style.marginTop = '6px';
+      your.textContent = `Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+      item.appendChild(your);
+
+      const correctDiv = document.createElement('div');
+      correctDiv.style.marginTop = '6px';
+      correctDiv.textContent = `Correct answer: ${q.choices[q.a]}`;
+      item.appendChild(correctDiv);
+
+      const explanDiv = document.createElement('div');
+      explanDiv.style.marginTop = '6px';
+      explanDiv.textContent = q.explanation || '';
+      item.appendChild(explanDiv);
+
+      passBlock.appendChild(item);
+    });
+
+    fullReview.appendChild(passBlock);
+  });
+
+  feedback.innerHTML = '';
+  const scoreBox = document.createElement('div');
+  scoreBox.className = 'resultBox';
+  scoreBox.innerHTML = `<div style="font-weight:700">Score: ${score} / ${total}</div><div class="small" style="margin-top:6px">Explanations appear beneath visible questions; full review follows.</div>`;
+  feedback.appendChild(scoreBox);
+  feedback.appendChild(fullReview);
+
+  disableAllInputs();
+  feedback.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* disable inputs and nav */
+function disableAllInputs() {
+  const radios = document.querySelectorAll('input[type=radio]');
+  radios.forEach(r => r.disabled = true);
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+  submitBtn.disabled = true;
+}
+
+/* Events */
+prevBtn.addEventListener('click', () => {
+  if (page > 0) {
+    page--;
+    renderPage(page);
+  }
+});
+nextBtn.addEventListener('click', () => {
+  if (page < totalPages - 1) {
+    page++;
+    renderPage(page);
+  }
+});
+submitBtn.addEventListener('click', () => {
+  if (!confirm("Submit answers and view explanations? You won't be able to change answers afterward.")) return;
+  gradeAllAndShow();
+});
+
+/* Init */
+renderPage(page);
+
+</script>
+</body>
+</html>
