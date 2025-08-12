@@ -25,167 +25,65 @@
 <p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
 <div id="container"></div>
 <script>
+
 const exercises = [
-  // Addition chart
   {
-    question: "What is 3 + 4?",
-    image: "images/addition_chart.png",
-    options: ["5", "6", "7", "8"],
-    answer: "7"
+    'title': 'Addition Facts',
+    'img': 'images/addition_chart.png',
+    'questions': [
+      {'q': 'What is 3 + 4?', 'opts': ['5', '6', '7', '8'], 'ans': '7'},
+      {'q': 'What is 6 + 9?', 'opts': ['14', '15', '16', '17'], 'ans': '15'},
+      {'q': 'What is 12 + 15?', 'opts': ['26', '27', '28', '29'], 'ans': '27'},
+      {'q': 'What is 24 + 18?', 'opts': ['41', '42', '43', '44'], 'ans': '42'},
+      {'q': 'What is 45 + 37?', 'opts': ['81', '82', '83', '84'], 'ans': '82'}
+    ]
   },
   {
-    question: "What is 6 + 9?",
-    image: "images/addition_chart.png",
-    options: ["14", "15", "16", "17"],
-    answer: "15"
+    'title': 'Subtraction Facts',
+    'img': 'images/subtraction_chart.png',
+    'questions': [
+      {'q': 'What is 9 - 4?', 'opts': ['4', '5', '6', '7'], 'ans': '5'},
+      {'q': 'What is 15 - 7?', 'opts': ['7', '8', '9', '10'], 'ans': '8'},
+      {'q': 'What is 32 - 18?', 'opts': ['12', '13', '14', '15'], 'ans': '14'},
+      {'q': 'What is 54 - 27?', 'opts': ['26', '27', '28', '29'], 'ans': '27'},
+      {'q': 'What is 87 - 46?', 'opts': ['40', '41', '42', '43'], 'ans': '41'}
+    ]
   },
   {
-    question: "What is 12 + 15?",
-    image: "images/addition_chart.png",
-    options: ["26", "27", "28", "29"],
-    answer: "27"
+    'title': 'Multiplication Facts',
+    'img': 'images/multiplication_chart.png',
+    'questions': [
+      {'q': 'What is 3 × 6?', 'opts': ['16', '17', '18', '19'], 'ans': '18'},
+      {'q': 'What is 7 × 8?', 'opts': ['54', '55', '56', '57'], 'ans': '56'},
+      {'q': 'What is 9 × 12?', 'opts': ['106', '107', '108', '109'], 'ans': '108'},
+      {'q': 'What is 14 × 15?', 'opts': ['209', '210', '211', '212'], 'ans': '210'},
+      {'q': 'What is 18 × 24?', 'opts': ['431', '432', '433', '434'], 'ans': '432'}
+    ]
   },
   {
-    question: "What is 24 + 18?",
-    image: "images/addition_chart.png",
-    options: ["41", "42", "43", "44"],
-    answer: "42"
+    'title': 'Division Facts',
+    'img': 'images/division_chart.png',
+    'questions': [
+      {'q': 'What is 18 ÷ 3?', 'opts': ['5', '6', '7', '8'], 'ans': '6'},
+      {'q': 'What is 56 ÷ 7?', 'opts': ['7', '8', '9', '10'], 'ans': '8'},
+      {'q': 'What is 96 ÷ 8?', 'opts': ['10', '11', '12', '13'], 'ans': '12'},
+      {'q': 'What is 144 ÷ 12?', 'opts': ['11', '12', '13', '14'], 'ans': '12'},
+      {'q': 'What is 225 ÷ 15?', 'opts': ['14', '15', '16', '17'], 'ans': '15'}
+    ]
   },
   {
-    question: "What is 45 + 37?",
-    image: "images/addition_chart.png",
-    options: ["81", "82", "83", "84"],
-    answer: "82"
-  },
-
-  // Subtraction chart
-  {
-    question: "What is 9 - 4?",
-    image: "images/subtraction_chart.png",
-    options: ["4", "5", "6", "7"],
-    answer: "5"
-  },
-  {
-    question: "What is 15 - 7?",
-    image: "images/subtraction_chart.png",
-    options: ["7", "8", "9", "10"],
-    answer: "8"
-  },
-  {
-    question: "What is 32 - 18?",
-    image: "images/subtraction_chart.png",
-    options: ["12", "13", "14", "15"],
-    answer: "14"
-  },
-  {
-    question: "What is 54 - 27?",
-    image: "images/subtraction_chart.png",
-    options: ["26", "27", "28", "29"],
-    answer: "27"
-  },
-  {
-    question: "What is 87 - 46?",
-    image: "images/subtraction_chart.png",
-    options: ["40", "41", "42", "43"],
-    answer: "41"
-  },
-
-  // Multiplication chart
-  {
-    question: "What is 3 × 6?",
-    image: "images/multiplication_chart.png",
-    options: ["16", "17", "18", "19"],
-    answer: "18"
-  },
-  {
-    question: "What is 7 × 8?",
-    image: "images/multiplication_chart.png",
-    options: ["54", "55", "56", "57"],
-    answer: "56"
-  },
-  {
-    question: "What is 9 × 12?",
-    image: "images/multiplication_chart.png",
-    options: ["106", "107", "108", "109"],
-    answer: "108"
-  },
-  {
-    question: "What is 14 × 15?",
-    image: "images/multiplication_chart.png",
-    options: ["209", "210", "211", "212"],
-    answer: "210"
-  },
-  {
-    question: "What is 18 × 24?",
-    image: "images/multiplication_chart.png",
-    options: ["431", "432", "433", "434"],
-    answer: "432"
-  },
-
-  // Division chart
-  {
-    question: "What is 18 ÷ 3?",
-    image: "images/division_chart.png",
-    options: ["5", "6", "7", "8"],
-    answer: "6"
-  },
-  {
-    question: "What is 56 ÷ 7?",
-    image: "images/division_chart.png",
-    options: ["7", "8", "9", "10"],
-    answer: "8"
-  },
-  {
-    question: "What is 96 ÷ 8?",
-    image: "images/division_chart.png",
-    options: ["10", "11", "12", "13"],
-    answer: "12"
-  },
-  {
-    question: "What is 144 ÷ 12?",
-    image: "images/division_chart.png",
-    options: ["11", "12", "13", "14"],
-    answer: "12"
-  },
-  {
-    question: "What is 225 ÷ 15?",
-    image: "images/division_chart.png",
-    options: ["14", "15", "16", "17"],
-    answer: "15"
-  },
-
-  // Mixed operations chart
-  {
-    question: "What is 5 + 8 × 2?",
-    image: "images/mixed_chart.png",
-    options: ["21", "24", "25", "26"],
-    answer: "21" // Multiplication first: 8×2=16, then 5+16=21
-  },
-  {
-    question: "What is (15 - 3) × 4?",
-    image: "images/mixed_chart.png",
-    options: ["46", "47", "48", "49"],
-    answer: "48"
-  },
-  {
-    question: "What is 64 ÷ 8 + 9?",
-    image: "images/mixed_chart.png",
-    options: ["16", "17", "18", "19"],
-    answer: "17" // Division first: 64÷8=8, then 8+9=17
-  },
-  {
-    question: "What is 45 ÷ (5 × 3)?",
-    image: "images/mixed_chart.png",
-    options: ["2", "3", "4", "5"],
-    answer: "3" // 5×3=15, then 45÷15=3
-  },
-  {
-    question: "What is (25 + 15) ÷ 5?",
-    image: "images/mixed_chart.png",
-    options: ["7", "8", "9", "10"],
-    answer: "8" // 25+15=40, then 40÷5=8
+    'title': 'Mixed Operations',
+    'img': 'images/mixed_chart.png',
+    'questions': [
+      {'q': 'What is 5 + 8 × 2?', 'opts': ['21', '24', '25', '26'], 'ans': '21'},
+      {'q': 'What is (15 - 3) × 4?', 'opts': ['46', '47', '48', '49'], 'ans': '48'},
+      {'q': 'What is 64 ÷ 8 + 9?', 'opts': ['16', '17', '18', '19'], 'ans': '17'},
+      {'q': 'What is 45 ÷ (5 × 3)?', 'opts': ['2', '3', '4', '5'], 'ans': '3'},
+      {'q': 'What is (25 + 15) ÷ 5?', 'opts': ['7', '8', '9', '10'], 'ans': '8'}
+    ]
   }
 ];
+
 
 function createPage(ex, idx) {
   const div = document.createElement('div');
