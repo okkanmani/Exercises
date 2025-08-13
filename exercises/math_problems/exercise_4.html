@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        font-size: 26px;
+    }
+    .question {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .options label {
+        display: block;
+        margin: 8px 0;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+    .options input {
+        margin-right: 8px;
+    }
+    .navigation {
+        margin-top: 20px;
+    }
+    button {
+        padding: 8px 14px;
+        margin: 0 5px;
+        border: none;
+        background-color: #4285f4;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #3367d6;
+    }
+    .feedback {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .correct {
+        color: green;
+    }
+    .incorrect {
+        color: red;
+    }
+    .explanation {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Physics Quiz</h1>
+    <p><a href="../../index.html">Back To Main Page</a></p>
+    <div id="quiz"></div>
+    <div class="navigation">
+        <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button id="submitBtn" onclick="submitQuiz()" style="display:none;">Submit</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "A toy car rolls 12 meters in 4 seconds. What is its speed?",
+    options: ["2 m/s", "3 m/s", "4 m/s", "6 m/s"],
+    answer: "3 m/s",
+    explanation: "Speed = Distance ÷ Time = 12 ÷ 4 = 3 m/s."
+  },
+  {
+    q: "A ball is pushed and travels 10 meters. Then it stops. What caused it to stop?",
+    options: ["Gravity", "Friction", "Force", "Speed"],
+    answer: "Friction",
+    explanation: "Friction is the force that slows down and stops moving objects."
+  },
+  {
+    q: "Which of the following requires the most force to move?",
+    options: ["Empty box", "Toy car", "Backpack", "Full bookshelf"],
+    answer: "Full bookshelf",
+    explanation: "Heavier objects require more force to move due to greater mass."
+  },
+  {
+    q: "If you push a swing harder, what happens?",
+    options: ["It slows down", "It stops", "It goes higher", "It breaks"],
+    answer: "It goes higher",
+    explanation: "A stronger force causes the swing to move farther or faster."
+  },
+  {
+    q: "What happens when two people push a box from opposite sides with equal force?",
+    options: ["It moves left", "It moves right", "It stays still", "It rolls away"],
+    answer: "It stays still",
+    explanation: "Equal forces in opposite directions cancel each other out."
+  },
+  {
+    q: "A marble rolls down a ramp and speeds up. What force is causing this?",
+    options: ["Friction", "Gravity", "Air resistance", "Push"],
+    answer: "Gravity",
+    explanation: "Gravity pulls the marble downward, causing it to accelerate."
+  },
+  {
+    q: "Which surface would slow down a rolling ball the most?",
+    options: ["Tile floor", "Wood floor", "Carpet", "Concrete"],
+    answer: "Carpet",
+    explanation: "Carpet creates more friction, slowing the ball down faster."
+  },
+  {
+    q: "A student lifts a backpack and carries it across the room. What type of force is used?",
+    options: ["Push", "Pull", "Friction", "Gravity"],
+    answer: "Pull",
+    explanation: "Lifting and carrying involves pulling against gravity."
+  },
+  {
+    q: "Which object will fall faster in a vacuum (no air)?",
+    options: ["Feather", "Hammer", "Both fall equally", "Neither falls"],
+    answer: "Both fall equally",
+    explanation: "In a vacuum, there is no air resistance, so all objects fall at the same rate."
+  },
+  {
+    q: "What tool is used to measure force?",
+    options: ["Thermometer", "Ruler", "Spring scale", "Balance"],
+    answer: "Spring scale",
+    explanation: "A spring scale measures force in units like newtons."
+  }
+];
+
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function loadQuestion() {
+    const quizEl = document.getElementById("quiz");
+    const qData = quizData[currentQuestion];
+    const options = shuffleArray([...qData.options]);
+
+    let html = `<div class="question"><strong>Question ${currentQuestion+1} of ${quizData.length}</strong><br>${qData.q}</div>`;
+    html += `<div class="options">`;
+    options.forEach(opt => {
+        const checked = userAnswers[currentQuestion] === opt ? 'checked' : '';
+        html += `<label><input type="radio" name="q${currentQuestion}" value="${opt}" ${checked}> ${opt}</label>`;
+    });
+    html += `</div>`;
+    quizEl.innerHTML = html;
+
+    document.getElementById("prevBtn").style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+    document.getElementById("nextBtn").style.display = currentQuestion === quizData.length - 1 ? 'none' : 'inline-block';
+    document.getElementById("submitBtn").style.display = currentQuestion === quizData.length - 1 ? 'inline-block' : 'none';
+}
+
+function saveAnswer() {
+    const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+    if (selected) {
+        userAnswers[currentQuestion] = selected.value;
+    }
+}
+
+function nextQuestion() {
+    saveAnswer();
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function prevQuestion() {
+    saveAnswer();
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function submitQuiz() {
+    saveAnswer();
+    let score = 0;
+    let html = "";
+    quizData.forEach((q, idx) => {
+        const userAns = userAnswers[idx];
+        const correct = userAns === q.answer;
+        if (correct) score++;
+        html += `<div class="question"><strong>Question ${idx+1}:</strong> ${q.q}</div>`;
+        html += `<div class="feedback ${correct ? 'correct' : 'incorrect'}">${correct ? 'Correct!' : 'Incorrect'} (Your answer: ${userAns || 'No answer'})</div>`;
+        if (!correct) {
+            html += `<div class="correct">Correct answer: ${q.answer}</div>`;
+        }
+        html += `<div class="explanation">${q.explanation}</div><hr>`;
+    });
+    html += `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+    document.getElementById("quiz").innerHTML = html;
+    document.querySelector(".navigation").style.display = "none";
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

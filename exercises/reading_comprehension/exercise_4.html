@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RC Quiz — Science & Nature (5 passages)</title>
+  <style>
+    :root{
+      --bg:#f4f7fb; --card:#ffffff; --accent:#0b66ff; --muted:#6b7280;
+      --good:#ecfdf5; --good-text:#064e3b; --bad:#fff1f2; --bad-text:#7f1d1d;
+      --explain-bg:#f8fafc; --max-width:1200px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#0b1220;background:var(--bg)}
+    .wrap{max-width:var(--max-width);margin:24px auto;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(12,20,40,0.06)}
+    header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+    header h1{margin:0;font-size:20px}
+    header .muted{color:var(--muted);font-size:13px}
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+    .passagePanel{padding:18px;overflow:auto;height:72vh}
+    .questionsPanel{padding:14px;overflow:auto;height:72vh}
+    .passTitle{font-size:24px;font-weight:700;margin-bottom:10px}
+    .passageText{line-height:1.7;white-space:pre-wrap}
+    .question{padding:10px;margin-bottom:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef2ff}
+    .qtext{font-weight:600;margin-bottom:8px}
+    .muted{color:var(--muted);font-size:13px}
+    label.option{display:block;padding:8px;margin:6px 0;border-radius:8px;cursor:pointer;border:1px solid transparent}
+    label.option:hover{background:#f7fbff}
+    input[type=radio]{margin-right:8px}
+    .controls{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.secondary{background:#eef2ff;color:var(--accent);font-weight:600}
+    button:disabled{opacity:0.5;cursor:default}
+    .resultBox{margin-top:12px;padding:12px;border-radius:8px}
+    .correct{background:var(--good);color:var(--good-text);padding:8px;border-radius:6px}
+    .incorrect{background:var(--bad);color:var(--bad-text);padding:8px;border-radius:6px}
+    .review-item{padding:8px;border-radius:8px;margin-bottom:8px;border:1px solid #eef2ff}
+    .explanation{background:var(--explain-bg);padding:8px;border-radius:6px;margin-top:8px;font-size:14px}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr;}.passagePanel{height:45vh}.questionsPanel{height:45vh}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Reading Comprehension — Science & Nature (Challenging)</h1>
+          <p><a href="../../index.html">Back To Main Page</a></p>
+          <div class="muted">5 passages • 6 questions each • 2 vocabulary questions per passage</div>
+        </div>
+        <div class="muted">Tip: Use <strong>Previous</strong> and <strong>Next</strong>. Submit appears on the last page.</div>
+      </header>
+
+      <div id="main" class="layout">
+        <div class="passagePanel card">
+          <div id="passageHeader" class="passTitle">Passage 1 of 5 — The Water Cycle and Why It Matters</div>
+          <div id="passageText" class="passageText"></div>
+
+          <div class="controls" style="justify-content:flex-start;margin-top:16px">
+            <button id="prevBtn" class="secondary">Previous</button>
+          </div>
+        </div>
+
+        <div class="questionsPanel card">
+          <div class="muted" id="qHeader">Questions</div>
+          <div id="questionsContainer"></div>
+
+          <div class="controls" style="margin-top:12px">
+            <button id="nextBtn" class="secondary">Next</button>
+            <button id="submitBtn" style="display:none">Submit</button>
+          </div>
+
+          <div id="feedback" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <footer class="muted">This quiz runs entirely in your browser. No data leaves your device.</footer>
+    </div>
+  </div>
+
+<script>
+/* shuffle helper */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* ===== Passages, Questions, Explanations =====
+Each passage has: title, text, questions [{q, choices[], a (index), explanation}]
+*/
+const passages = [
+  {
+    "title": "Aeroplane Science",
+    "text": "Airplanes are incredible machines that allow people to travel quickly across long distances. But how do these giant metal birds actually fly? The answer lies in science\u2014specifically, the forces of flight and the design of airplanes.\n\nThere are four main forces that affect how an airplane flies: lift, thrust, drag, and weight. Lift is the upward force that helps the plane rise into the air. It is created by the wings as air flows over and under them. Thrust is the forward force that moves the plane ahead, usually provided by engines. Drag is the resistance that slows the plane down, caused by air pushing against the plane\u2019s surface. Weight is the force of gravity pulling the plane down.\n\nAirplane wings are specially shaped to help create lift. They are curved on the top and flatter on the bottom. This shape causes air to move faster over the top than underneath, creating lower pressure above the wing and higher pressure below. The difference in pressure pushes the wing upward, lifting the airplane.\n\nThrust is generated by engines, which can be propellers or jet engines. Propellers spin and push air backward, while jet engines shoot out hot gases to move the plane forward. According to Newton\u2019s Third Law\u2014for every action, there is an equal and opposite reaction\u2014pushing air backward causes the plane to move forward.\n\nDrag works against thrust. Engineers design airplanes to be smooth and streamlined to reduce drag. The less drag there is, the faster and more efficiently a plane can fly. Pilots also adjust flaps and other parts of the wings to control drag during takeoff and landing.\n\nWeight is always pulling the plane down, so lift must be strong enough to overcome it. The balance between lift and weight, and between thrust and drag, determines whether a plane can take off, stay in the air, or land safely.\n\nAirplanes also have control surfaces to help them turn, climb, and descend. The rudder controls left and right movement, the elevator controls up and down, and ailerons help the plane roll. Pilots use these controls to steer the plane through the sky.\n\nDifferent airplanes have different designs depending on their purpose. A small Cessna 172 is used for training and short trips, while a massive Airbus A380 can carry hundreds of passengers across continents. Cargo planes are built to carry heavy loads, and fighter jets are designed for speed and agility.\n\nAirplanes are used for many things besides travel. They deliver packages, fight wildfires, take aerial photos, and even explore space as part of launch systems. Drones, which are small unmanned aircraft, are used for filming, farming, and rescue missions.\n\nFlying safely requires careful planning. Pilots check weather conditions, flight paths, and fuel levels before taking off. Air traffic controllers guide planes to avoid collisions. Airports have runways, control towers, and maintenance crews to support flights.\n\nLearning to fly takes training. Pilots study aerodynamics, navigation, and safety procedures. They practice in simulators and real planes before earning a license. Some pilots fly for airlines, while others work in the military or for private companies.\n\nAirplanes have changed the world by making travel faster and connecting people globally. They help in emergencies, support businesses, and bring families together. The science behind flight continues to evolve, with new technologies like electric planes and improved fuel efficiency.\n\nUnderstanding how airplanes fly helps us appreciate the amazing blend of physics, engineering, and human skill that makes air travel possible. Whether you're watching a plane soar overhead or dreaming of becoming a pilot, the science of flight is truly fascinating.",
+    "questions": [
+      {
+        "q": "Word meaning \u2014 What does 'lift' mean in the context of flight?",
+        "choices": [
+          "A type of elevator",
+          "A way to drag something",
+          "A force that pushes up",
+          "A heavy object"
+        ],
+        "a": 2,
+        "explanation": "Lift is the upward force that helps planes rise."
+      },
+      {
+        "q": "Word meaning \u2014 What does 'drag' mean in the passage?",
+        "choices": [
+          "To pull something quickly",
+          "A force that slows down movement",
+          "A type of engine",
+          "A wing part"
+        ],
+        "a": 1,
+        "explanation": "Drag is the resistance that slows a plane down."
+      },
+      {
+        "q": "Why do airplane wings tilt upward at the front?",
+        "choices": [
+          "To push air down and create lift",
+          "To look cool",
+          "To reduce weight",
+          "To increase drag"
+        ],
+        "a": 0,
+        "explanation": "Tilting helps push air down, which lifts the plane."
+      },
+      {
+        "q": "What can we infer about Newton\u2019s Third Law and flight?",
+        "choices": [
+          "Planes fly because they are light",
+          "Planes push air down and get pushed up",
+          "Planes use gravity to move",
+          "Planes don\u2019t need engines"
+        ],
+        "a": 1,
+        "explanation": "Newton\u2019s law explains how pushing air backward results in forward motion."
+      },
+      {
+        "q": "Why is thrust important for airplanes?",
+        "choices": [
+          "It moves planes forward",
+          "It makes planes heavier",
+          "It reduces drag",
+          "It helps planes turn"
+        ],
+        "a": 3,
+        "explanation": "Thrust is the forward force that helps planes take off and stay in motion."
+      },
+      {
+        "q": "What does the comparison between the A-380 and Cessna 172 show?",
+        "choices": [
+          "Planes are all the same",
+          "Bigger planes need more lift",
+          "Small planes are faster",
+          "Engines don\u2019t matter"
+        ],
+        "a": 1,
+        "explanation": "It shows how size affects the amount of air pushed and lift needed."
+      }
+    ]
+  },
+  {
+    "title": "Evolution",
+    "text": "Evolution is the process by which living things change over time. It explains how plants, animals, and even humans have developed and adapted to their environments. The idea of evolution helps scientists understand the history of life on Earth and how different species are related.\n\nThe theory of evolution was made famous by Charles Darwin, a scientist who studied animals and plants in the 1800s. He noticed that creatures living in different places had different traits that helped them survive. For example, birds on one island had long beaks to reach food, while birds on another island had short beaks for cracking seeds. Darwin called this idea \u201cnatural selection.\u201d\n\nNatural selection means that traits that help an animal survive are more likely to be passed on to its offspring. Over many generations, these helpful traits become common in the population. Animals that don\u2019t have useful traits may not survive or reproduce as well. This leads to changes in the species over time.\n\nMutations also play a role in evolution. A mutation is a random change in an organism\u2019s DNA. Sometimes mutations are harmful, but other times they can be helpful. If a mutation helps an animal survive, it may be passed on to future generations. This is another way species can change.\n\nFossils are important evidence for evolution. Fossils are the remains of ancient plants and animals that have been preserved in rock. By studying fossils, scientists can see how species have changed over millions of years. For example, horse fossils show that ancient horses were much smaller and had more toes than modern horses.\n\nDNA also helps scientists understand evolution. DNA is the genetic code that tells cells how to grow and function. By comparing the DNA of different species, scientists can see how closely related they are. Humans share a lot of DNA with chimpanzees, which shows that we have a common ancestor.\n\nEvolution doesn\u2019t happen overnight. It takes thousands or even millions of years for big changes to occur. That\u2019s why we don\u2019t see animals changing quickly. But over long periods, evolution can lead to the development of new species.\n\nAdaptation is another key part of evolution. An adaptation is a trait that helps an organism survive in its environment. For example, camels have long eyelashes and thick fur to protect them from sand and sun. Polar bears have white fur to blend in with snow and thick fat to stay warm. These traits help animals live in their specific habitats.\n\nSometimes, species evolve in response to changes in their environment. If a desert becomes colder, animals may develop thicker fur. If a forest disappears, animals may need to learn to live in open areas. Evolution helps species adjust to new challenges.\n\nHumans have also evolved over time. Early humans walked on two legs, used tools, and lived in groups. Over time, our brains grew larger, and we developed language and culture. Today, humans continue to evolve, although the changes are slow and hard to notice.\n\nEvolution is a powerful idea that helps explain the diversity of life on Earth. It shows how all living things are connected and how they have changed to survive. By studying evolution, we learn more about our past and how we can protect the future of life on our planet.",
+    "questions": [
+      {
+        "q": "Word meaning \u2014 What does 'mutation' mean in the passage?",
+        "choices": [
+          "A planned change",
+          "A type of fossil",
+          "A new species",
+          "A mistake in copying genes"
+        ],
+        "a": 3,
+        "explanation": "Mutations are random changes in DNA."
+      },
+      {
+        "q": "Word meaning \u2014 What does 'natural selection' mean?",
+        "choices": [
+          "Choosing pets",
+          "Nature picking favorite animals",
+          "Survival of the fittest traits",
+          "A type of farming"
+        ],
+        "a": 2,
+        "explanation": "Natural selection favors traits that help survival."
+      },
+      {
+        "q": "Why do sand-colored gerbils survive better in deserts?",
+        "choices": [
+          "They are faster",
+          "They blend in and avoid predators",
+          "They eat more",
+          "They are stronger"
+        ],
+        "a": 1,
+        "explanation": "Their color helps them hide from predators."
+      },
+      {
+        "q": "What can we infer about fossils and evolution?",
+        "choices": [
+          "Fossils are useless",
+          "Fossils show how species changed",
+          "Fossils are only bones",
+          "Fossils are made by scientists"
+        ],
+        "a": 1,
+        "explanation": "Fossils provide evidence of past life and changes."
+      },
+      {
+        "q": "Why is DNA important in understanding evolution?",
+        "choices": [
+          "It shows how species are related",
+          "It makes fossils",
+          "It creates new animals",
+          "It helps animals grow"
+        ],
+        "a": 0,
+        "explanation": "DNA reveals shared traits and ancestry."
+      },
+      {
+        "q": "What was Darwin\u2019s major contribution?",
+        "choices": [
+          "He invented fossils",
+          "He proved evolution with experiments",
+          "He explained how species change over time",
+          "He created DNA"
+        ],
+        "a": 2,
+        "explanation": "Darwin developed the theory of evolution through natural selection."
+      }
+    ]
+  },
+
+{
+        "title": "The Immune System: Your Body’s Defense Team",
+        "text": `The human body is constantly under attack from tiny invaders called pathogens—bacteria, viruses, fungi, and parasites. Fortunately, we have a powerful defense system called the immune system. This system works day and night to keep us healthy by identifying and destroying harmful organisms before they can cause illness.
+
+The immune system is made up of many parts that work together. The first line of defense includes physical barriers like the skin and mucous membranes in the nose and mouth. These barriers block many germs from entering the body. If a pathogen gets past these barriers, the second line of defense kicks in: white blood cells. These cells patrol the body, looking for anything that doesn’t belong.
+
+There are different types of white blood cells. Phagocytes are like the body’s garbage collectors—they find and swallow harmful invaders. Lymphocytes are more specialized. They include B cells and T cells. B cells produce antibodies, which are proteins that stick to pathogens and mark them for destruction. T cells help destroy infected cells and support other immune responses.
+
+When the immune system encounters a pathogen for the first time, it learns how to fight it. This learning process is called acquired immunity. Once the body has fought off a germ, it remembers how to defeat it in the future. That’s why people usually don’t get the same illness twice, like chickenpox.
+
+Vaccines help the immune system by teaching it how to fight specific diseases without making the person sick. A vaccine contains a tiny, harmless piece of a pathogen. When the body sees this, it creates antibodies and memory cells. If the real pathogen ever shows up, the immune system is ready to fight it off quickly.
+
+Sometimes the immune system doesn’t work properly. Autoimmune diseases happen when the immune system attacks healthy cells by mistake. Allergies occur when the immune system overreacts to harmless things like pollen or pet dander. Scientists are working to understand these problems and find better treatments.
+
+To keep your immune system strong, it’s important to eat healthy foods, get enough sleep, exercise regularly, and wash your hands. These habits help your body stay ready to fight off germs.
+
+The immune system is one of the most important parts of the human body. It protects us from countless threats and helps us recover when we’re sick. By learning how it works, we can better understand how to stay healthy and appreciate the amazing ways our bodies defend us every day.`,
+        "questions": [
+            {
+                "q": "Word meaning — What does 'pathogen' most nearly mean in the passage?",
+                "choices": [
+                    "A type of medicine",
+                    "A white blood cell",
+                    "A harmful organism like a virus or bacteria",
+                    "A part of the skin"
+                ],
+                "a": 2,
+                "explanation": "Pathogens are harmful organisms that can cause illness."
+            },
+            {
+                "q": "Word meaning — What does 'antibody' mean in the context of the immune system?",
+                "choices": [
+                    "A protein that helps fight pathogens",
+                    "A type of germ",
+                    "A kind of vaccine",
+                    "A white blood cell"
+                ],
+                "a": 0,
+                "explanation": "Antibodies are proteins that stick to pathogens and help destroy them."
+            },
+            {
+                "q": "Why don’t people usually get the same illness twice?",
+                "choices": [
+                    "The immune system remembers how to fight it",
+                    "The illness disappears forever",
+                    "The skin blocks it",
+                    "The body forgets the illness"
+                ],
+                "a": 3,
+                "explanation": "The immune system remembers past pathogens and fights them off quickly."
+            },
+            {
+                "q": "What can we infer about vaccines?",
+                "choices": [
+                    "They make people sick",
+                    "They teach the immune system to fight diseases",
+                    "They are only for adults",
+                    "They are made of white blood cells"
+                ],
+                "a": 1,
+                "explanation": "Vaccines prepare the immune system without causing illness."
+            },
+            {
+                "q": "Why is it important to wash your hands?",
+                "choices": [
+                    "To keep your skin clean",
+                    "To make your hands smell nice",
+                    "To help the immune system block germs",
+                    "To remove antibodies"
+                ],
+                "a": 2,
+                "explanation": "Washing hands helps prevent germs from entering the body."
+            },
+            {
+                "q": "What is an autoimmune disease?",
+                "choices": [
+                    "A disease caused by vaccines",
+                    "A disease where the immune system attacks healthy cells",
+                    "A disease that makes you sleepy",
+                    "A disease that helps the immune system"
+                ],
+                "a": 1,
+                "explanation": "Autoimmune diseases happen when the immune system attacks the body’s own cells."
+            }
+        ]
+    },
+    {
+        "title": "Life in Medieval Times",
+        "text": `The medieval period, also known as the Middle Ages, lasted from around 500 to 1500 CE. It was a time of castles, knights, and kings, but also of farmers, merchants, and monks. Life during this time was very different from today, and people had to work hard to survive.
+
+Most people lived in small villages and worked as farmers. They grew crops like wheat, barley, and vegetables, and raised animals such as chickens, cows, and sheep. Life was ruled by the seasons, and people depended on good weather for food. Homes were made of wood and straw, and families often shared one room.
+
+Society was organized through a system called feudalism. In this system, kings gave land to nobles, who promised to support the king. The nobles gave land to knights, who protected the land and the people. At the bottom were peasants, who worked the land in exchange for protection. Everyone had a role to play, and loyalty was very important.
+
+Castles were built to protect people and show the power of the nobles. They had thick stone walls, towers, and moats filled with water. Inside, there were rooms for the lord and his family, soldiers, and servants. Castles were also places of celebration, with feasts, music, and dancing.
+
+Knights were trained from a young age. Boys started as pages, then became squires, and finally knights. They learned to ride horses, fight with swords, and follow a code of honor called chivalry. Knights protected their lord’s land and sometimes went on crusades—religious wars to capture holy lands.
+
+Religion was very important in medieval life. The church was powerful and influenced laws, education, and daily routines. Monks and nuns lived in monasteries, where they prayed, studied, and helped the poor. People believed that following the church’s teachings would lead to a better life after death.
+
+Trade and towns grew during the later Middle Ages. Merchants sold goods like cloth, spices, and tools. Guilds were formed by workers with the same job, such as blacksmiths or bakers. These guilds set rules for quality and helped members learn skills.
+
+Children didn’t go to school like today. Only boys from rich families learned to read and write, often taught by monks. Girls learned household skills like cooking and sewing. Most children helped their families with farming or crafts.
+
+Despite the hard work, people found joy in festivals and fairs. These events had music, games, plays, and food. They brought communities together and gave people a break from daily chores.
+
+The medieval period was full of challenges, but also creativity and growth. It laid the foundation for many things we have today, like laws, schools, and cities. Learning about this time helps us understand how people lived and how society has changed.`,
+        "questions": [
+            {
+                "q": "Word meaning — What does 'feudalism' most nearly mean in the passage?",
+                "choices": [
+                    "A system where land is exchanged for loyalty and protection",    
+                    "A type of farming",
+                    "A kind of celebration",
+                    "A religious belief"
+                ],
+                "a": 0,
+                "explanation": "Feudalism was a system where land was given in exchange for loyalty and service."
+            },
+            {
+                "q": "Word meaning — What is a 'guild' in medieval times?",
+                "choices": [
+                    "A group of knights",
+                    "A type of castle",
+                    "A religious leader",
+                    "A group of workers with the same job"
+                ],
+                "a": 3,
+                "explanation": "Guilds were groups of workers who set rules and helped each other."
+            },
+            {
+                "q": "Why were castles important?",
+                "choices": [
+                    "They were places to grow food",
+                    "They protected people and showed noble power",
+                    "They were homes for peasants",
+                    "They were used for trade"
+                ],
+                "a": 1,
+                "explanation": "Castles provided protection and showed the strength of nobles."
+            },
+            {
+                "q": "What can we infer about medieval education?",
+                "choices": [
+                    "All children went to school",
+                    "Girls studied math and science",
+                    "Only rich boys learned to read and write",
+                    "Monks didn’t teach"
+                ],
+                "a": 2,
+                "explanation": "Education was limited to boys from wealthy families, often taught by monks."
+            },
+            {
+                "q": "Why did people enjoy festivals and fairs?",
+                "choices": [
+                    "They were required by law",
+                    "They gave people a break and brought joy",
+                    "They were only for nobles",
+                    "They were religious ceremonies"
+                ],
+                "a": 1,
+                "explanation": "Festivals and fairs were fun events that brought communities together."
+            },
+            {
+                "q": "What was the role of knights?",
+                "choices": [
+                    "To teach children",
+                    "To sell goods",
+                    "To protect land and follow chivalry",
+                    "To build castles"
+                ],
+                "a": 2,
+                "explanation": "Knights protected land and followed a code of honor."
+            }
+        ]
+    },
+    {
+        "title": "Modern RPG Games: Adventures in Digital Worlds",
+        "text": `Role-playing games, or RPGs, are a popular type of video game where players take on the role of a character and explore exciting worlds. These games let players make choices, solve problems, and go on quests. RPGs can be set in fantasy lands, futuristic cities, or even real-life places.
+
+In an RPG, players often start with a basic character and improve their skills over time. This process is called leveling up. As players complete tasks and defeat enemies, they earn experience points. These points help characters become stronger, faster, or smarter. Players can also collect items like weapons, armor, and magic spells to help them on their journey.
+
+One key part of RPGs is the quest. A quest is a mission or challenge that players must complete. Quests can involve finding lost items, helping other characters, or defeating powerful enemies. Completing quests helps move the story forward and gives players rewards.
+
+Many RPGs allow players to make choices that affect the game. For example, helping a character might lead to a new friend, while ignoring them could cause trouble later. These choices make the game feel personal and exciting.
+
+Popular RPGs for kids include Pokémon, Miitopia, and Disney Dreamlight Valley. In Pokémon, players catch and train creatures to battle others. Miitopia lets players use characters based on their friends and family. Disney Dreamlight Valley combines adventure with favorite Disney characters.
+
+RPGs also teach important skills. Players learn to think ahead, solve puzzles, and work as a team. Some games let players join others online to complete quests together. This teamwork helps build communication and cooperation.
+
+The stories in RPGs are often rich and detailed. Players might explore ancient ruins, talk to magical creatures, or uncover secrets. These stories encourage imagination and creativity. Many games also include maps, journals, and clues to help players keep track of their progress.
+
+Customization is another fun part of RPGs. Players can change their character’s appearance, choose outfits, and even decorate homes or towns. This lets players express themselves and feel more connected to the game.
+
+While RPGs are fun, it’s important to play them in moderation. Too much screen time can affect sleep and health. Parents can help by setting limits and choosing age-appropriate games.
+
+Overall, RPGs offer exciting adventures and valuable lessons. They combine storytelling, strategy, and creativity in a way that entertains and educates. Whether exploring a magical forest or solving a mystery, RPGs invite players to become heroes in their own digital worlds.`,
+        "questions": [
+            {
+                "q": "Word meaning — What does 'quest' most nearly mean in the passage?",
+                "choices": [
+                    "A type of food",
+                    "A kind of monster",
+                    "A game controller",
+                    "A mission or challenge in a game"
+                ],
+                "a": 3,
+                "explanation": "A quest is a mission or challenge that players complete in RPGs."
+            },
+            {
+                "q": "Word meaning — What does 'leveling up' mean in RPGs?",
+                "choices": [
+                    "Getting taller",
+                    "Changing clothes",
+                    "Improving a character’s skills and abilities",
+                    "Losing points"
+                ],
+                "a": 2,
+                "explanation": "Leveling up means gaining experience and becoming stronger in the game."
+            },
+            {
+                "q": "Why are choices important in RPGs?",
+                "choices": [
+                    "They make the game easier",
+                    "They affect the story and outcomes",
+                    "They help players win faster",
+                    "They are required by law"
+                ],
+                "a": 1,
+                "explanation": "Choices in RPGs change the story and make the game more personal."
+            },
+            {
+                "q": "What can we infer about teamwork in RPGs?",
+                "choices": [
+                    "It’s not needed",
+                    "It helps players complete quests together",
+                    "It makes the game harder",
+                    "It’s only for adults"
+                ],
+                "a": 1,
+                "explanation": "Teamwork in RPGs helps players solve problems and succeed together."
+            },
+            {
+                "q": "Why is customization fun in RPGs?",
+                "choices": [
+                    "It lets players express themselves",
+                    "It makes the game shorter",
+                    "It removes quests",
+                    "It changes the game rules"
+                ],
+                "a": 0,
+                "explanation": "Customization allows players to personalize their experience."
+            },
+            {
+                "q": "What is one benefit of playing RPGs?",
+                "choices": [
+                    "They teach teamwork and problem-solving",
+                    "They make players tired",
+                    "They are only for experts",
+                    "They don’t have stories"
+                ],
+                "a": 0,
+                "explanation": "RPGs help players learn strategy, creativity, and cooperation."
+            }
+        ]
+    }
+];
+
+
+
+
+
+/* ===== State & UI elements ===== */
+let page = 0;
+const totalPages = passages.length;
+const answers = {}; // store selected original index per question, e.g., 'p0q1': 2
+
+const passageHeader = document.getElementById('passageHeader');
+const passageText = document.getElementById('passageText');
+const qsContainer = document.getElementById('questionsContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const feedback = document.getElementById('feedback');
+const qHeader = document.getElementById('qHeader');
+
+const renderedQuestionNodes = {}; // track rendered nodes for inserting explanations
+
+/* Render page */
+function renderPage(idx) {
+  const p = passages[idx];
+  passageHeader.textContent = `Passage ${idx+1} of ${totalPages} — ${p.title}`;
+  passageText.textContent = p.text;
+  qsContainer.innerHTML = '';
+  qHeader.textContent = `Questions — Passage ${idx+1}`;
+  // clear rendered map
+  for (const k in renderedQuestionNodes) delete renderedQuestionNodes[k];
+
+  p.questions.forEach((q, qi) => {
+    const qKey = `p${idx}q${qi}`;
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.id = qKey;
+
+    const qTitle = document.createElement('div');
+    qTitle.className = 'qtext';
+    qTitle.textContent = `Q${qi+1}. ${q.q}`;
+    qDiv.appendChild(qTitle);
+
+    // Shuffle display order but keep original indices
+    const choiceObjs = q.choices.map((c, i) => ({ text: c, origIndex: i }));
+    shuffle(choiceObjs);
+
+    const labels = [];
+    choiceObjs.forEach((ch, ci) => {
+      const id = `${qKey}c${ci}`;
+      const label = document.createElement('label');
+      label.className = 'option';
+      label.htmlFor = id;
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = qKey;
+      radio.id = id;
+      radio.value = ch.origIndex; // store original index for grading
+
+      if (answers[qKey] !== undefined && answers[qKey] === ch.origIndex) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener('change', () => {
+        answers[qKey] = Number(radio.value);
+      });
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(ch.text));
+      qDiv.appendChild(label);
+      labels.push(label);
+    });
+
+    qsContainer.appendChild(qDiv);
+    renderedQuestionNodes[qKey] = { container: qDiv, labels: labels, questionObj: q };
+  });
+
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === totalPages - 1;
+  submitBtn.style.display = (idx === totalPages - 1) ? 'inline-block' : 'none';
+  feedback.innerHTML = '';
+}
+
+/* Grading and explanations insertion */
+function gradeAllAndShow() {
+  let total = 0, score = 0;
+  const fullReview = document.createElement('div');
+
+  passages.forEach((p, pi) => {
+    const passBlock = document.createElement('div');
+    passBlock.style.marginBottom = '12px';
+    const passTitle = document.createElement('div');
+    passTitle.style.fontWeight = '700';
+    passTitle.textContent = `Passage ${pi+1}: ${p.title}`;
+    passBlock.appendChild(passTitle);
+
+    p.questions.forEach((q, qi) => {
+      total++;
+      const key = `p${pi}q${qi}`;
+      const chosen = answers[key] !== undefined ? Number(answers[key]) : null;
+      const isCorrect = chosen === q.a;
+      if (isCorrect) score++;
+
+      // If this question is currently visible, insert explanation directly under it
+      const rendered = renderedQuestionNodes[key];
+      if (rendered && rendered.container) {
+        const oldExpl = rendered.container.querySelector('.explanation');
+        if (oldExpl) oldExpl.remove();
+
+        const expl = document.createElement('div');
+        expl.className = 'explanation';
+
+        const status = document.createElement('div');
+        status.style.fontWeight = '700';
+        status.style.marginBottom = '6px';
+        if (isCorrect) {
+          status.textContent = `✅ Correct — You chose: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+          status.style.color = 'var(--good-text)';
+        } else {
+          status.textContent = `❌ ${chosen === null ? 'Unanswered' : 'Incorrect'} — Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}; Correct: ${q.choices[q.a]}`;
+          status.style.color = 'var(--bad-text)';
+        }
+        expl.appendChild(status);
+
+        const expt = document.createElement('div');
+        expt.textContent = q.explanation || '';
+        expl.appendChild(expt);
+
+        rendered.container.appendChild(expl);
+
+        // highlight labels
+        rendered.labels.forEach(lbl => {
+          const inp = lbl.querySelector('input[type=radio]');
+          if (!inp) return;
+          const val = Number(inp.value);
+          if (val === q.a) {
+            lbl.style.border = '1px solid #bfe6c8';
+            lbl.style.background = '#f0fff4';
+          }
+          if (chosen !== null && val === chosen && chosen !== q.a) {
+            lbl.style.border = '1px solid #ffd6d6';
+            lbl.style.background = '#fff6f6';
+          }
+        });
+      }
+
+      // Build full-review item
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const qn = document.createElement('div');
+      qn.className = 'qtext';
+      qn.textContent = `Passage ${pi+1} — Q${qi+1}. ${q.q}`;
+      item.appendChild(qn);
+
+      const your = document.createElement('div');
+      your.style.marginTop = '6px';
+      your.textContent = `Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+      item.appendChild(your);
+
+      const correctDiv = document.createElement('div');
+      correctDiv.style.marginTop = '6px';
+      correctDiv.textContent = `Correct answer: ${q.choices[q.a]}`;
+      item.appendChild(correctDiv);
+
+      const explanDiv = document.createElement('div');
+      explanDiv.style.marginTop = '6px';
+      explanDiv.textContent = q.explanation || '';
+      item.appendChild(explanDiv);
+
+      passBlock.appendChild(item);
+    });
+
+    fullReview.appendChild(passBlock);
+  });
+
+  feedback.innerHTML = '';
+  const scoreBox = document.createElement('div');
+  scoreBox.className = 'resultBox';
+  scoreBox.innerHTML = `<div style="font-weight:700">Score: ${score} / ${total}</div><div class="small" style="margin-top:6px">Explanations appear beneath visible questions; full review follows.</div>`;
+  feedback.appendChild(scoreBox);
+  feedback.appendChild(fullReview);
+
+  disableAllInputs();
+  feedback.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* disable inputs and nav */
+function disableAllInputs() {
+  const radios = document.querySelectorAll('input[type=radio]');
+  radios.forEach(r => r.disabled = true);
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+  submitBtn.disabled = true;
+}
+
+/* Events */
+prevBtn.addEventListener('click', () => {
+  if (page > 0) {
+    page--;
+    renderPage(page);
+  }
+});
+nextBtn.addEventListener('click', () => {
+  if (page < totalPages - 1) {
+    page++;
+    renderPage(page);
+  }
+});
+submitBtn.addEventListener('click', () => {
+  if (!confirm("Submit answers and view explanations? You won't be able to change answers afterward.")) return;
+  gradeAllAndShow();
+});
+
+/* Init */
+renderPage(page);
+
+</script>
+</body>
+</html>
