@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Logical Fallacies Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .question-container { display: none; }
+    .question { font-weight: bold; margin-bottom: 10px; }
+    .options label { display: block; margin: 5px 0; }
+    .navigation { margin-top: 20px; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+    .explanation { font-style: italic; margin-left: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>Logical Fallacies Quiz</h1>
+<p><a href="../../index.html">Back To Main Page</a></p>
+
+<div id="quiz"></div>
+
+<div class="navigation">
+  <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+  <button id="nextBtn" onclick="nextQuestion()">Next</button>
+  <button id="submitBtn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<div id="results"></div>
+
+<script>
+var questions = [
+  {
+    q: "Q1: Mia says, 'We should go to the new playground because everyone is talking about it.'",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Appeal to Popularity",
+    explanation: "Mia bases her reasoning on popularity, not whether the playground is actually fun or safe."
+  },
+  {
+    q: "Q2: Jack says, 'I wore my red shirt and then it rained, so my shirt caused the rain.'",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Cause and Effect",
+    explanation: "Jack assumes the shirt caused the rain, which is not logically connected."
+  },
+  {
+    q: "Q3: Olivia says, 'You don’t like pizza? So you must hate all food!'",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "False Dilemma - saying there are only two choices when there may be more",
+      "Circular Reasoning - using the conclusion as a reason for itself"
+    ],
+    answer: "Strawman",
+    explanation: "Olivia misrepresents the original opinion to make it easier to argue against."
+  },
+  {
+    q: "Q4: Noah says, 'Reading is important because reading is valuable.'",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Circular Reasoning - using the conclusion as the reason for itself",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Appeal to Popularity - saying something is true because many people believe it"
+    ],
+    answer: "Circular Reasoning",
+    explanation: "Noah is repeating the statement as proof instead of providing actual reasons."
+  },
+  {
+    q: "Q5: Ella says, 'If we let one student skip homework, soon no one will ever do homework again.'",
+    options: [
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Circular Reasoning - using the conclusion as a reason for itself",
+      "Slippery Slope - assuming one small action will lead to a chain of big events"
+    ],
+    answer: "Slippery Slope",
+    explanation: "Ella exaggerates the consequences of one student skipping homework."
+  },
+  {
+    q: "Q6: Lucas says, 'We should follow the old school rules because they’ve always been followed.'",
+    options: [
+      "Appeal to Tradition - saying something is correct because it’s always been done",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Red Herring - changing the subject to distract from the real issue",
+      "False Dilemma - saying there are only two choices when there may be more"
+    ],
+    answer: "Appeal to Tradition",
+    explanation: "Lucas relies on tradition instead of evaluating if the rules are still useful."
+  },
+  {
+    q: "Q7: Grace says, 'You either like my idea or you hate me.'",
+    options: [
+      "Circular Reasoning - using the conclusion as the reason for itself",
+      "Cause and Effect - attributing cause and effect the wrong way",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "False Dilemma - saying there are only two choices when there may be more"
+    ],
+    answer: "False Dilemma",
+    explanation: "Grace ignores the possibility of other opinions or middle-ground solutions."
+  },
+  {
+    q: "Q8: Ethan says, 'We should buy this game because the popular YouTuber says it’s fun.'",
+    options: [
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Hasty Generalization - making a broad claim based on too little evidence",
+      "Appeal to Authority - believing something is true just because someone famous said it",
+      "Red Herring - changing the subject to distract from the real issue"
+    ],
+    answer: "Appeal to Authority",
+    explanation: "Ethan relies on a celebrity’s opinion rather than evaluating the game himself."
+  },
+  {
+    q: "Q9: Lily says, 'All the tall kids in my class play basketball well, so all tall kids must be good at basketball.'",
+    options: [
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Slippery Slope - assuming one small action will lead to a chain of big events",
+      "Hasty Generalization - making a broad claim based on little evidence",
+      "False Dilemma - saying there are only two choices when there may be more"
+    ],
+    answer: "Hasty Generalization",
+    explanation: "Lily generalizes from a small sample without enough evidence."
+  },
+  {
+    q: "Q10: Ben says, 'You can’t argue with me because you failed the last test.'",
+    options: [
+      "Ad Hominem - attacking the person instead of the argument",
+      "Appeal to Popularity - saying something is true because many people believe it",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Circular Reasoning - using the conclusion as the reason for itself"
+    ],
+    answer: "Ad Hominem",
+    explanation: "Ben attacks the person instead of the logic of the argument."
+  },
+  {
+    q: "Q11: Ava says, 'You can’t tell me to clean my room because your room is messy too!'",
+    options: [
+      "Tu Quoque - avoiding the argument by pointing out the other person did the same thing",
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "Red Herring - changing the subject to distract from the real issue",
+      "Circular Reasoning - using the conclusion as the reason for itself"
+    ],
+    answer: "Tu Quoque",
+    explanation: "Ava tries to avoid responsibility by highlighting someone else’s behavior."
+  },
+  {
+    q: "Q12: Mason says, 'We shouldn’t worry about littering because lots of people already litter.'",
+    options: [
+      "Strawman - creating an easier target to attack than addressing the real argument",
+      "False Dilemma - saying there are only two choices when there may be more",
+      "Tu Quoque - avoiding the argument by pointing out the other person did the same thing",
+      "Red Herring - changing the subject to distract from the main issue"
+    ],
+    answer: "Red Herring",
+    explanation: "Mason distracts from the actual problem of littering."
+  },
+
+  // Questions 13-20 remain without definitions
+  {
+    q: "Q13: Zoe says, 'If I fail this quiz, I’ll never get into a good school.'",
+    options: ["Post Hoc", "Appeal to Tradition", "Slippery Slope", "False Dilemma"],
+    answer: "Slippery Slope",
+    explanation: "Zoe assumes one event will inevitably cause extreme consequences."
+  },
+  {
+    q: "Q14: Harper says, 'Math is easy because it’s simple.'",
+    options: ["Strawman", "Appeal to Popularity", "Circular Reasoning", "Cause and Effect"],
+    answer: "Circular Reasoning",
+    explanation: "Harper repeats the statement as proof without providing real reasoning."
+  },
+  {
+    q: "Q15: Daniel says, 'We should use this method because it worked in the past.'",
+    options: ["Appeal to Tradition", "Slippery Slope", "Cause and Effect", "Ad Hominem"],
+    answer: "Appeal to Tradition",
+    explanation: "Daniel relies on past practices rather than evaluating current effectiveness."
+  },
+  {
+    q: "Q16: Chloe says, 'If one person cheats on homework, soon everyone will cheat.'",
+    options: ["Post Hoc", "Slippery Slope", "Ad Hominem", "Red Herring"],
+    answer: "Slippery Slope",
+    explanation: "Chloe assumes a small action will lead to extreme consequences."
+  },
+  {
+    q: "Q17: Jack says, 'I got an A after wearing my lucky hat, so the hat made me do well.'",
+    options: ["Cause and Effect", "Circular Reasoning", "Strawman", "Appeal to Popularity"],
+    answer: "Cause and Effect",
+    explanation: "Jack assumes a causal link without evidence."
+  },
+  {
+    q: "Q18: Ella says, 'You’re wrong because you’re just a kid.'",
+    options: ["Ad Hominem", "False Dilemma", "Strawman", "Red Herring"],
+    answer: "Ad Hominem",
+    explanation: "Ella attacks the person instead of their argument."
+  },
+  {
+    q: "Q19: Liam says, 'My lucky pen always helps me get good grades.'",
+    options: ["Slippery Slope", "Strawman", "Appeal to Authority", "Cause and Effect"],
+    answer: "Cause and Effect",
+    explanation: "Liam incorrectly assumes the pen is the cause of his success."
+  },
+  {
+    q: "Q20: Grace says, 'We should try this toy because everyone likes it.'",
+    options: ["Circular Reasoning", "Slippery Slope", "False Dilemma", "Appeal to Popularity"],
+    answer: "Appeal to Popularity",
+    explanation: "Grace relies on popularity rather than the toy’s actual qualities."
+  }
+];
+
+
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+
+function renderQuestion() {
+  const quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = "";
+  const q = questions[currentQuestion];
+  const container = document.createElement("div");
+  container.className = "question-container";
+  container.style.display = "block";
+  const questionEl = document.createElement("div");
+  questionEl.className = "question";
+  questionEl.textContent = `Q${currentQuestion+1}: ${q.q}`;
+  container.appendChild(questionEl);
+
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = "options";
+  q.options.forEach((opt, idx) => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "question" + currentQuestion;
+    input.value = idx;
+    if (userAnswers[currentQuestion] === idx) input.checked = true;
+    input.onclick = () => { userAnswers[currentQuestion] = idx; };
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    optionsDiv.appendChild(label);
+  });
+  container.appendChild(optionsDiv);
+  quizDiv.appendChild(container);
+
+  document.getElementById("prevBtn").style.display = currentQuestion === 0 ? "none" : "inline";
+  document.getElementById("nextBtn").style.display = currentQuestion === questions.length - 1 ? "none" : "inline";
+  document.getElementById("submitBtn").style.display = currentQuestion === questions.length - 1 ? "inline" : "none";
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  }
+}
+
+function submitQuiz() {
+  let resultsHTML = "<h2>Results</h2>";
+  questions.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    const correct = q.answer === userAns;
+    resultsHTML += `<p><strong>Q${idx+1}:</strong> ${q.q}<br>`;
+    q.options.forEach((opt, optIdx) => {
+      if (optIdx === q.answer) {
+        resultsHTML += `<span class="correct">${opt} (Correct)</span><br>`;
+      } else if (optIdx === userAns) {
+        resultsHTML += `<span class="incorrect">${opt} (Your Answer)</span><br>`;
+      } else {
+        resultsHTML += `${opt}<br>`;
+      }
+    });
+    resultsHTML += `<span class="explanation">${q.explanation}</span></p>`;
+  });
+  document.getElementById("quiz").innerHTML = "";
+  document.getElementById("results").innerHTML = resultsHTML;
+  document.querySelector(".navigation").style.display = "none";
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
