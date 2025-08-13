@@ -89,24 +89,32 @@ function createPage(ex, idx) {
   const div = document.createElement('div');
   div.className = 'page';
   div.id = 'page-' + idx;
-  let html = '<h2>Exercise ' + (idx+1) + ': ' + ex.title + '</h2>';
-  html += '<img class="img" src="' + ex.img + '" alt="chart">';
+
+  let html = '<h2>Exercise ' + (idx + 1) + ': ' + ex.title + '</h2>';
+
+  // ✅ Only include image if it's present and not empty
+  if (ex.img && ex.img.trim() !== '') {
+    html += '<img class="img" src="' + ex.img + '" alt="chart">';
+  }
+
   ex.questions.forEach((q, qi) => {
     const qid = 'e' + idx + 'q' + qi;
-    html += `<div class="question" id="${qid}"><p class="question-title">${qi+1}. ${q.q}</p>`;
+    html += `<div class="question" id="${qid}"><p class="question-title">${qi + 1}. ${q.q}</p>`;
     html += '<div class="options">';
-    for (let i=0;i<q.opts.length;i++) {
+    for (let i = 0; i < q.opts.length; i++) {
       const opt = q.opts[i];
       const oid = qid + '_opt' + i;
       html += `<label><input type="radio" name="${qid}" value="${opt}" id="${oid}"> ${opt}</label>`;
     }
     html += '</div></div><hr/>';
   });
+
   html += '<div class="nav">';
-  if (idx>0) html += '<button class="btn" onclick="showPage(' + (idx-1) + ')">Previous</button>';
-  if (idx < exercises.length-1) html += '<button class="btn" onclick="showPage(' + (idx+1) + ')">Next</button>';
-  if (idx === exercises.length-1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
+  if (idx > 0) html += '<button class="btn" onclick="showPage(' + (idx - 1) + ')">Previous</button>';
+  if (idx < exercises.length - 1) html += '<button class="btn" onclick="showPage(' + (idx + 1) + ')">Next</button>';
+  if (idx === exercises.length - 1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
   html += '</div>';
+
   div.innerHTML = html;
   return div;
 }

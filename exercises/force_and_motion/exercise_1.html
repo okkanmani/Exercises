@@ -25,222 +25,165 @@
 <p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
 <div id="container"></div>
 <script>
-
 const exercises = [
   {
-    "title": "Library Book Borrowing",
-    "img": "images/4_1.png",
+    "title": "Forces and Motion - Set 1",
+    "img": "images/1_1.png",
     "questions": [
       {
-        "q": "What percentage of the total books borrowed were Fiction?",
+        "q": "Which object traveled the farthest?",
         "opts": [
-          "20%",
-          "30%",
-          "40%",
-          "50%"
+          "Ball",
+          "Box",
+          "Skateboard",
+          "Toy Car"
         ],
-        "ans": "40%"
+        "ans": "Skateboard"
       },
       {
-        "q": "How many more books were borrowed in Fiction than in Science and Biography combined?",
+        "q": "How much farther did the Toy Car travel than the Box?",
         "opts": [
           "10",
-          "20",
-          "30",
-          "40"
+          "12",
+          "13",
+          "15"
         ],
-        "ans": "30"
+        "ans": "13"
       },
       {
-        "q": "If Mystery borrowing increased by 25%, how many books would that be?",
+        "q": "Which two objects together traveled the same distance as the Ball?",
         "opts": [
-          "65",
-          "70",
-          "75",
-          "80"
+          "Box and Chair",
+          "Box and Toy Car",
+          "Chair and Toy Car",
+          "Box and Skateboard"
         ],
-        "ans": "75"
+        "ans": "Box and Chair"
       },
       {
-        "q": "Which genres together account for more than half of all books borrowed?",
+        "q": "What is the average distance traveled by all objects?",
         "opts": [
-          "Fiction and Non-fiction",
-          "Mystery and Science",
-          "Fiction and Mystery",
-          "Non-fiction and Biography"
+          "10.2",
+          "12.2",
+          "13.2",
+          "14.2"
         ],
-        "ans": "Fiction and Non-fiction"
+        "ans": "12.2"
       },
       {
-        "q": "If 10 more Biography books were borrowed next month, what would be the new total?",
+        "q": "If the Box was pushed with double the force and traveled twice as far, what would its new distance be?",
         "opts": [
-          "55",
-          "60",
-          "65",
-          "70"
-        ],
-        "ans": "60"
-      }
-    ]
-  },
-  {
-    "title": "School Lunch Preferences",
-    "img": "images/4_2.png",
-    "questions": [
-      {
-        "q": "Which lunch item is the most preferred?",
-        "opts": [
-          "Pizza",
-          "Sandwich",
-          "Salad",
-          "Pasta"
-        ],
-        "ans": "Pizza"
-      },
-      {
-        "q": "What is the combined percentage of Salad and Other?",
-        "opts": [
-          "25%",
-          "30%",
-          "35%",
-          "40%"
-        ],
-        "ans": "30%"
-      },
-      {
-        "q": "If 200 students were surveyed, how many chose Sandwich?",
-        "opts": [
-          "40",
-          "50",
-          "60",
-          "70"
-        ],
-        "ans": "50"
-      },
-      {
-        "q": "Which two items together equal the percentage of Pizza?",
-        "opts": [
-          "Sandwich and Pasta",
-          "Salad and Other",
-          "Pasta and Other",
-          "Sandwich and Salad"
-        ],
-        "ans": "Sandwich and Salad"
-      },
-      {
-        "q": "If Pasta increased by 5%, what would its new percentage be?",
-        "opts": [
-          "10%",
-          "15%",
-          "20%",
-          "25%"
-        ],
-        "ans": "15%"
-      }
-    ]
-  },
-  {
-    "title": "Weekly Chores Completed",
-    "img": "images/4_3.png",
-    "questions": [
-      {
-        "q": "On which day were the most chores completed?",
-        "opts": [
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "ans": "Saturday"
-      },
-      {
-        "q": "What is the average number of chores per day?",
-        "opts": [
-          "3.5",
-          "4.5",
-          "5",
-          "5.5"
-        ],
-        "ans": "4.5"
-      },
-      {
-        "q": "Which two days had the same number of chores?",
-        "opts": [
-          "Monday and Sunday",
-          "Tuesday and Thursday",
-          "Wednesday and Friday",
-          "Saturday and Sunday"
-        ],
-        "ans": "Monday and Sunday"
-      },
-      {
-        "q": "What is the total number of chores completed during the week?",
-        "opts": [
-          "30",
-          "32",
-          "34",
-          "36"
-        ],
-        "ans": "33"
-      },
-      {
-        "q": "If Friday\u2019s chores doubled, what would the new total be?",
-        "opts": [
-          "35",
-          "36",
-          "37",
-          "38"
-        ],
-        "ans": "35"
-      }
-    ]
-  },
-  {
-    "title": "Recycling Collection",
-    "img": "images/4_4.png",
-    "questions": [
-      {
-        "q": "Which material had the highest total collection over 3 weeks?",
-        "opts": [
-          "Paper",
-          "Plastic",
-          "Glass",
-          "All equal"
-        ],
-        "ans": "Plastic"
-      },
-      {
-        "q": "How many total units of Glass were collected?",
-        "opts": [
-          "15",
-          "16",
-          "17",
-          "18"
-        ],
-        "ans": "17"
-      },
-      {
-        "q": "In which week was the most recycling collected overall?",
-        "opts": [
-          "Week 1",
-          "Week 2",
-          "Week 3",
-          "All equal"
-        ],
-        "ans": "Week 3"
-      },
-      {
-        "q": "What is the difference in Plastic collection between Week 2 and Week 3?",
-        "opts": [
-          "5",
+          "8",
+          "9",
           "10",
-          "15",
-          "20"
+          "11"
         ],
         "ans": "10"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 2",
+    "img": "images/1_2.png",
+    "questions": [
+      {
+        "q": "Which object traveled the least?",
+        "opts": [
+          "Feather",
+          "Rock",
+          "Paper Plane",
+          "Book"
+        ],
+        "ans": "Rock"
       },
       {
-        "q": "If Paper collection in Week 3 increased by 50%, what would it be?",
+        "q": "How many more meters did the Paper Plane travel than the Book?",
+        "opts": [
+          "15",
+          "20",
+          "25",
+          "30"
+        ],
+        "ans": "20"
+      },
+      {
+        "q": "What is the total distance traveled by all objects?",
+        "opts": [
+          "90",
+          "95",
+          "100",
+          "105"
+        ],
+        "ans": "90"
+      },
+      {
+        "q": "Which object traveled more than 20 meters?",
+        "opts": [
+          "Feather",
+          "Paper Plane",
+          "Balloon",
+          "Rock"
+        ],
+        "ans": "Paper Plane"
+      },
+      {
+        "q": "If the Rock was pushed with triple the force, what would its new distance be?",
+        "opts": [
+          "10",
+          "12",
+          "15",
+          "18"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 3",
+    "img": "images/1_3.png",
+    "questions": [
+      {
+        "q": "Which object traveled the second farthest?",
+        "opts": [
+          "Roller",
+          "Crate",
+          "Wheel",
+          "Cart"
+        ],
+        "ans": "Cart"
+      },
+      {
+        "q": "What is the difference in distance between the Wheel and Crate?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "Which two objects together equal the distance of the Wheel?",
+        "opts": [
+          "Roller and Crate",
+          "Cart and Bag",
+          "Roller and Bag",
+          "Crate and Bag"
+        ],
+        "ans": "Roller and Bag"
+      },
+      {
+        "q": "What is the average distance traveled?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "If the Crate doubled its distance, what would it be?",
         "opts": [
           "10",
           "11",
@@ -252,63 +195,118 @@ const exercises = [
     ]
   },
   {
-    "title": "School Bus Arrival Times",
-    "img": "images/4_5.png",
+    "title": "Forces and Motion - Set 4",
+    "img": "images/1_4.png",
     "questions": [
       {
-        "q": "Which bus arrived first?",
+        "q": "Which object traveled the most?",
         "opts": [
-          "101",
-          "102",
-          "103",
-          "104"
+          "Toy Train",
+          "Block",
+          "Sled",
+          "Can"
         ],
-        "ans": "101"
+        "ans": "Toy Train"
       },
       {
-        "q": "How many students arrived before 8:10 AM?",
+        "q": "What is the total distance traveled?",
         "opts": [
-          "25",
-          "45",
-          "50",
-          "55"
+          "70",
+          "75",
+          "80",
+          "85"
         ],
-        "ans": "45"
+        "ans": "70"
       },
       {
-        "q": "What is the average number of students per bus?",
+        "q": "Which object traveled less than 10 meters?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "Block",
+          "Can",
+          "Bottle",
+          "Sled"
         ],
-        "ans": "25"
+        "ans": "Block"
       },
       {
-        "q": "Which bus had the fewest students?",
+        "q": "What is the average distance traveled?",
         "opts": [
-          "101",
-          "103",
-          "104",
-          "105"
+          "12",
+          "13",
+          "14",
+          "15"
         ],
-        "ans": "105"
+        "ans": "14"
       },
       {
-        "q": "If Bus 103 had 5 more students, how many would it have?",
+        "q": "If the Bottle increased by 2 meters, what would be its new distance?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "14",
+          "15",
+          "16",
+          "17"
         ],
-        "ans": "25"
+        "ans": "15"
       }
     ]
-  }
+  },
+  {
+    "title": "Forces and Motion - Set 5",
+    "img": "images/1_5.png",
+    "questions": [
+      {
+        "q": "Which object traveled the least?",
+        "opts": [
+          "Marble",
+          "Toy Truck",
+          "Box",
+          "Stick"
+        ],
+        "ans": "Box"
+      },
+      {
+        "q": "How many more meters did the Toy Truck travel than the Box?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "Which two objects together equal the distance of the Toy Truck?",
+        "opts": [
+          "Marble and Stick",
+          "Box and Ball",
+          "Ball and Stick",
+          "Marble and Ball"
+        ],
+        "ans": "Marble and Ball"
+      },
+      {
+        "q": "What is the average distance traveled?",
+        "opts": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ],
+        "ans": "14.2"
+      },
+      {
+        "q": "If the Stick increased by 4 meters, what would be its new distance?",
+        "opts": [
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
 ]
-
 
 function createPage(ex, idx) {
   const div = document.createElement('div');

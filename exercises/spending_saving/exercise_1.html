@@ -20,171 +20,28 @@
 </style>
 </head>
 <body>
-<h1>Data Interpretation — Grade 5 Level</h1>
+<h1>Spending and Saving — Grade 5 Level</h1>
 <p><a href="../../index.html">Back To Main Page</a></p>
 <p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
 <div id="container"></div>
 <script>
-
 const exercises = [
   {
-    "title": "Library Book Borrowing",
-    "img": "images/4_1.png",
+    "title": "Spending vs Saving - Set 1",
+    "img": "images/1_1.png",
     "questions": [
       {
-        "q": "What percentage of the total books borrowed were Fiction?",
+        "q": "In which week was the most money saved?",
         "opts": [
-          "20%",
-          "30%",
-          "40%",
-          "50%"
+          "Week 1",
+          "Week 2",
+          "Week 4",
+          "Week 5"
         ],
-        "ans": "40%"
+        "ans": "Week 5"
       },
       {
-        "q": "How many more books were borrowed in Fiction than in Science and Biography combined?",
-        "opts": [
-          "10",
-          "20",
-          "30",
-          "40"
-        ],
-        "ans": "30"
-      },
-      {
-        "q": "If Mystery borrowing increased by 25%, how many books would that be?",
-        "opts": [
-          "65",
-          "70",
-          "75",
-          "80"
-        ],
-        "ans": "75"
-      },
-      {
-        "q": "Which genres together account for more than half of all books borrowed?",
-        "opts": [
-          "Fiction and Non-fiction",
-          "Mystery and Science",
-          "Fiction and Mystery",
-          "Non-fiction and Biography"
-        ],
-        "ans": "Fiction and Non-fiction"
-      },
-      {
-        "q": "If 10 more Biography books were borrowed next month, what would be the new total?",
-        "opts": [
-          "55",
-          "60",
-          "65",
-          "70"
-        ],
-        "ans": "60"
-      }
-    ]
-  },
-  {
-    "title": "School Lunch Preferences",
-    "img": "images/4_2.png",
-    "questions": [
-      {
-        "q": "Which lunch item is the most preferred?",
-        "opts": [
-          "Pizza",
-          "Sandwich",
-          "Salad",
-          "Pasta"
-        ],
-        "ans": "Pizza"
-      },
-      {
-        "q": "What is the combined percentage of Salad and Other?",
-        "opts": [
-          "25%",
-          "30%",
-          "35%",
-          "40%"
-        ],
-        "ans": "30%"
-      },
-      {
-        "q": "If 200 students were surveyed, how many chose Sandwich?",
-        "opts": [
-          "40",
-          "50",
-          "60",
-          "70"
-        ],
-        "ans": "50"
-      },
-      {
-        "q": "Which two items together equal the percentage of Pizza?",
-        "opts": [
-          "Sandwich and Pasta",
-          "Salad and Other",
-          "Pasta and Other",
-          "Sandwich and Salad"
-        ],
-        "ans": "Sandwich and Salad"
-      },
-      {
-        "q": "If Pasta increased by 5%, what would its new percentage be?",
-        "opts": [
-          "10%",
-          "15%",
-          "20%",
-          "25%"
-        ],
-        "ans": "15%"
-      }
-    ]
-  },
-  {
-    "title": "Weekly Chores Completed",
-    "img": "images/4_3.png",
-    "questions": [
-      {
-        "q": "On which day were the most chores completed?",
-        "opts": [
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "ans": "Saturday"
-      },
-      {
-        "q": "What is the average number of chores per day?",
-        "opts": [
-          "3.5",
-          "4.5",
-          "5",
-          "5.5"
-        ],
-        "ans": "4.5"
-      },
-      {
-        "q": "Which two days had the same number of chores?",
-        "opts": [
-          "Monday and Sunday",
-          "Tuesday and Thursday",
-          "Wednesday and Friday",
-          "Saturday and Sunday"
-        ],
-        "ans": "Monday and Sunday"
-      },
-      {
-        "q": "What is the total number of chores completed during the week?",
-        "opts": [
-          "30",
-          "32",
-          "34",
-          "36"
-        ],
-        "ans": "33"
-      },
-      {
-        "q": "If Friday\u2019s chores doubled, what would the new total be?",
+        "q": "What is the total amount spent over 5 weeks?",
         "opts": [
           "35",
           "36",
@@ -192,55 +49,85 @@ const exercises = [
           "38"
         ],
         "ans": "35"
+      },
+      {
+        "q": "Which week had the highest percentage of money saved?",
+        "opts": [
+          "Week 1",
+          "Week 2",
+          "Week 4",
+          "Week 5"
+        ],
+        "ans": "Week 2"
+      },
+      {
+        "q": "What is the average amount saved per week?",
+        "opts": [
+          "7",
+          "8",
+          "9",
+          "10"
+        ],
+        "ans": "8"
+      },
+      {
+        "q": "If the student saved $2 more in Week 3, what would the new total savings be?",
+        "opts": [
+          "40",
+          "41",
+          "42",
+          "43"
+        ],
+        "ans": "42"
       }
     ]
   },
   {
-    "title": "Recycling Collection",
-    "img": "images/4_4.png",
+    "title": "Spending vs Saving - Set 2",
+    "img": "images/1_2.png",
     "questions": [
       {
-        "q": "Which material had the highest total collection over 3 weeks?",
-        "opts": [
-          "Paper",
-          "Plastic",
-          "Glass",
-          "All equal"
-        ],
-        "ans": "Plastic"
-      },
-      {
-        "q": "How many total units of Glass were collected?",
-        "opts": [
-          "15",
-          "16",
-          "17",
-          "18"
-        ],
-        "ans": "17"
-      },
-      {
-        "q": "In which week was the most recycling collected overall?",
+        "q": "Which week had the least savings?",
         "opts": [
           "Week 1",
           "Week 2",
           "Week 3",
-          "All equal"
+          "Week 5"
         ],
-        "ans": "Week 3"
+        "ans": "Week 1"
       },
       {
-        "q": "What is the difference in Plastic collection between Week 2 and Week 3?",
+        "q": "What is the total money received over 5 weeks?",
         "opts": [
-          "5",
-          "10",
-          "15",
-          "20"
+          "60",
+          "62",
+          "64",
+          "66"
         ],
-        "ans": "10"
+        "ans": "60"
       },
       {
-        "q": "If Paper collection in Week 3 increased by 50%, what would it be?",
+        "q": "What is the average money received per week?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "Which week had the highest spending?",
+        "opts": [
+          "Week 3",
+          "Week 4",
+          "Week 5",
+          "Week 2"
+        ],
+        "ans": "Week 4"
+      },
+      {
+        "q": "If Week 2 spending increased by $2, what would it be?",
         "opts": [
           "10",
           "11",
@@ -252,63 +139,174 @@ const exercises = [
     ]
   },
   {
-    "title": "School Bus Arrival Times",
-    "img": "images/4_5.png",
+    "title": "Spending vs Saving - Set 3",
+    "img": "images/1_3.png",
     "questions": [
       {
-        "q": "Which bus arrived first?",
+        "q": "Which week had the highest savings?",
         "opts": [
-          "101",
-          "102",
-          "103",
-          "104"
+          "Week 1",
+          "Week 3",
+          "Week 4",
+          "Week 5"
         ],
-        "ans": "101"
+        "ans": "Week 5"
       },
       {
-        "q": "How many students arrived before 8:10 AM?",
+        "q": "What is the total savings over 5 weeks?",
         "opts": [
-          "25",
           "45",
-          "50",
-          "55"
+          "46",
+          "47",
+          "48"
         ],
         "ans": "45"
       },
       {
-        "q": "What is the average number of students per bus?",
+        "q": "What is the average savings per week?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "8",
+          "9",
+          "10",
+          "11"
         ],
-        "ans": "25"
+        "ans": "9"
       },
       {
-        "q": "Which bus had the fewest students?",
+        "q": "Which week had the lowest spending?",
         "opts": [
-          "101",
-          "103",
-          "104",
-          "105"
+          "Week 1",
+          "Week 2",
+          "Week 3",
+          "Week 4"
         ],
-        "ans": "105"
+        "ans": "Week 1"
       },
       {
-        "q": "If Bus 103 had 5 more students, how many would it have?",
+        "q": "If Week 3 savings decreased by $2, what would it be?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "7",
+          "8",
+          "9",
+          "10"
         ],
-        "ans": "25"
+        "ans": "7"
+      }
+    ]
+  },
+  {
+    "title": "Spending vs Saving - Set 4",
+    "img": "images/1_4.png",
+    "questions": [
+      {
+        "q": "Which week had the most spending?",
+        "opts": [
+          "Week 1",
+          "Week 2",
+          "Week 3",
+          "Week 4"
+        ],
+        "ans": "Week 1"
+      },
+      {
+        "q": "What is the total money received?",
+        "opts": [
+          "80",
+          "81",
+          "82",
+          "83"
+        ],
+        "ans": "80"
+      },
+      {
+        "q": "What is the average spending per week?",
+        "opts": [
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        "ans": "16"
+      },
+      {
+        "q": "Which week had the least savings?",
+        "opts": [
+          "Week 1",
+          "Week 2",
+          "Week 3",
+          "Week 4"
+        ],
+        "ans": "Week 5"
+      },
+      {
+        "q": "If Week 5 savings increased by $3, what would it be?",
+        "opts": [
+          "15",
+          "16",
+          "17",
+          "18"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
+  {
+    "title": "Spending vs Saving - Set 5",
+    "img": "images/1_5.png",
+    "questions": [
+      {
+        "q": "Which week had equal spending and saving?",
+        "opts": [
+          "Week 1",
+          "Week 2",
+          "Week 3",
+          "Week 4"
+        ],
+        "ans": "Week 3"
+      },
+      {
+        "q": "What is the total savings?",
+        "opts": [
+          "50",
+          "51",
+          "52",
+          "53"
+        ],
+        "ans": "50"
+      },
+      {
+        "q": "What is the average savings?",
+        "opts": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
+        "ans": "10"
+      },
+      {
+        "q": "Which week had the highest savings?",
+        "opts": [
+          "Week 1",
+          "Week 2",
+          "Week 4",
+          "Week 5"
+        ],
+        "ans": "Week 5"
+      },
+      {
+        "q": "If Week 1 savings decreased by $2, what would it be?",
+        "opts": [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "ans": "4"
       }
     ]
   }
 ]
-
 
 function createPage(ex, idx) {
   const div = document.createElement('div');

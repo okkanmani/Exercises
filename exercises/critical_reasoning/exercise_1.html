@@ -25,290 +25,288 @@
 <p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
 <div id="container"></div>
 <script>
-
 const exercises = [
   {
-    "title": "Library Book Borrowing",
-    "img": "images/4_1.png",
+    "title": "Logic Puzzle - Pets",
+    "img": "images/1_1.png",
     "questions": [
       {
-        "q": "What percentage of the total books borrowed were Fiction?",
+        "q": "Who has the bird?",
         "opts": [
-          "20%",
-          "30%",
-          "40%",
-          "50%"
+          "Ava",
+          "Ben",
+          "Chloe",
+          "Daniel"
         ],
-        "ans": "40%"
+        "ans": "Chloe"
       },
       {
-        "q": "How many more books were borrowed in Fiction than in Science and Biography combined?",
+        "q": "Which pet does Daniel have?",
         "opts": [
-          "10",
-          "20",
-          "30",
-          "40"
+          "Dog",
+          "Cat",
+          "Bird",
+          "Fish"
         ],
-        "ans": "30"
+        "ans": "Fish"
       },
       {
-        "q": "If Mystery borrowing increased by 25%, how many books would that be?",
+        "q": "Who has the cat?",
         "opts": [
-          "65",
-          "70",
-          "75",
-          "80"
+          "Ava",
+          "Ben",
+          "Chloe",
+          "Daniel"
         ],
-        "ans": "75"
+        "ans": "Ava"
       },
       {
-        "q": "Which genres together account for more than half of all books borrowed?",
+        "q": "Which pet does Ben have?",
         "opts": [
-          "Fiction and Non-fiction",
-          "Mystery and Science",
-          "Fiction and Mystery",
-          "Non-fiction and Biography"
+          "Dog",
+          "Cat",
+          "Bird",
+          "Fish"
         ],
-        "ans": "Fiction and Non-fiction"
+        "ans": "Dog"
       },
       {
-        "q": "If 10 more Biography books were borrowed next month, what would be the new total?",
+        "q": "Which clue helped you identify Chloe\u2019s pet?",
         "opts": [
-          "55",
-          "60",
-          "65",
-          "70"
+          "Clue 1",
+          "Clue 2",
+          "Clue 3",
+          "Clue 4"
         ],
-        "ans": "60"
+        "ans": "Clue 4"
       }
     ]
   },
   {
-    "title": "School Lunch Preferences",
-    "img": "images/4_2.png",
+    "title": "Pattern Recognition",
+    "img": "",
     "questions": [
       {
-        "q": "Which lunch item is the most preferred?",
+        "q": "What comes next in the pattern: 2, 4, 8, 16, ?",
         "opts": [
-          "Pizza",
-          "Sandwich",
-          "Salad",
-          "Pasta"
+          "18",
+          "24",
+          "32",
+          "36"
         ],
-        "ans": "Pizza"
+        "ans": "32"
       },
       {
-        "q": "What is the combined percentage of Salad and Other?",
+        "q": "Which shape completes the sequence: Circle, Square, Triangle, Circle, Square, ?",
         "opts": [
-          "25%",
-          "30%",
-          "35%",
-          "40%"
+          "Circle",
+          "Square",
+          "Triangle",
+          "Hexagon"
         ],
-        "ans": "30%"
+        "ans": "Triangle"
       },
       {
-        "q": "If 200 students were surveyed, how many chose Sandwich?",
+        "q": "If RED = 27, and BLUE = 40, what is GREEN?",
         "opts": [
-          "40",
+          "45",
           "50",
-          "60",
-          "70"
+          "55",
+          "60"
         ],
         "ans": "50"
       },
       {
-        "q": "Which two items together equal the percentage of Pizza?",
+        "q": "Which number is missing: 5, 10, __, 20, 25",
         "opts": [
-          "Sandwich and Pasta",
-          "Salad and Other",
-          "Pasta and Other",
-          "Sandwich and Salad"
-        ],
-        "ans": "Sandwich and Salad"
-      },
-      {
-        "q": "If Pasta increased by 5%, what would its new percentage be?",
-        "opts": [
-          "10%",
-          "15%",
-          "20%",
-          "25%"
-        ],
-        "ans": "15%"
-      }
-    ]
-  },
-  {
-    "title": "Weekly Chores Completed",
-    "img": "images/4_3.png",
-    "questions": [
-      {
-        "q": "On which day were the most chores completed?",
-        "opts": [
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "ans": "Saturday"
-      },
-      {
-        "q": "What is the average number of chores per day?",
-        "opts": [
-          "3.5",
-          "4.5",
-          "5",
-          "5.5"
-        ],
-        "ans": "4.5"
-      },
-      {
-        "q": "Which two days had the same number of chores?",
-        "opts": [
-          "Monday and Sunday",
-          "Tuesday and Thursday",
-          "Wednesday and Friday",
-          "Saturday and Sunday"
-        ],
-        "ans": "Monday and Sunday"
-      },
-      {
-        "q": "What is the total number of chores completed during the week?",
-        "opts": [
-          "30",
-          "32",
-          "34",
-          "36"
-        ],
-        "ans": "33"
-      },
-      {
-        "q": "If Friday\u2019s chores doubled, what would the new total be?",
-        "opts": [
-          "35",
-          "36",
-          "37",
-          "38"
-        ],
-        "ans": "35"
-      }
-    ]
-  },
-  {
-    "title": "Recycling Collection",
-    "img": "images/4_4.png",
-    "questions": [
-      {
-        "q": "Which material had the highest total collection over 3 weeks?",
-        "opts": [
-          "Paper",
-          "Plastic",
-          "Glass",
-          "All equal"
-        ],
-        "ans": "Plastic"
-      },
-      {
-        "q": "How many total units of Glass were collected?",
-        "opts": [
+          "12",
+          "13",
           "15",
-          "16",
-          "17",
           "18"
         ],
-        "ans": "17"
+        "ans": "15"
       },
       {
-        "q": "In which week was the most recycling collected overall?",
+        "q": "Which word does not belong: Apple, Banana, Carrot, Grape",
         "opts": [
-          "Week 1",
-          "Week 2",
-          "Week 3",
-          "All equal"
+          "Apple",
+          "Banana",
+          "Carrot",
+          "Grape"
         ],
-        "ans": "Week 3"
-      },
-      {
-        "q": "What is the difference in Plastic collection between Week 2 and Week 3?",
-        "opts": [
-          "5",
-          "10",
-          "15",
-          "20"
-        ],
-        "ans": "10"
-      },
-      {
-        "q": "If Paper collection in Week 3 increased by 50%, what would it be?",
-        "opts": [
-          "10",
-          "11",
-          "12",
-          "13"
-        ],
-        "ans": "12"
+        "ans": "Carrot"
       }
     ]
   },
   {
-    "title": "School Bus Arrival Times",
-    "img": "images/4_5.png",
+    "title": "Deductive Reasoning - Who Ate the Cake?",
+    "img": "images/1_3.png",
     "questions": [
       {
-        "q": "Which bus arrived first?",
+        "q": "Clue: Only someone who was in the kitchen could eat the cake. Who was in the kitchen?",
         "opts": [
-          "101",
-          "102",
-          "103",
-          "104"
+          "Tom",
+          "Sara",
+          "Liam",
+          "Nina"
         ],
-        "ans": "101"
+        "ans": "Sara"
       },
       {
-        "q": "How many students arrived before 8:10 AM?",
+        "q": "Clue: The person who ate the cake loves chocolate. Who loves chocolate?",
         "opts": [
-          "25",
-          "45",
-          "50",
-          "55"
+          "Tom",
+          "Sara",
+          "Liam",
+          "Nina"
         ],
-        "ans": "45"
+        "ans": "Sara"
       },
       {
-        "q": "What is the average number of students per bus?",
+        "q": "Clue: The cake was eaten at 3 PM. Who was in the kitchen at that time?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "Tom",
+          "Sara",
+          "Liam",
+          "Nina"
         ],
-        "ans": "25"
+        "ans": "Sara"
       },
       {
-        "q": "Which bus had the fewest students?",
+        "q": "Who most likely ate the cake?",
         "opts": [
-          "101",
-          "103",
-          "104",
-          "105"
+          "Tom",
+          "Sara",
+          "Liam",
+          "Nina"
         ],
-        "ans": "105"
+        "ans": "Sara"
       },
       {
-        "q": "If Bus 103 had 5 more students, how many would it have?",
+        "q": "Which clue was most important?",
         "opts": [
-          "25",
-          "26",
-          "27",
-          "28"
+          "Kitchen",
+          "Chocolate",
+          "Time",
+          "All of the above"
         ],
-        "ans": "25"
+        "ans": "All of the above"
       }
     ]
-  }
+  },
+  {
+  "title": "Sequencing Puzzle \u2013 Steps to Bake a Cake",
+  "img": "images/1_4.png",
+  "questions": [
+    {
+      "q": "Which step comes right after mixing the ingredients?",
+      "opts": [
+        "Bake in oven",
+        "Pour into pan",
+        "Let it cool",
+        "Serve"
+      ],
+      "ans": "Pour into pan"
+    },
+    {
+      "q": "Which step is the final one in the process?",
+      "opts": [
+        "Bake in oven",
+        "Let it cool",
+        "Serve",
+        "Mix ingredients"
+      ],
+      "ans": "Serve"
+    },
+    {
+      "q": "What is the third step in baking a cake?",
+      "opts": [
+        "Mix ingredients",
+        "Pour into pan",
+        "Bake in oven",
+        "Let it cool"
+      ],
+      "ans": "Bake in oven"
+    },
+    {
+      "q": "If the cake is not cooled properly, which step was skipped or rushed?",
+      "opts": [
+        "Mix ingredients",
+        "Pour into pan",
+        "Bake in oven",
+        "Let it cool"
+      ],
+      "ans": "Let it cool"
+    },
+    {
+      "q": "Which two steps involve heat?",
+      "opts": [
+        "Mix ingredients and Bake in oven",
+        "Bake in oven and Let it cool",
+        "Pour into pan and Bake in oven",
+        "Let it cool and Serve"
+      ],
+      "ans": "Bake in oven and Let it cool"
+    }
+  ]
+  },
+  {
+    "title": "Analogies",
+    "img": "",
+    "questions": [
+      {
+        "q": "Dog is to Bark as Cat is to ?",
+        "opts": [
+          "Meow",
+          "Purr",
+          "Scratch",
+          "Run"
+        ],
+        "ans": "Meow"
+      },
+      {
+        "q": "Sun is to Day as Moon is to ?",
+        "opts": [
+          "Night",
+          "Light",
+          "Sky",
+          "Star"
+        ],
+        "ans": "Night"
+      },
+      {
+        "q": "Book is to Read as Pen is to ?",
+        "opts": [
+          "Write",
+          "Draw",
+          "Ink",
+          "Paper"
+        ],
+        "ans": "Write"
+      },
+      {
+        "q": "Fish is to Water as Bird is to ?",
+        "opts": [
+          "Air",
+          "Tree",
+          "Nest",
+          "Sky"
+        ],
+        "ans": "Air"
+      },
+      {
+        "q": "Wheel is to Car as Wing is to ?",
+        "opts": [
+          "Plane",
+          "Bird",
+          "Fly",
+          "Feather"
+        ],
+        "ans": "Plane"
+      }
+    ]
+  },
 ]
-
 
 function createPage(ex, idx) {
   const div = document.createElement('div');
@@ -343,6 +341,7 @@ function createPage(ex, idx) {
   div.innerHTML = html;
   return div;
 }
+
 
 function init() {
   const container = document.getElementById('container');
