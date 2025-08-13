@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RC Quiz — Science & Nature (5 passages)</title>
+  <style>
+    :root{
+      --bg:#f4f7fb; --card:#ffffff; --accent:#0b66ff; --muted:#6b7280;
+      --good:#ecfdf5; --good-text:#064e3b; --bad:#fff1f2; --bad-text:#7f1d1d;
+      --explain-bg:#f8fafc; --max-width:1200px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#0b1220;background:var(--bg)}
+    .wrap{max-width:var(--max-width);margin:24px auto;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(12,20,40,0.06)}
+    header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+    header h1{margin:0;font-size:20px}
+    header .muted{color:var(--muted);font-size:13px}
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+    .passagePanel{padding:18px;overflow:auto;height:72vh}
+    .questionsPanel{padding:14px;overflow:auto;height:72vh}
+    .passTitle{font-size:24px;font-weight:700;margin-bottom:10px}
+    .passageText{line-height:1.7;white-space:pre-wrap}
+    .question{padding:10px;margin-bottom:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef2ff}
+    .qtext{font-weight:600;margin-bottom:8px}
+    .muted{color:var(--muted);font-size:13px}
+    label.option{display:block;padding:8px;margin:6px 0;border-radius:8px;cursor:pointer;border:1px solid transparent}
+    label.option:hover{background:#f7fbff}
+    input[type=radio]{margin-right:8px}
+    .controls{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.secondary{background:#eef2ff;color:var(--accent);font-weight:600}
+    button:disabled{opacity:0.5;cursor:default}
+    .resultBox{margin-top:12px;padding:12px;border-radius:8px}
+    .correct{background:var(--good);color:var(--good-text);padding:8px;border-radius:6px}
+    .incorrect{background:var(--bad);color:var(--bad-text);padding:8px;border-radius:6px}
+    .review-item{padding:8px;border-radius:8px;margin-bottom:8px;border:1px solid #eef2ff}
+    .explanation{background:var(--explain-bg);padding:8px;border-radius:6px;margin-top:8px;font-size:14px}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr;}.passagePanel{height:45vh}.questionsPanel{height:45vh}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Reading Comprehension — Science & Nature (Challenging)</h1>
+          <p><a href="../../index.html">Back To Main Page</a></p>
+          <div class="muted">5 passages • 6 questions each • 2 vocabulary questions per passage</div>
+        </div>
+        <div class="muted">Tip: Use <strong>Previous</strong> and <strong>Next</strong>. Submit appears on the last page.</div>
+      </header>
+
+      <div id="main" class="layout">
+        <div class="passagePanel card">
+          <div id="passageHeader" class="passTitle">Passage 1 of 5 — The Water Cycle and Why It Matters</div>
+          <div id="passageText" class="passageText"></div>
+
+          <div class="controls" style="justify-content:flex-start;margin-top:16px">
+            <button id="prevBtn" class="secondary">Previous</button>
+          </div>
+        </div>
+
+        <div class="questionsPanel card">
+          <div class="muted" id="qHeader">Questions</div>
+          <div id="questionsContainer"></div>
+
+          <div class="controls" style="margin-top:12px">
+            <button id="nextBtn" class="secondary">Next</button>
+            <button id="submitBtn" style="display:none">Submit</button>
+          </div>
+
+          <div id="feedback" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <footer class="muted">This quiz runs entirely in your browser. No data leaves your device.</footer>
+    </div>
+  </div>
+
+<script>
+/* shuffle helper */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* ===== Passages, Questions, Explanations =====
+Each passage has: title, text, questions [{q, choices[], a (index), explanation}]
+*/
+const passages = [
+  {
+    title: "Life in Antarctica",
+    text: `Antarctica is the coldest, driest, and windiest continent on Earth. Its vast ice sheets hold about 60% of the world’s fresh water, locked in frozen form. Temperatures in the interior can drop below -70°C (-94°F), and the coastal areas are only slightly warmer. Because of these harsh conditions, no permanent human population lives there. Instead, temporary residents—scientists and support staff—come to work at research stations.
+
+Wildlife in Antarctica has adapted in remarkable ways. Emperor penguins huddle in large groups to conserve heat during the long winter. Weddell seals can hold their breath for over an hour to hunt beneath the ice. The food chain here begins with tiny organisms called phytoplankton, which thrive in the nutrient-rich waters during the brief summer.
+
+Life for researchers is challenging. Supplies must be flown or shipped in, and any mistake in planning can have serious consequences. Electricity is often generated from diesel fuel, though renewable energy like wind and solar is becoming more common. Communication is limited, and internet access is often slow.
+
+The Antarctic Treaty, signed in 1959, designates the continent as a place for peaceful scientific research. It bans military activity and protects the environment. Tourism is carefully controlled to prevent harm to fragile ecosystems. Visitors must follow strict rules to avoid disturbing wildlife.
+
+Antarctica also plays a crucial role in regulating Earth’s climate. Its ice reflects sunlight, helping keep the planet cool. Melting ice due to global warming could cause sea levels to rise dramatically, affecting coastal communities around the world. Scientists study the ice sheets, glaciers, and atmosphere to better understand climate change.
+
+Despite its isolation and extreme environment, Antarctica remains a place of wonder. Its untouched landscapes, unique wildlife, and critical scientific value make it one of the most fascinating places on our planet.`,
+    questions: [
+      { q: "Word meaning — What does 'nutrient-rich' most nearly mean in the passage?", choices: ["Completely free of life", "Dangerous for animals to live in", "Full of substances that support life", "Made entirely of ice"], a: 2, explanation: "Nutrient-rich refers to waters full of substances like minerals that support the growth of organisms." },
+      { q: "Word meaning — In the context of the passage, what does 'fragile' most likely mean?", choices: ["Highly dangerous", "Easily damaged or delicate", "Unchangeable", "Completely frozen"], a: 1, explanation: "Fragile here refers to ecosystems that can be easily harmed by human activity." },
+      { q: "Why is the Antarctic Treaty important for the continent?", choices: ["It helps penguins migrate more easily", "It allows mining for valuable resources", "It promotes peaceful research and environmental protection", "It increases tourism without limits"], a: 2, explanation: "The Treaty prevents military use and protects the environment while encouraging scientific cooperation." },
+      { q: "Why might melting Antarctic ice cause problems globally?", choices: ["It could raise sea levels and flood coastal areas", "It will create dangerous icebergs for ships", "It will reduce the amount of fish in the oceans", "It will make Antarctica more habitable"], a: 0, explanation: "Melting ice adds water to the oceans, which can raise sea levels and flood coastal cities." },
+      { q: "If a research station runs out of supplies, what is the most likely consequence?", choices: ["They will switch to farming", "They can easily buy supplies from nearby towns", "It will have no effect", "Researchers may have to leave early"], a: 3, explanation: "Because there are no nearby towns, a lack of supplies could end a research season early." },
+      { q: "Which detail best shows Antarctica's global importance?", choices: ["It has internet access", "Its ice reflects sunlight, helping regulate climate", "It is home to emperor penguins", "Tourism is allowed"], a: 1, explanation: "The reflective ice helps control Earth's temperature, which is important for the whole planet." }
+    ]
+  },
+  {
+    title: "Famous Historical Hoaxes",
+    text: `Throughout history, people have been fooled by elaborate hoaxes—false events or artifacts deliberately presented as true. These hoaxes often capture public attention, sometimes for years, before being exposed. One famous example is the “Piltdown Man,” a supposed fossil discovery in England in 1912 that was claimed to be the missing link between apes and humans. It wasn’t until decades later that scientists discovered it was a combination of a human skull and an orangutan jaw, artificially aged to appear ancient.
+
+Another example is the “Cardiff Giant,” a ten-foot stone figure unearthed in New York in 1869. Many believed it was evidence of ancient giants, but it was soon revealed to be a carved statue, created as a prank. Even so, people continued to pay money to see it, demonstrating how a good story can overpower evidence.
+
+In 1938, a radio broadcast of “The War of the Worlds” by Orson Welles caused panic among listeners who believed Earth was being invaded by Martians. Although disclaimers were given, many tuned in late and thought the fictional news reports were real. This showed how media could strongly influence public perception.
+
+These hoaxes remind us of the importance of skepticism and verifying information before believing it. In modern times, the internet allows hoaxes to spread faster than ever, from fake social media posts to doctored videos. Critical thinking and fact-checking have become essential skills to navigate a world full of misinformation.
+
+The reasons behind hoaxes vary. Some are created for profit, others for fame, and still others as social experiments or pranks. But regardless of intent, they can have lasting effects on culture, science, and trust in institutions.`,
+    questions: [
+      { q: "Word meaning — What does 'skepticism' most likely mean as used in the passage?", choices: ["Believing everything you hear", "The act of creating a hoax", "Excitement about discovering new things", "Doubt and questioning before accepting something as true"], a: 3, explanation: "Skepticism means having doubt and questioning information until there is evidence to support it." },
+      { q: "Word meaning — What does 'fabricated' most nearly mean in the context of hoaxes?", choices: ["Accidentally found", "Deliberately made up or invented", "Scientifically proven", "Discovered by chance"], a: 1, explanation: "Fabricated means something was deliberately created, often with the intent to deceive." },
+      { q: "What made the Piltdown Man hoax so convincing for many years?", choices: ["It was supported by respected scientists at the time", "It was found in a well-known fossil site", "It was shown in a popular movie", "It was discovered by multiple countries"], a: 0, explanation: "Respected scientists initially endorsed it, lending credibility despite the fake evidence." },
+      { q: "What lesson does the 'War of the Worlds' incident teach about media?", choices: ["Media can easily cause fear if information is presented as real", "Radio is not a good source for storytelling", "People don’t enjoy fictional broadcasts", "Martian invasions are a real danger"], a: 0, explanation: "The panic showed that believable presentation can cause fear, even if the story is fiction." },
+      { q: "Why might people still pay to see the Cardiff Giant even after learning it was fake?", choices: ["They wanted to study it scientifically", "They were fascinated by the story and the object itself", "They believed it would come to life", "They wanted to destroy it"], a: 1, explanation: "The curiosity and spectacle of the hoax continued to attract visitors despite knowing the truth." },
+      { q: "Which modern factor makes hoaxes more dangerous today?", choices: ["Faster spread through the internet and social media", "Less interest in history", "Increased literacy rates", "More television stations"], a: 2, explanation: "The internet allows false information to reach large audiences quickly, making hoaxes more impactful." }
+    ]
+  },
+  {
+    title: "The Great Pacific Garbage Patch",
+    text: `The Great Pacific Garbage Patch is a massive area of floating plastic and debris in the North Pacific Ocean. It is formed by the movement of ocean currents, known as gyres, which collect debris from across the Pacific. This swirling mass of plastic is not a solid island but rather a diffuse collection of small plastic fragments, discarded fishing nets, and other man-made items. Many pieces are so tiny that they are almost invisible, called microplastics, yet they still pose a major threat to marine life.
+
+Plastics enter the ocean through rivers, coastal littering, and waste dumped directly at sea. Over time, sunlight and waves break larger pieces into smaller fragments, which can persist for hundreds of years. Marine animals, including fish, turtles, and birds, can mistake these plastics for food, often leading to injury, starvation, or death. Chemicals from the plastics can accumulate in the bodies of animals and move up the food chain, potentially affecting humans who consume seafood.
+
+Cleaning up the garbage patch is extremely difficult. The plastics are widely dispersed across a huge area, often hundreds of kilometers in diameter. While some efforts use nets or booms to collect debris, it is impossible to remove microplastics efficiently without harming wildlife. As a result, scientists and environmentalists emphasize the importance of preventing plastic pollution at its source. Reducing single-use plastics, improving waste management, and recycling are essential steps to slow the accumulation of debris.
+
+The patch also serves as a warning about global environmental issues. It highlights how human activity in one part of the world can have far-reaching effects on ecosystems thousands of kilometers away. Research in this area helps scientists understand the impact of plastics on ocean currents, wildlife, and even climate systems. International cooperation is necessary to develop strategies that protect marine environments and reduce the flow of plastic waste into oceans.
+
+Public awareness campaigns and educational programs are helping people understand the scope of the problem. Many organizations encourage beach cleanups, sustainable consumption, and lobbying for policies that limit plastic production. Technology is also being developed to create biodegradable alternatives to traditional plastics and more efficient recycling methods. However, the challenge remains enormous, and long-term change will require both individual action and systemic policy shifts.
+
+In the future, the health of oceans may depend on how effectively humans manage plastic waste. Understanding the complexity of ocean currents, the persistence of plastics, and the vulnerability of marine species is crucial. By studying the Great Pacific Garbage Patch, scientists can develop informed solutions to prevent further ecological damage and ensure the sustainability of marine life for generations to come. Awareness, education, and action are the keys to addressing this pressing environmental issue.
+`,
+    questions: [
+      { q: "Word meaning — What does 'gyre' mean in the context of the passage?", choices: ["A type of plastic waste", "A deep-sea creature", "A rotating ocean current system", "A government policy"], a: 2, explanation: "A gyre is a large system of rotating ocean currents, where debris can accumulate." },
+      { q: "Word meaning — What does 'microplastics' most likely refer to?", choices: ["Small ocean creatures", "Extremely small pieces of plastic", "Tiny currents in the sea", "Microscopic fish eggs"], a: 1, explanation: "Microplastics are very small pieces of plastic, often less than 5mm in size." },
+      { q: "Why is cleaning up the Garbage Patch challenging?", choices: ["It is illegal to remove plastic from the ocean", "The currents make ships sink", "The plastics are spread over a huge area and often too small to easily collect", "There are too many sharks"], a: 2, explanation: "The debris is widely dispersed and includes tiny microplastics, making removal difficult." },
+      { q: "If plastic pollution continues unchecked, what is a likely consequence?", choices: ["Ocean temperatures will drop suddenly", "Marine food chains could be disrupted", "More rain will fall on coastal cities", "Whales will stop migrating"], a: 1, explanation: "Plastic harms marine life, which can disrupt entire food chains." },
+      { q: "Why might focusing only on cleanup be less effective than prevention?", choices: ["Prevention stops new plastic from entering, reducing the problem at its source", "Cleanup is too fun to be effective", "Prevention is cheaper than any other ocean activity", "Cleanup is impossible"], a: 0, explanation: "Stopping plastic at the source is more sustainable than constantly removing it afterward." },
+      { q: "Which human action would most directly reduce the size of the Garbage Patch?", choices: ["Fishing more often", "Building more ships", "Adding chemicals to the ocean", "Using less single-use plastic"], a: 3, explanation: "Reducing single-use plastic prevents it from entering the ocean and joining the garbage patch." }
+    ]
+  },
+  {
+    title: "The Mystery of the Roanoke Colony",
+    text: `In 1587, a group of English settlers arrived on Roanoke Island, off the coast of what is now North Carolina. This colony, sponsored by Sir Walter Raleigh, was meant to establish England’s presence in the New World. However, the settlers faced many challenges, including unfamiliar terrain, hostile relations with some Indigenous peoples, and scarce food supplies. After their governor, John White, returned to England for supplies, the colony was left alone for several years.
+
+When White returned in 1590, he found the settlement abandoned. No signs of struggle or destruction were evident, and the only clue was the word “CROATOAN” carved into a post. The fate of the colonists became one of America’s earliest and most enduring historical mysteries. Historians and archaeologists have proposed many theories, but no definitive evidence has been found to explain the disappearance.
+
+One possibility is that the settlers integrated with local Indigenous tribes for survival. Some accounts suggest that they may have moved inland to escape harsh coastal conditions, while other reports indicate that disease or famine could have caused deaths among the colonists. Environmental factors such as drought might also have played a role, reducing the availability of crops and fresh water.
+
+Archaeologists continue to search for artifacts that might reveal what happened. Pieces of European pottery, tools, and other items have been found at various nearby sites, leading some to speculate that the settlers dispersed across the region. However, these findings are inconclusive, and the mystery remains unsolved. The lack of written records from the colonists themselves only adds to the uncertainty.
+
+The story of Roanoke highlights the difficulties of early colonial ventures. Settlers had to adapt to unfamiliar lands, rely on trade with local peoples, and endure isolation. The disappearance of the colony has fascinated historians, writers, and the public for centuries, inspiring countless theories and fictional accounts. It serves as a reminder of the fragility of early settlements and the unpredictable challenges of exploring new territories.
+
+Despite over 400 years of research, the Roanoke Colony continues to intrigue scholars. It has become a symbol of human curiosity, resilience, and the enduring mysteries of history. Modern techniques, including ground-penetrating radar and advanced archaeological surveys, may one day provide more answers, but for now, Roanoke remains a puzzle that sparks imagination and inquiry about the early colonial period in North America.
+`,
+    questions: [
+      { q: "Word meaning — What does 'vanished' most nearly mean in the passage?", choices: ["Moved to another country", "Hidden temporarily", "Completely disappeared", "Destroyed by fire"], a: 2, explanation: "Vanished means completely disappeared without clear explanation." },
+      { q: "Word meaning — What does 'artifact' mean in this context?", choices: ["A tool or object made by humans from the past", "A type of ancient tree", "A mythical animal", "A lost language"], a: 0, explanation: "An artifact is an object made by humans, often from historical times." },
+      { q: "Why is the Roanoke Colony considered a mystery?", choices: ["The settlers disappeared with no definitive evidence explaining where they went", "The colony was destroyed by a hurricane", "The colonists moved to England", "It was abandoned due to cold weather"], a: 0, explanation: "The lack of conclusive evidence about their fate makes it a mystery." },
+      { q: "What does the word 'CROATOAN' carved into a post suggest to historians?", choices: ["That they were attacked by pirates", "A message to future settlers", "A religious symbol", "A possible clue that colonists went to Croatoan Island"], a: 3, explanation: "The carving suggests they may have relocated to Croatoan Island." },
+      { q: "Why might drought have contributed to the colony's disappearance?", choices: ["It would have made growing food and finding fresh water difficult", "It caused the colony to flood", "It made the soil too rich", "It increased visits from traders"], a: 0, explanation: "A drought would have made survival hard by limiting crops and water sources." },
+      { q: "What lesson can modern researchers learn from Roanoke?", choices: ["That all colonies fail", "The importance of thorough record-keeping and planning", "That storms are unavoidable", "To avoid coastal settlements"], a: 1, explanation: "Keeping detailed records and planning can help avoid repeating past mistakes." }
+    ]
+  },
+  {
+    title: "The Science of Dreams",
+    text: `Dreams have fascinated humans for centuries, inspiring myths, art, and scientific inquiry. Modern research shows that dreams occur during the Rapid Eye Movement (REM) stage of sleep, a period when brain activity is high and vivid imagery is common. During REM sleep, the eyes move quickly, and the brain processes emotions, memories, and experiences from the day. Dreams can range from realistic scenarios to bizarre, fantastical sequences that defy logic.
+
+The purpose of dreams remains a topic of investigation. Some scientists believe that dreaming helps the brain process emotions, solve problems, and consolidate memories. For instance, dreaming about challenges faced during the day may allow individuals to rehearse solutions or gain new insights. Other researchers suggest that dreams play a role in creativity, allowing the mind to combine ideas in novel ways that might not occur during waking thought.
+
+Lucid dreaming is a phenomenon in which the dreamer is aware they are dreaming and can sometimes influence the dream’s content. Techniques for achieving lucid dreams include reality checks, keeping a dream journal, and setting intentions before sleep. This awareness can enhance problem-solving abilities, promote creativity, and even help address recurring nightmares.
+
+Dream content often reflects personal experiences, emotions, and concerns. Stress, anxiety, and trauma can influence the vividness and themes of dreams. In contrast, positive experiences can lead to pleasant dreams that reinforce learning or mood. Despite these insights, many aspects of dreams remain mysterious, and the interpretation of dreams should be approached carefully, avoiding overgeneralization.
+
+Sleep deprivation can interfere with dreaming, particularly REM sleep. Individuals who are deprived of REM often experience increased irritability, reduced focus, and memory problems. Studying dreams provides scientists with a better understanding of sleep cycles, brain function, and the interconnections between consciousness and mental health.
+
+Overall, dreams are a window into the complex workings of the human mind. By exploring why we dream, how dreams relate to emotions and cognition, and how they influence creativity and problem-solving, researchers continue to uncover the remarkable functions of sleep. Dream studies also offer practical applications for education, therapy, and personal growth, highlighting the deep connection between sleep, the brain, and our waking lives. Awareness and study of dreams enhance our understanding of ourselves and the fascinating processes that occur while we sleep.
+`,
+    questions: [
+      { q: "Word meaning — What does 'REM' stand for in the passage?", choices: ["Real Energy Mode", "Rest Every Minute", "Random Event Motion", "Rapid Eye Movement"], a: 3, explanation: "REM stands for Rapid Eye Movement, a stage of sleep where dreaming is most vivid." },
+      { q: "Word meaning — What does 'lucid dreaming' mean?", choices: ["Being aware you are dreaming while in the dream", "Sleeping without dreams", "Controlling your heartbeat during sleep", "Waking up suddenly"], a: 0, explanation: "Lucid dreaming is when a person realizes they are dreaming and may control aspects of it." },
+      { q: "Why do scientists believe dreams may help with problem-solving?", choices: ["Dreams stop you from sleeping too long", "Dreams are always realistic", "Dreams can simulate scenarios and allow creative thinking", "Dreams erase bad memories"], a: 2, explanation: "By simulating events and challenges, dreams can encourage novel solutions." },
+      { q: "If someone is deprived of REM sleep, what might happen?", choices: ["They may have trouble concentrating and remembering things", "They will dream more vividly", "They will not be able to move", "They will not feel tired"], a: 0, explanation: "Lack of REM sleep affects memory, focus, and emotional regulation." },
+      { q: "Why might dream journals help researchers?", choices: ["They help people fall asleep faster", "They provide data on recurring themes and dream frequency", "They stop nightmares from happening", "They increase deep sleep"], a: 1, explanation: "Written records give scientists information about patterns in dreams." },
+      { q: "What conclusion can be drawn about the purpose of dreams?", choices: ["They may serve multiple roles, including emotional processing and creativity", "They have no effect on daily life", "They are only for entertainment", "They are dangerous to mental health"], a: 0, explanation: "Evidence suggests dreams may support mental health, learning, and creativity." }
+    ]
+  }
+];
+
+
+
+
+
+/* ===== State & UI elements ===== */
+let page = 0;
+const totalPages = passages.length;
+const answers = {}; // store selected original index per question, e.g., 'p0q1': 2
+
+const passageHeader = document.getElementById('passageHeader');
+const passageText = document.getElementById('passageText');
+const qsContainer = document.getElementById('questionsContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const feedback = document.getElementById('feedback');
+const qHeader = document.getElementById('qHeader');
+
+const renderedQuestionNodes = {}; // track rendered nodes for inserting explanations
+
+/* Render page */
+function renderPage(idx) {
+  const p = passages[idx];
+  passageHeader.textContent = `Passage ${idx+1} of ${totalPages} — ${p.title}`;
+  passageText.textContent = p.text;
+  qsContainer.innerHTML = '';
+  qHeader.textContent = `Questions — Passage ${idx+1}`;
+  // clear rendered map
+  for (const k in renderedQuestionNodes) delete renderedQuestionNodes[k];
+
+  p.questions.forEach((q, qi) => {
+    const qKey = `p${idx}q${qi}`;
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.id = qKey;
+
+    const qTitle = document.createElement('div');
+    qTitle.className = 'qtext';
+    qTitle.textContent = `Q${qi+1}. ${q.q}`;
+    qDiv.appendChild(qTitle);
+
+    // Shuffle display order but keep original indices
+    const choiceObjs = q.choices.map((c, i) => ({ text: c, origIndex: i }));
+    shuffle(choiceObjs);
+
+    const labels = [];
+    choiceObjs.forEach((ch, ci) => {
+      const id = `${qKey}c${ci}`;
+      const label = document.createElement('label');
+      label.className = 'option';
+      label.htmlFor = id;
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = qKey;
+      radio.id = id;
+      radio.value = ch.origIndex; // store original index for grading
+
+      if (answers[qKey] !== undefined && answers[qKey] === ch.origIndex) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener('change', () => {
+        answers[qKey] = Number(radio.value);
+      });
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(ch.text));
+      qDiv.appendChild(label);
+      labels.push(label);
+    });
+
+    qsContainer.appendChild(qDiv);
+    renderedQuestionNodes[qKey] = { container: qDiv, labels: labels, questionObj: q };
+  });
+
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === totalPages - 1;
+  submitBtn.style.display = (idx === totalPages - 1) ? 'inline-block' : 'none';
+  feedback.innerHTML = '';
+}
+
+/* Grading and explanations insertion */
+function gradeAllAndShow() {
+  let total = 0, score = 0;
+  const fullReview = document.createElement('div');
+
+  passages.forEach((p, pi) => {
+    const passBlock = document.createElement('div');
+    passBlock.style.marginBottom = '12px';
+    const passTitle = document.createElement('div');
+    passTitle.style.fontWeight = '700';
+    passTitle.textContent = `Passage ${pi+1}: ${p.title}`;
+    passBlock.appendChild(passTitle);
+
+    p.questions.forEach((q, qi) => {
+      total++;
+      const key = `p${pi}q${qi}`;
+      const chosen = answers[key] !== undefined ? Number(answers[key]) : null;
+      const isCorrect = chosen === q.a;
+      if (isCorrect) score++;
+
+      // If this question is currently visible, insert explanation directly under it
+      const rendered = renderedQuestionNodes[key];
+      if (rendered && rendered.container) {
+        const oldExpl = rendered.container.querySelector('.explanation');
+        if (oldExpl) oldExpl.remove();
+
+        const expl = document.createElement('div');
+        expl.className = 'explanation';
+
+        const status = document.createElement('div');
+        status.style.fontWeight = '700';
+        status.style.marginBottom = '6px';
+        if (isCorrect) {
+          status.textContent = `✅ Correct — You chose: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+          status.style.color = 'var(--good-text)';
+        } else {
+          status.textContent = `❌ ${chosen === null ? 'Unanswered' : 'Incorrect'} — Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}; Correct: ${q.choices[q.a]}`;
+          status.style.color = 'var(--bad-text)';
+        }
+        expl.appendChild(status);
+
+        const expt = document.createElement('div');
+        expt.textContent = q.explanation || '';
+        expl.appendChild(expt);
+
+        rendered.container.appendChild(expl);
+
+        // highlight labels
+        rendered.labels.forEach(lbl => {
+          const inp = lbl.querySelector('input[type=radio]');
+          if (!inp) return;
+          const val = Number(inp.value);
+          if (val === q.a) {
+            lbl.style.border = '1px solid #bfe6c8';
+            lbl.style.background = '#f0fff4';
+          }
+          if (chosen !== null && val === chosen && chosen !== q.a) {
+            lbl.style.border = '1px solid #ffd6d6';
+            lbl.style.background = '#fff6f6';
+          }
+        });
+      }
+
+      // Build full-review item
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const qn = document.createElement('div');
+      qn.className = 'qtext';
+      qn.textContent = `Passage ${pi+1} — Q${qi+1}. ${q.q}`;
+      item.appendChild(qn);
+
+      const your = document.createElement('div');
+      your.style.marginTop = '6px';
+      your.textContent = `Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+      item.appendChild(your);
+
+      const correctDiv = document.createElement('div');
+      correctDiv.style.marginTop = '6px';
+      correctDiv.textContent = `Correct answer: ${q.choices[q.a]}`;
+      item.appendChild(correctDiv);
+
+      const explanDiv = document.createElement('div');
+      explanDiv.style.marginTop = '6px';
+      explanDiv.textContent = q.explanation || '';
+      item.appendChild(explanDiv);
+
+      passBlock.appendChild(item);
+    });
+
+    fullReview.appendChild(passBlock);
+  });
+
+  feedback.innerHTML = '';
+  const scoreBox = document.createElement('div');
+  scoreBox.className = 'resultBox';
+  scoreBox.innerHTML = `<div style="font-weight:700">Score: ${score} / ${total}</div><div class="small" style="margin-top:6px">Explanations appear beneath visible questions; full review follows.</div>`;
+  feedback.appendChild(scoreBox);
+  feedback.appendChild(fullReview);
+
+  disableAllInputs();
+  feedback.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* disable inputs and nav */
+function disableAllInputs() {
+  const radios = document.querySelectorAll('input[type=radio]');
+  radios.forEach(r => r.disabled = true);
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+  submitBtn.disabled = true;
+}
+
+/* Events */
+prevBtn.addEventListener('click', () => {
+  if (page > 0) {
+    page--;
+    renderPage(page);
+  }
+});
+nextBtn.addEventListener('click', () => {
+  if (page < totalPages - 1) {
+    page++;
+    renderPage(page);
+  }
+});
+submitBtn.addEventListener('click', () => {
+  if (!confirm("Submit answers and view explanations? You won't be able to change answers afterward.")) return;
+  gradeAllAndShow();
+});
+
+/* Init */
+renderPage(page);
+
+</script>
+</body>
+</html>
