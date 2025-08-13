@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Interpretation Exercises - Grade 5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{font-family: Arial, sans-serif; max-width:900px; margin:20px auto; padding:10px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .img{max-width:100%; height:auto; border:1px solid #ccc; padding:6px;}
+  .options label{display:block; margin:6px 0; cursor:pointer;}
+  .nav{margin-top:12px;}
+  .correct{color:green;}
+  .wrong{color:red;}
+  .result-row{padding:6px; border-bottom:1px solid #eee;}
+  .question-title{font-weight:600;}
+  .center{text-align:center;}
+  .btn{padding:8px 12px; margin:6px; cursor:pointer;}
+</style>
+</head>
+<body>
+<h1>Data Interpretation — Grade 5 Level</h1>
+<p><a href="../../index.html">Back To Main Page</a></p>
+<p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
+<div id="container"></div>
+<script>
+
+const exercises = [
+  {
+    "title": "Favorite Ice Cream Flavors",
+    "img": "images/3_1.png",
+    "questions": [
+      {
+        "q": "Which ice cream flavor is the most popular?",
+        "opts": [
+          "Vanilla",
+          "Chocolate",
+          "Strawberry",
+          "Mint"
+        ],
+        "ans": "Chocolate"
+      },
+      {
+        "q": "What percentage of students prefer Vanilla?",
+        "opts": [
+          "20%",
+          "30%",
+          "40%",
+          "50%"
+        ],
+        "ans": "30%"
+      },
+      {
+        "q": "How many more students prefer Mint over Strawberry?",
+        "opts": [
+          "5",
+          "10",
+          "15",
+          "20"
+        ],
+        "ans": "10"
+      },
+      {
+        "q": "If 200 students were surveyed, how many prefer Chocolate?",
+        "opts": [
+          "50",
+          "60",
+          "70",
+          "80"
+        ],
+        "ans": "60"
+      },
+      {
+        "q": "Which two flavors together make up 50% of the preferences?",
+        "opts": [
+          "Vanilla and Mint",
+          "Chocolate and Strawberry",
+          "Vanilla and Chocolate",
+          "Strawberry and Mint"
+        ],
+        "ans": "Vanilla and Chocolate"
+      }
+    ]
+  },
+  {
+    "title": "Monthly Rainfall",
+    "img": "images/3_2.png",
+    "questions": [
+      {
+        "q": "In which month was the rainfall the highest?",
+        "opts": [
+          "January",
+          "March",
+          "May",
+          "July"
+        ],
+        "ans": "May"
+      },
+      {
+        "q": "How many inches of rain fell in March?",
+        "opts": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "ans": "3"
+      },
+      {
+        "q": "Which two months had the same amount of rainfall?",
+        "opts": [
+          "January and February",
+          "March and April",
+          "May and June",
+          "July and August"
+        ],
+        "ans": "March and April"
+      },
+      {
+        "q": "What is the total rainfall from January to June?",
+        "opts": [
+          "12 inches",
+          "15 inches",
+          "18 inches",
+          "20 inches"
+        ],
+        "ans": "15 inches"
+      },
+      {
+        "q": "In which month was the rainfall the lowest?",
+        "opts": [
+          "January",
+          "February",
+          "March",
+          "April"
+        ],
+        "ans": "February"
+      }
+    ]
+  },
+  {
+    "title": "Classroom Pets",
+    "img": "images/3_3.png",
+    "questions": [
+      {
+        "q": "Which pet is the most common?",
+        "opts": [
+          "Rabbit",
+          "Hamster",
+          "Guinea Pig",
+          "Fish"
+        ],
+        "ans": "Hamster"
+      },
+      {
+        "q": "How many more Guinea Pigs than Rabbits are there?",
+        "opts": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "ans": "2"
+      },
+      {
+        "q": "Which two pets together make up 60% of the total?",
+        "opts": [
+          "Rabbit and Guinea Pig",
+          "Hamster and Fish",
+          "Guinea Pig and Fish",
+          "Rabbit and Hamster"
+        ],
+        "ans": "Rabbit and Hamster"
+      },
+      {
+        "q": "If there are 50 pets in total, how many are Fish?",
+        "opts": [
+          "5",
+          "10",
+          "15",
+          "20"
+        ],
+        "ans": "10"
+      },
+      {
+        "q": "Which pet has the smallest share?",
+        "opts": [
+          "Rabbit",
+          "Hamster",
+          "Guinea Pig",
+          "Fish"
+        ],
+        "ans": "Fish"
+      }
+    ]
+  },
+  {
+    "title": "Student Test Scores",
+    "img": "images/3_4.png",
+    "questions": [
+      {
+        "q": "Which student scored the highest?",
+        "opts": [
+          "Alice",
+          "Bob",
+          "Charlie",
+          "David"
+        ],
+        "ans": "Alice"
+      },
+      {
+        "q": "What is the average score?",
+        "opts": [
+          "85",
+          "90",
+          "95",
+          "100"
+        ],
+        "ans": "90"
+      },
+      {
+        "q": "Which two students have the same score?",
+        "opts": [
+          "Alice and Bob",
+          "Bob and Charlie",
+          "Charlie and David",
+          "Alice and David"
+        ],
+        "ans": "Bob and Charlie"
+      },
+      {
+        "q": "What is the range of scores?",
+        "opts": [
+          "5",
+          "10",
+          "15",
+          "20"
+        ],
+        "ans": "10"
+      },
+      {
+        "q": "Which student has the lowest score?",
+        "opts": [
+          "Alice",
+          "Bob",
+          "Charlie",
+          "David"
+        ],
+        "ans": "David"
+      }
+    ]
+  },
+  {
+    "title": "Sports Participation",
+    "img": "images/3_5.png",
+    "questions": [
+      {
+        "q": "Which sport has the most participants?",
+        "opts": [
+          "Soccer",
+          "Basketball",
+          "Baseball",
+          "Tennis"
+        ],
+        "ans": "Soccer"
+      },
+      {
+        "q": "How many more students play Basketball than Baseball?",
+        "opts": [
+          "5",
+          "10",
+          "15",
+          "20"
+        ],
+        "ans": "10"
+      },
+      {
+        "q": "Which two sports together have the same number of participants as Soccer?",
+        "opts": [
+          "Basketball and Baseball",
+          "Basketball and Tennis",
+          "Baseball and Tennis",
+          "Soccer and Baseball"
+        ],
+        "ans": "Basketball and Baseball"
+      },
+      {
+        "q": "If there are 100 students in total, how many play Tennis?",
+        "opts": [
+          "10",
+          "15",
+          "20",
+          "25"
+        ],
+        "ans": "20"
+      },
+      {
+        "q": "Which sport has the fewest participants?",
+        "opts": [
+          "Soccer",
+          "Basketball",
+          "Baseball",
+          "Tennis"
+        ],
+        "ans": "Tennis"
+      }
+    ]
+  }
+]
+
+
+function createPage(ex, idx) {
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-' + idx;
+  let html = '<h2>Exercise ' + (idx+1) + ': ' + ex.title + '</h2>';
+  html += '<img class="img" src="' + ex.img + '" alt="chart">';
+  ex.questions.forEach((q, qi) => {
+    const qid = 'e' + idx + 'q' + qi;
+    html += `<div class="question" id="${qid}"><p class="question-title">${qi+1}. ${q.q}</p>`;
+    html += '<div class="options">';
+    for (let i=0;i<q.opts.length;i++) {
+      const opt = q.opts[i];
+      const oid = qid + '_opt' + i;
+      html += `<label><input type="radio" name="${qid}" value="${opt}" id="${oid}"> ${opt}</label>`;
+    }
+    html += '</div></div><hr/>';
+  });
+  html += '<div class="nav">';
+  if (idx>0) html += '<button class="btn" onclick="showPage(' + (idx-1) + ')">Previous</button>';
+  if (idx < exercises.length-1) html += '<button class="btn" onclick="showPage(' + (idx+1) + ')">Next</button>';
+  if (idx === exercises.length-1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
+  html += '</div>';
+  div.innerHTML = html;
+  return div;
+}
+
+function init() {
+  const container = document.getElementById('container');
+  exercises.forEach((ex, i) => container.appendChild(createPage(ex,i)));
+  showPage(0);
+}
+
+function showPage(i) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-' + i).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showResults() {
+  const resultsDiv = document.createElement('div');
+  resultsDiv.id = 'results';
+  let html = '<h2>Results</h2>';
+  let total=0, correct=0;
+  exercises.forEach((ex, ei) => {
+    html += `<h3>Exercise ${ei+1}: ${ex.title}</h3>`;
+    ex.questions.forEach((q, qi) => {
+      total++;
+      const qid = 'e' + ei + 'q' + qi;
+      const els = document.getElementsByName(qid);
+      let selected = null;
+      for (const r of els) if (r.checked) selected = r.value;
+      const isCorrect = (selected === q.ans);
+      if (isCorrect) correct++;
+      html += `<div class="result-row">`;
+      html += `<div class="question-title">${ei+1}.${qi+1} ${q.q}</div>`;
+      if (selected === null) {
+        html += `<div class="wrong">No answer — Correct: ${q.ans}</div>`;
+      } else if (isCorrect) {
+        html += `<div class="correct">Your answer: ${selected} — Correct</div>`;
+      } else {
+        html += `<div class="wrong">Your answer: ${selected} — Incorrect. Correct: ${q.ans}</div>`;
+      }
+      html += `</div>`;
+    });
+  });
+  html += `<h3 class="center">Score: ${correct} / ${total}</h3>`;
+  resultsDiv.innerHTML = html;
+  document.body.appendChild(resultsDiv);
+  resultsDiv.scrollIntoView();
+  const btn = document.getElementById('submitBtn');
+  if (btn) btn.disabled = true;
+}
+
+init();
+</script>
+</body>
+</html>
