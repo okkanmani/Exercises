@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Interpretation Exercises - Grade 5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{font-family: Arial, sans-serif; max-width:900px; margin:20px auto; padding:10px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .img{max-width:100%; height:auto; border:1px solid #ccc; padding:6px;}
+  .options label{display:block; margin:6px 0; cursor:pointer;}
+  .nav{margin-top:12px;}
+  .correct{color:green;}
+  .wrong{color:red;}
+  .result-row{padding:6px; border-bottom:1px solid #eee;}
+  .question-title{font-weight:600;}
+  .center{text-align:center;}
+  .btn{padding:8px 12px; margin:6px; cursor:pointer;}
+</style>
+</head>
+<body>
+<h1>Data Interpretation — Grade 5 Level</h1>
+<p><a href="../../index.html">Back To Main Page</a></p>
+<p>There are 5 exercises. Each has 5 multiple-choice questions. Navigate with Previous/Next and press <strong>Submit All</strong> on the last page to see results. Correct answers are in green, wrong answers in red.</p>
+<div id="container"></div>
+<script>
+const exercises = [
+  {
+    "title": "Forces and Motion - Set 1",
+    "img": "images/1_1.png",
+    "questions": [
+      {
+        "q": "Which object traveled the farthest?",
+        "opts": [
+          "Ball",
+          "Box",
+          "Skateboard",
+          "Toy Car"
+        ],
+        "ans": "Skateboard"
+      },
+      {
+        "q": "How much farther did the Toy Car travel than the Box?",
+        "opts": [
+          "10",
+          "12",
+          "13",
+          "15"
+        ],
+        "ans": "13"
+      },
+      {
+        "q": "Which two objects together traveled the same distance as the Ball?",
+        "opts": [
+          "Box and Chair",
+          "Box and Toy Car",
+          "Chair and Toy Car",
+          "Box and Skateboard"
+        ],
+        "ans": "Box and Chair"
+      },
+      {
+        "q": "What is the average distance traveled by all objects?",
+        "opts": [
+          "10.2",
+          "12.2",
+          "13.2",
+          "14.2"
+        ],
+        "ans": "12.2"
+      },
+      {
+        "q": "If the Box was pushed with double the force and traveled twice as far, what would its new distance be?",
+        "opts": [
+          "8",
+          "9",
+          "10",
+          "11"
+        ],
+        "ans": "10"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 2",
+    "img": "images/1_2.png",
+    "questions": [
+      {
+        "q": "Which object traveled the least?",
+        "opts": [
+          "Feather",
+          "Rock",
+          "Paper Plane",
+          "Book"
+        ],
+        "ans": "Rock"
+      },
+      {
+        "q": "How many more meters did the Paper Plane travel than the Book?",
+        "opts": [
+          "15",
+          "20",
+          "25",
+          "30"
+        ],
+        "ans": "20"
+      },
+      {
+        "q": "What is the total distance traveled by all objects?",
+        "opts": [
+          "90",
+          "95",
+          "100",
+          "105"
+        ],
+        "ans": "90"
+      },
+      {
+        "q": "Which object traveled more than 20 meters?",
+        "opts": [
+          "Feather",
+          "Paper Plane",
+          "Balloon",
+          "Rock"
+        ],
+        "ans": "Paper Plane"
+      },
+      {
+        "q": "If the Rock was pushed with triple the force, what would its new distance be?",
+        "opts": [
+          "10",
+          "12",
+          "15",
+          "18"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 3",
+    "img": "images/1_3.png",
+    "questions": [
+      {
+        "q": "Which object traveled the second farthest?",
+        "opts": [
+          "Roller",
+          "Crate",
+          "Wheel",
+          "Cart"
+        ],
+        "ans": "Cart"
+      },
+      {
+        "q": "What is the difference in distance between the Wheel and Crate?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "Which two objects together equal the distance of the Wheel?",
+        "opts": [
+          "Roller and Crate",
+          "Cart and Bag",
+          "Roller and Bag",
+          "Crate and Bag"
+        ],
+        "ans": "Roller and Bag"
+      },
+      {
+        "q": "What is the average distance traveled?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "If the Crate doubled its distance, what would it be?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 4",
+    "img": "images/1_4.png",
+    "questions": [
+      {
+        "q": "Which object traveled the most?",
+        "opts": [
+          "Toy Train",
+          "Block",
+          "Sled",
+          "Can"
+        ],
+        "ans": "Toy Train"
+      },
+      {
+        "q": "What is the total distance traveled?",
+        "opts": [
+          "70",
+          "75",
+          "80",
+          "85"
+        ],
+        "ans": "70"
+      },
+      {
+        "q": "Which object traveled less than 10 meters?",
+        "opts": [
+          "Block",
+          "Can",
+          "Bottle",
+          "Sled"
+        ],
+        "ans": "Block"
+      },
+      {
+        "q": "What is the average distance traveled?",
+        "opts": [
+          "12",
+          "13",
+          "14",
+          "15"
+        ],
+        "ans": "14"
+      },
+      {
+        "q": "If the Bottle increased by 2 meters, what would be its new distance?",
+        "opts": [
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
+  {
+    "title": "Forces and Motion - Set 5",
+    "img": "images/1_5.png",
+    "questions": [
+      {
+        "q": "Which object traveled the least?",
+        "opts": [
+          "Marble",
+          "Toy Truck",
+          "Box",
+          "Stick"
+        ],
+        "ans": "Box"
+      },
+      {
+        "q": "How many more meters did the Toy Truck travel than the Box?",
+        "opts": [
+          "10",
+          "11",
+          "12",
+          "13"
+        ],
+        "ans": "12"
+      },
+      {
+        "q": "Which two objects together equal the distance of the Toy Truck?",
+        "opts": [
+          "Marble and Stick",
+          "Box and Ball",
+          "Ball and Stick",
+          "Marble and Ball"
+        ],
+        "ans": "Marble and Ball"
+      },
+      {
+        "q": "What is the average distance traveled?",
+        "opts": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ],
+        "ans": "14.2"
+      },
+      {
+        "q": "If the Stick increased by 4 meters, what would be its new distance?",
+        "opts": [
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        "ans": "15"
+      }
+    ]
+  },
+]
+
+function createPage(ex, idx) {
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-' + idx;
+
+  let html = '<h2>Exercise ' + (idx + 1) + ': ' + ex.title + '</h2>';
+
+  // ✅ Only include image if it's present and not empty
+  if (ex.img && ex.img.trim() !== '') {
+    html += '<img class="img" src="' + ex.img + '" alt="chart">';
+  }
+
+  ex.questions.forEach((q, qi) => {
+    const qid = 'e' + idx + 'q' + qi;
+    html += `<div class="question" id="${qid}"><p class="question-title">${qi + 1}. ${q.q}</p>`;
+    html += '<div class="options">';
+    for (let i = 0; i < q.opts.length; i++) {
+      const opt = q.opts[i];
+      const oid = qid + '_opt' + i;
+      html += `<label><input type="radio" name="${qid}" value="${opt}" id="${oid}"> ${opt}</label>`;
+    }
+    html += '</div></div><hr/>';
+  });
+
+  html += '<div class="nav">';
+  if (idx > 0) html += '<button class="btn" onclick="showPage(' + (idx - 1) + ')">Previous</button>';
+  if (idx < exercises.length - 1) html += '<button class="btn" onclick="showPage(' + (idx + 1) + ')">Next</button>';
+  if (idx === exercises.length - 1) html += '<button class="btn" id="submitBtn" onclick="showResults()">Submit All</button>';
+  html += '</div>';
+
+  div.innerHTML = html;
+  return div;
+}
+
+function init() {
+  const container = document.getElementById('container');
+  exercises.forEach((ex, i) => container.appendChild(createPage(ex,i)));
+  showPage(0);
+}
+
+function showPage(i) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-' + i).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showResults() {
+  const resultsDiv = document.createElement('div');
+  resultsDiv.id = 'results';
+  let html = '<h2>Results</h2>';
+  let total=0, correct=0;
+  exercises.forEach((ex, ei) => {
+    html += `<h3>Exercise ${ei+1}: ${ex.title}</h3>`;
+    ex.questions.forEach((q, qi) => {
+      total++;
+      const qid = 'e' + ei + 'q' + qi;
+      const els = document.getElementsByName(qid);
+      let selected = null;
+      for (const r of els) if (r.checked) selected = r.value;
+      const isCorrect = (selected === q.ans);
+      if (isCorrect) correct++;
+      html += `<div class="result-row">`;
+      html += `<div class="question-title">${ei+1}.${qi+1} ${q.q}</div>`;
+      if (selected === null) {
+        html += `<div class="wrong">No answer — Correct: ${q.ans}</div>`;
+      } else if (isCorrect) {
+        html += `<div class="correct">Your answer: ${selected} — Correct</div>`;
+      } else {
+        html += `<div class="wrong">Your answer: ${selected} — Incorrect. Correct: ${q.ans}</div>`;
+      }
+      html += `</div>`;
+    });
+  });
+  html += `<h3 class="center">Score: ${correct} / ${total}</h3>`;
+  resultsDiv.innerHTML = html;
+  document.body.appendChild(resultsDiv);
+  resultsDiv.scrollIntoView();
+  const btn = document.getElementById('submitBtn');
+  if (btn) btn.disabled = true;
+}
+
+init();
+</script>
+</body>
+</html>

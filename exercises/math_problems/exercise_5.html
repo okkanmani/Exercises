@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        font-size: 26px;
+    }
+    .question {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .options label {
+        display: block;
+        margin: 8px 0;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+    .options input {
+        margin-right: 8px;
+    }
+    .navigation {
+        margin-top: 20px;
+    }
+    button {
+        padding: 8px 14px;
+        margin: 0 5px;
+        border: none;
+        background-color: #4285f4;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #3367d6;
+    }
+    .feedback {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .correct {
+        color: green;
+    }
+    .incorrect {
+        color: red;
+    }
+    .explanation {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Physics Quiz</h1>
+    <p><a href="../../index.html">Back To Main Page</a></p>
+    <div id="quiz"></div>
+    <div class="navigation">
+        <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button id="submitBtn" onclick="submitQuiz()" style="display:none;">Submit</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "What force keeps the Moon in orbit around Earth?",
+    options: ["Magnetism", "Gravity", "Wind", "Electricity"],
+    answer: "Gravity",
+    explanation: "Gravity is the force that keeps celestial bodies like the Moon in orbit around planets."
+  },
+  {
+    q: "Which of Newton’s laws explains why a ball stays still until kicked?",
+    options: ["First Law", "Second Law", "Third Law", "Law of Gravity"],
+    answer: "First Law",
+    explanation: "Newton’s First Law states that an object at rest stays at rest unless acted upon by a force."
+  },
+  {
+    q: "What is the unit of force?",
+    options: ["Meter", "Kilogram", "Newton", "Joule"],
+    answer: "Newton",
+    explanation: "The unit of force is named after Sir Isaac Newton: Newton (N)."
+  },
+  {
+    q: "Which planet has the strongest gravitational pull?",
+    options: ["Earth", "Mars", "Jupiter", "Venus"],
+    answer: "Jupiter",
+    explanation: "Jupiter is the largest planet and has the strongest gravity in our solar system."
+  },
+  {
+    q: "Why do astronauts appear to float in space?",
+    options: ["No gravity", "They are weightless", "Free fall around Earth", "Space pushes them up"],
+    answer: "Free fall around Earth",
+    explanation: "Astronauts are in continuous free fall around Earth, creating a sensation of weightlessness."
+  },
+  {
+    q: "What causes an object to accelerate?",
+    options: ["Balanced forces", "Friction", "Unbalanced forces", "Inertia"],
+    answer: "Unbalanced forces",
+    explanation: "Unbalanced forces cause changes in motion, including acceleration."
+  },
+  {
+    q: "Which of these is an example of Newton’s Third Law?",
+    options: ["A ball falling", "A rocket launching", "A book on a table", "A car stopping"],
+    answer: "A rocket launching",
+    explanation: "Newton’s Third Law: For every action, there is an equal and opposite reaction."
+  },
+  {
+    q: "What happens to your weight on the Moon?",
+    options: ["It increases", "It stays the same", "It decreases", "It disappears"],
+    answer: "It decreases",
+    explanation: "The Moon has less gravity than Earth, so your weight is less there."
+  },
+  {
+    q: "What is inertia?",
+    options: ["Force that speeds things up", "Resistance to motion change", "Gravity pull", "Push from friction"],
+    answer: "Resistance to motion change",
+    explanation: "Inertia is the tendency of objects to resist changes in their motion."
+  },
+  {
+    q: "Which force slows down a moving bicycle?",
+    options: ["Gravity", "Friction", "Magnetism", "Inertia"],
+    answer: "Friction",
+    explanation: "Friction between the tires and the ground slows the bicycle down."
+  },
+  {
+    q: "What causes day and night on Earth?",
+    options: ["Earth’s orbit", "Earth’s rotation", "Moon blocking Sun", "Earth’s tilt"],
+    answer: "Earth’s rotation",
+    explanation: "Earth rotates on its axis, causing different parts to face the Sun and experience day or night."
+  },
+  {
+    q: "What is acceleration?",
+    options: ["Constant speed", "Change in speed", "Stopping", "Change in direction only"],
+    answer: "Change in speed",
+    explanation: "Acceleration is the rate at which an object’s speed changes over time."
+  },
+  {
+    q: "Which planet is known for its rings?",
+    options: ["Mars", "Earth", "Saturn", "Mercury"],
+    answer: "Saturn",
+    explanation: "Saturn is famous for its beautiful and visible ring system."
+  },
+  {
+    q: "What keeps planets in orbit around the Sun?",
+    options: ["Magnetism", "Gravity", "Wind", "Light"],
+    answer: "Gravity",
+    explanation: "The Sun’s gravity pulls planets into orbit around it."
+  },
+  {
+    q: "If a box is pushed with more force, what happens?",
+    options: ["It slows down", "It speeds up", "It stops", "It floats"],
+    answer: "It speeds up",
+    explanation: "According to Newton’s Second Law, more force results in more acceleration."
+  },
+  {
+    q: "Which of these is NOT a planet?",
+    options: ["Neptune", "Pluto", "Venus", "Moon"],
+    answer: "Moon",
+    explanation: "The Moon is Earth’s natural satellite, not a planet."
+  },
+  {
+    q: "Why do we feel heavier in a fast-moving elevator going up?",
+    options: ["Gravity increases", "Acceleration adds force", "Air pushes us", "Elevator is small"],
+    answer: "Acceleration adds force",
+    explanation: "The upward acceleration adds to the normal force, making us feel heavier."
+  },
+  {
+    q: "What is Newton’s Second Law?",
+    options: ["Force equals mass times acceleration", "Objects stay at rest", "Every action has a reaction", "Gravity pulls down"],
+    answer: "Force equals mass times acceleration",
+    explanation: "Newton’s Second Law: F = ma, explains how force affects motion."
+  },
+  {
+    q: "Which of these is a balanced force scenario?",
+    options: ["A book resting on a table", "A car speeding up", "A ball rolling", "A rocket launching"],
+    answer: "A book resting on a table",
+    explanation: "Balanced forces keep the book stationary with gravity and support force equal."
+  },
+  {
+    q: "What happens when two equal forces act in opposite directions?",
+    options: ["Object speeds up", "Object slows down", "Object stays still", "Object spins"],
+    answer: "Object stays still",
+    explanation: "Equal and opposite forces cancel each other out, resulting in no motion."
+  }
+];
+
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function loadQuestion() {
+    const quizEl = document.getElementById("quiz");
+    const qData = quizData[currentQuestion];
+    const options = shuffleArray([...qData.options]);
+
+    let html = `<div class="question"><strong>Question ${currentQuestion+1} of ${quizData.length}</strong><br>${qData.q}</div>`;
+    html += `<div class="options">`;
+    options.forEach(opt => {
+        const checked = userAnswers[currentQuestion] === opt ? 'checked' : '';
+        html += `<label><input type="radio" name="q${currentQuestion}" value="${opt}" ${checked}> ${opt}</label>`;
+    });
+    html += `</div>`;
+    quizEl.innerHTML = html;
+
+    document.getElementById("prevBtn").style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+    document.getElementById("nextBtn").style.display = currentQuestion === quizData.length - 1 ? 'none' : 'inline-block';
+    document.getElementById("submitBtn").style.display = currentQuestion === quizData.length - 1 ? 'inline-block' : 'none';
+}
+
+function saveAnswer() {
+    const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+    if (selected) {
+        userAnswers[currentQuestion] = selected.value;
+    }
+}
+
+function nextQuestion() {
+    saveAnswer();
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function prevQuestion() {
+    saveAnswer();
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function submitQuiz() {
+    saveAnswer();
+    let score = 0;
+    let html = "";
+    quizData.forEach((q, idx) => {
+        const userAns = userAnswers[idx];
+        const correct = userAns === q.answer;
+        if (correct) score++;
+        html += `<div class="question"><strong>Question ${idx+1}:</strong> ${q.q}</div>`;
+        html += `<div class="feedback ${correct ? 'correct' : 'incorrect'}">${correct ? 'Correct!' : 'Incorrect'} (Your answer: ${userAns || 'No answer'})</div>`;
+        if (!correct) {
+            html += `<div class="correct">Correct answer: ${q.answer}</div>`;
+        }
+        html += `<div class="explanation">${q.explanation}</div><hr>`;
+    });
+    html += `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+    document.getElementById("quiz").innerHTML = html;
+    document.querySelector(".navigation").style.display = "none";
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
