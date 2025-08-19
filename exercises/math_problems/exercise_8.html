@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        font-size: 26px;
+    }
+    .question {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .options label {
+        display: block;
+        margin: 8px 0;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+    .options input {
+        margin-right: 8px;
+    }
+    .navigation {
+        margin-top: 20px;
+    }
+    button {
+        padding: 8px 14px;
+        margin: 0 5px;
+        border: none;
+        background-color: #4285f4;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #3367d6;
+    }
+    .feedback {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .correct {
+        color: green;
+    }
+    .incorrect {
+        color: red;
+    }
+    .explanation {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Math Quiz</h1>
+    <p><a href="../../index.html">Back To Main Page</a></p>
+    <div id="quiz"></div>
+    <div class="navigation">
+        <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button id="submitBtn" onclick="submitQuiz()" style="display:none;">Submit</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "A box contains 18 pencils. How many pencils are in 12 boxes?",
+    options: ["216", "204", "224", "212"],
+    answer: "216",
+    explanation: "18 × 12 = 216 pencils."
+  },
+  {
+    q: "A baker made 480 cookies and packed them into boxes of 24. How many boxes did he use?",
+    options: ["20", "18", "22", "24"],
+    answer: "20",
+    explanation: "480 ÷ 24 = 20 boxes."
+  },
+  {
+    q: "Each student gets 3 notebooks. If there are 45 students, how many notebooks are needed?",
+    options: ["135", "140", "120", "150"],
+    answer: "135",
+    explanation: "3 × 45 = 135 notebooks."
+  },
+  {
+    q: "A car travels 60 km per hour. How far does it go in 7 hours?",
+    options: ["420", "400", "430", "410"],
+    answer: "420",
+    explanation: "60 × 7 = 420 km."
+  },
+  {
+    q: "A farmer has 864 eggs and packs them into cartons of 12. How many cartons does he need?",
+    options: ["72", "74", "70", "76"],
+    answer: "72",
+    explanation: "864 ÷ 12 = 72 cartons."
+  },
+  {
+    q: "A movie theater has 14 rows with 16 seats each. How many seats are there?",
+    options: ["224", "210", "230", "240"],
+    answer: "224",
+    explanation: "14 × 16 = 224 seats."
+  },
+  {
+    q: "A store sold 1,200 candies in 8 days. How many candies were sold per day?",
+    options: ["150", "160", "140", "170"],
+    answer: "150",
+    explanation: "1,200 ÷ 8 = 150 candies per day."
+  },
+  {
+    q: "A box contains 6 packs of markers. Each pack has 18 markers. How many markers are there?",
+    options: ["108", "104", "112", "114"],
+    answer: "108",
+    explanation: "6 × 18 = 108 markers."
+  },
+  {
+    q: "A school has 24 classrooms. Each classroom has 28 desks. How many desks are there?",
+    options: ["672", "684", "658", "696"],
+    answer: "672",
+    explanation: "24 × 28 = 672 desks."
+  },
+  {
+    q: "A gardener planted 135 flowers in 5 rows. How many flowers are in each row?",
+    options: ["27", "25", "30", "29"],
+    answer: "27",
+    explanation: "135 ÷ 5 = 27 flowers per row."
+  },
+  {
+    q: "A store sold 1,024 candies in 8 days. How many candies were sold per day?",
+    options: ["128", "124", "132", "120"],
+    answer: "128",
+    explanation: "1,024 ÷ 8 = 128 candies per day."
+  },
+  {
+    q: "A box of chocolates costs $15. How much do 9 boxes cost?",
+    options: ["135", "125", "145", "130"],
+    answer: "135",
+    explanation: "15 × 9 = $135."
+  },
+  {
+    q: "A movie ticket costs $12. How much do 5 tickets cost?",
+    options: ["60", "58", "62", "64"],
+    answer: "60",
+    explanation: "12 × 5 = $60."
+  },
+  {
+    q: "A student scored 87, 92, and 78 on three tests. What is the average score?",
+    options: ["85.7", "86", "84.3", "88"],
+    answer: "85.7",
+    explanation: "(87 + 92 + 78) ÷ 3 = 257 ÷ 3 = 85.7 average score."
+  },
+  {
+    q: "A box contains 15 pens. How many pens are in 10 boxes?",
+    options: ["150", "145", "155", "140"],
+    answer: "150",
+    explanation: "15 × 10 = 150 pens."
+  },
+  {
+    q: "A baker made 360 cookies and packed them into boxes of 12. How many boxes did he use?",
+    options: ["30", "28", "32", "36"],
+    answer: "30",
+    explanation: "360 ÷ 12 = 30 boxes."
+  },
+  {
+    q: "A car uses 8 liters of fuel to travel 96 kilometers. How many kilometers per liter does it travel?",
+    options: ["12", "11", "10", "13"],
+    answer: "12",
+    explanation: "96 ÷ 8 = 12 km per liter."
+  },
+  {
+    q: "A box contains 6 packs of markers. Each pack has 18 markers. How many markers are there in total?",
+    options: ["108", "104", "112", "114"],
+    answer: "108",
+    explanation: "6 × 18 = 108 markers."
+  },
+  {
+    q: "A school has 30 classrooms. Each classroom has 25 desks. How many desks are there?",
+    options: ["750", "725", "775", "700"],
+    answer: "750",
+    explanation: "30 × 25 = 750 desks."
+  },
+  {
+    q: "A student reads 45 pages each day. How many pages will they read in 6 days?",
+    options: ["270", "260", "280", "250"],
+    answer: "270",
+    explanation: "45 × 6 = 270 pages."
+  }
+];
+
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function loadQuestion() {
+    const quizEl = document.getElementById("quiz");
+    const qData = quizData[currentQuestion];
+    const options = shuffleArray([...qData.options]);
+
+    let html = `<div class="question"><strong>Question ${currentQuestion+1} of ${quizData.length}</strong><br>${qData.q}</div>`;
+    html += `<div class="options">`;
+    options.forEach(opt => {
+        const checked = userAnswers[currentQuestion] === opt ? 'checked' : '';
+        html += `<label><input type="radio" name="q${currentQuestion}" value="${opt}" ${checked}> ${opt}</label>`;
+    });
+    html += `</div>`;
+    quizEl.innerHTML = html;
+
+    document.getElementById("prevBtn").style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+    document.getElementById("nextBtn").style.display = currentQuestion === quizData.length - 1 ? 'none' : 'inline-block';
+    document.getElementById("submitBtn").style.display = currentQuestion === quizData.length - 1 ? 'inline-block' : 'none';
+}
+
+function saveAnswer() {
+    const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+    if (selected) {
+        userAnswers[currentQuestion] = selected.value;
+    }
+}
+
+function nextQuestion() {
+    saveAnswer();
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function prevQuestion() {
+    saveAnswer();
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function submitQuiz() {
+    saveAnswer();
+    let score = 0;
+    let html = "";
+    quizData.forEach((q, idx) => {
+        const userAns = userAnswers[idx];
+        const correct = userAns === q.answer;
+        if (correct) score++;
+        html += `<div class="question"><strong>Question ${idx+1}:</strong> ${q.q}</div>`;
+        html += `<div class="feedback ${correct ? 'correct' : 'incorrect'}">${correct ? 'Correct!' : 'Incorrect'} (Your answer: ${userAns || 'No answer'})</div>`;
+        if (!correct) {
+            html += `<div class="correct">Correct answer: ${q.answer}</div>`;
+        }
+        html += `<div class="explanation">${q.explanation}</div><hr>`;
+    });
+    html += `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+    document.getElementById("quiz").innerHTML = html;
+    document.querySelector(".navigation").style.display = "none";
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

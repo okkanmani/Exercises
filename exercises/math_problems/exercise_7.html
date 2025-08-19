@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        font-size: 26px;
+    }
+    .question {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .options label {
+        display: block;
+        margin: 8px 0;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+    .options input {
+        margin-right: 8px;
+    }
+    .navigation {
+        margin-top: 20px;
+    }
+    button {
+        padding: 8px 14px;
+        margin: 0 5px;
+        border: none;
+        background-color: #4285f4;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #3367d6;
+    }
+    .feedback {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .correct {
+        color: green;
+    }
+    .incorrect {
+        color: red;
+    }
+    .explanation {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #555;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Physics Quiz</h1>
+    <p><a href="../../index.html">Back To Main Page</a></p>
+    <div id="quiz"></div>
+    <div class="navigation">
+        <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button id="submitBtn" onclick="submitQuiz()" style="display:none;">Submit</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "Why does Earth’s gravity not pull the Moon down to crash into it?",
+    options: ["The Moon is too light", "The Moon is moving sideways fast enough", "Earth pushes it away", "Space holds it up"],
+    answer: "The Moon is moving sideways fast enough",
+    explanation: "The Moon’s sideways motion balances Earth’s gravity, keeping it in orbit."
+  },
+  {
+    q: "Why do astronauts feel weightless even though gravity still acts on them?",
+    options: ["They are floating freely", "They are falling around Earth", "Gravity is weaker in space", "They are far from Earth"],
+    answer: "They are falling around Earth",
+    explanation: "Astronauts are in continuous free fall, creating the sensation of weightlessness."
+  },
+  {
+    q: "Why does a rocket need to push downward to go upward?",
+    options: ["Gravity helps it", "Air lifts it", "Newton’s Third Law", "It’s lighter than air"],
+    answer: "Newton’s Third Law",
+    explanation: "Every action has an equal and opposite reaction; downward thrust creates upward motion."
+  },
+  {
+    q: "Why do planets not drift away from the Sun?",
+    options: ["They are stuck in space", "The Sun’s gravity pulls them", "They are not moving", "The Moon holds them"],
+    answer: "The Sun’s gravity pulls them",
+    explanation: "Gravity from the Sun keeps planets in orbit."
+  },
+  {
+    q: "Why does friction always act in the opposite direction of motion?",
+    options: ["To slow things down", "To balance gravity", "To help objects move", "To keep things still"],
+    answer: "To slow things down",
+    explanation: "Friction resists motion and acts opposite to the direction of movement."
+  },
+  {
+    q: "Why do we feel pushed back when a car suddenly speeds up?",
+    options: ["Gravity increases", "Air pushes us", "Inertia resists change", "The seat moves forward"],
+    answer: "Inertia resists change",
+    explanation: "Your body wants to stay at rest while the car moves forward."
+  },
+  {
+    q: "Why does a soccer ball eventually stop rolling on grass?",
+    options: ["Gravity pulls it down", "Friction with the grass slows it", "Air pushes it", "It runs out of energy"],
+    answer: "Friction with the grass slows it",
+    explanation: "Friction between the ball and grass resists motion."
+  },
+  {
+    q: "Why do we wear seatbelts in a moving car?",
+    options: ["To stay warm", "To prevent inertia from throwing us forward", "To help us sit straight", "To reduce gravity"],
+    answer: "To prevent inertia from throwing us forward",
+    explanation: "Seatbelts counteract inertia during sudden stops or changes in motion."
+  },
+  {
+    q: "Why does a feather fall slower than a rock on Earth?",
+    options: ["It’s lighter", "Air resistance affects it more", "Gravity pulls it less", "It floats"],
+    answer: "Air resistance affects it more",
+    explanation: "Air slows down light objects like feathers more than heavy ones."
+  },
+  {
+    q: "Why do satellites not fall straight down to Earth?",
+    options: ["They are weightless", "They are moving sideways fast enough", "Earth pushes them away", "They are held by magnets"],
+    answer: "They are moving sideways fast enough",
+    explanation: "Their sideways motion keeps them in orbit while gravity pulls them inward."
+  },
+  {
+    q: "Why does a book stay still on a table?",
+    options: ["Gravity holds it", "Balanced forces act on it", "It’s heavy", "Air keeps it down"],
+    answer: "Balanced forces act on it",
+    explanation: "Gravity pulls down and the table pushes up with equal force."
+  },
+  {
+    q: "Why does a balloon fly backward when air rushes out?",
+    options: ["Air pushes it", "Gravity pulls it", "It’s light", "It’s spinning"],
+    answer: "Air pushes it",
+    explanation: "The escaping air creates a reaction force that pushes the balloon."
+  },
+  {
+    q: "Why do we feel heavier in an elevator going up quickly?",
+    options: ["Gravity increases", "Acceleration adds force", "Air pushes us down", "The elevator is fast"],
+    answer: "Acceleration adds force",
+    explanation: "Upward acceleration increases the normal force acting on you."
+  },
+  {
+    q: "Why do objects in space keep moving unless stopped?",
+    options: ["Gravity helps them", "Inertia keeps them moving", "Air pushes them", "They are light"],
+    answer: "Inertia keeps them moving",
+    explanation: "Objects in motion stay in motion unless acted on by a force."
+  },
+  {
+    q: "Why does the Moon cause tides on Earth?",
+    options: ["It pushes water", "Its gravity pulls on Earth’s oceans", "It heats the oceans", "It blocks sunlight"],
+    answer: "Its gravity pulls on Earth’s oceans",
+    explanation: "The Moon’s gravity pulls on Earth’s oceans, causing tides."
+  },
+  {
+    q: "Why do planets not crash into each other?",
+    options: ["They are far apart", "They are held by magnets", "They are not moving", "They are pushed by the Sun"],
+    answer: "They are far apart",
+    explanation: "The vast distances between planets prevent collisions."
+  },
+  {
+    q: "Why do we feel lighter when a roller coaster drops suddenly?",
+    options: ["Gravity disappears", "Acceleration reduces force", "Air lifts us", "The ride is fast"],
+    answer: "Acceleration reduces force",
+    explanation: "Downward acceleration reduces the normal force acting on you."
+  },
+  {
+    q: "Why does a soccer ball change direction when kicked?",
+    options: ["Gravity pulls it", "A force acts on it", "It’s light", "Air pushes it"],
+    answer: "A force acts on it",
+    explanation: "The kick applies a force that changes the ball’s motion."
+  },
+  {
+    q: "Why do astronauts wear suits in space?",
+    options: ["To stay warm", "To protect from gravity", "To survive without air", "To float better"],
+    answer: "To survive without air",
+    explanation: "Space has no breathable air, so suits provide oxygen and protection."
+  },
+  {
+    q: "Why do we feel pulled toward Earth?",
+    options: ["Air pushes us", "Earth’s gravity pulls us", "We are heavy", "The ground attracts us"],
+    answer: "Earth’s gravity pulls us",
+    explanation: "Gravity is the force that attracts us toward Earth’s center."
+  }
+];
+
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function loadQuestion() {
+    const quizEl = document.getElementById("quiz");
+    const qData = quizData[currentQuestion];
+    const options = shuffleArray([...qData.options]);
+
+    let html = `<div class="question"><strong>Question ${currentQuestion+1} of ${quizData.length}</strong><br>${qData.q}</div>`;
+    html += `<div class="options">`;
+    options.forEach(opt => {
+        const checked = userAnswers[currentQuestion] === opt ? 'checked' : '';
+        html += `<label><input type="radio" name="q${currentQuestion}" value="${opt}" ${checked}> ${opt}</label>`;
+    });
+    html += `</div>`;
+    quizEl.innerHTML = html;
+
+    document.getElementById("prevBtn").style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+    document.getElementById("nextBtn").style.display = currentQuestion === quizData.length - 1 ? 'none' : 'inline-block';
+    document.getElementById("submitBtn").style.display = currentQuestion === quizData.length - 1 ? 'inline-block' : 'none';
+}
+
+function saveAnswer() {
+    const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+    if (selected) {
+        userAnswers[currentQuestion] = selected.value;
+    }
+}
+
+function nextQuestion() {
+    saveAnswer();
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function prevQuestion() {
+    saveAnswer();
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function submitQuiz() {
+    saveAnswer();
+    let score = 0;
+    let html = "";
+    quizData.forEach((q, idx) => {
+        const userAns = userAnswers[idx];
+        const correct = userAns === q.answer;
+        if (correct) score++;
+        html += `<div class="question"><strong>Question ${idx+1}:</strong> ${q.q}</div>`;
+        html += `<div class="feedback ${correct ? 'correct' : 'incorrect'}">${correct ? 'Correct!' : 'Incorrect'} (Your answer: ${userAns || 'No answer'})</div>`;
+        if (!correct) {
+            html += `<div class="correct">Correct answer: ${q.answer}</div>`;
+        }
+        html += `<div class="explanation">${q.explanation}</div><hr>`;
+    });
+    html += `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+    document.getElementById("quiz").innerHTML = html;
+    document.querySelector(".navigation").style.display = "none";
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
