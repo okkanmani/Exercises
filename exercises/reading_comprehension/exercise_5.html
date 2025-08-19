@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RC Quiz — Science & Nature (5 passages)</title>
+  <style>
+    :root{
+      --bg:#f4f7fb; --card:#ffffff; --accent:#0b66ff; --muted:#6b7280;
+      --good:#ecfdf5; --good-text:#064e3b; --bad:#fff1f2; --bad-text:#7f1d1d;
+      --explain-bg:#f8fafc; --max-width:1200px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#0b1220;background:var(--bg)}
+    .wrap{max-width:var(--max-width);margin:24px auto;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(12,20,40,0.06)}
+    header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+    header h1{margin:0;font-size:20px}
+    header .muted{color:var(--muted);font-size:13px}
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+    .passagePanel{padding:18px;overflow:auto;height:72vh}
+    .questionsPanel{padding:14px;overflow:auto;height:72vh}
+    .passTitle{font-size:24px;font-weight:700;margin-bottom:10px}
+    .passageText{line-height:1.7;white-space:pre-wrap}
+    .question{padding:10px;margin-bottom:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef2ff}
+    .qtext{font-weight:600;margin-bottom:8px}
+    .muted{color:var(--muted);font-size:13px}
+    label.option{display:block;padding:8px;margin:6px 0;border-radius:8px;cursor:pointer;border:1px solid transparent}
+    label.option:hover{background:#f7fbff}
+    input[type=radio]{margin-right:8px}
+    .controls{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.secondary{background:#eef2ff;color:var(--accent);font-weight:600}
+    button:disabled{opacity:0.5;cursor:default}
+    .resultBox{margin-top:12px;padding:12px;border-radius:8px}
+    .correct{background:var(--good);color:var(--good-text);padding:8px;border-radius:6px}
+    .incorrect{background:var(--bad);color:var(--bad-text);padding:8px;border-radius:6px}
+    .review-item{padding:8px;border-radius:8px;margin-bottom:8px;border:1px solid #eef2ff}
+    .explanation{background:var(--explain-bg);padding:8px;border-radius:6px;margin-top:8px;font-size:14px}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr;}.passagePanel{height:45vh}.questionsPanel{height:45vh}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Reading Comprehension — Science & Nature (Challenging)</h1>
+          <p><a href="../../index.html">Back To Main Page</a></p>
+          <div class="muted">5 passages • 6 questions each • 2 vocabulary questions per passage</div>
+        </div>
+        <div class="muted">Tip: Use <strong>Previous</strong> and <strong>Next</strong>. Submit appears on the last page.</div>
+      </header>
+
+      <div id="main" class="layout">
+        <div class="passagePanel card">
+          <div id="passageHeader" class="passTitle">Passage 1 of 5 — The Water Cycle and Why It Matters</div>
+          <div id="passageText" class="passageText"></div>
+
+          <div class="controls" style="justify-content:flex-start;margin-top:16px">
+            <button id="prevBtn" class="secondary">Previous</button>
+          </div>
+        </div>
+
+        <div class="questionsPanel card">
+          <div class="muted" id="qHeader">Questions</div>
+          <div id="questionsContainer"></div>
+
+          <div class="controls" style="margin-top:12px">
+            <button id="nextBtn" class="secondary">Next</button>
+            <button id="submitBtn" style="display:none">Submit</button>
+          </div>
+
+          <div id="feedback" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <footer class="muted">This quiz runs entirely in your browser. No data leaves your device.</footer>
+    </div>
+  </div>
+
+<script>
+/* shuffle helper */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* ===== Passages, Questions, Explanations =====
+Each passage has: title, text, questions [{q, choices[], a (index), explanation}]
+*/
+const passages = [
+{
+    "title": "The Fall of the Roman Empire",
+    "text": "The Roman Empire was one of the most powerful civilizations in history. It stretched across Europe, North Africa, and parts of Asia. For centuries, Rome ruled with strong armies, advanced engineering, and a complex government. But even great empires can fall.\n\nOne reason for Rome\u2019s decline was its size. The empire became too large to manage easily. Communication was slow, and leaders struggled to control distant lands. Armies were spread thin, and defending borders became harder.\n\nAnother problem was political instability. Emperors were often overthrown or assassinated. Some ruled poorly, focusing on personal gain instead of helping the people. Corruption weakened the government, and citizens lost trust.\n\nEconomic troubles also played a role. Heavy taxes were placed on people to support the military and government. Trade slowed, and many people became poor. Farms were abandoned, and food shortages increased.\n\nInvasions from outside groups added pressure. Germanic tribes like the Visigoths and Vandals attacked Roman lands. In 410 AD, the Visigoths even captured Rome. These invasions showed that Rome was no longer invincible.\n\nThe division of the empire made things worse. In 285 AD, Emperor Diocletian split the empire into Eastern and Western halves. The Eastern Empire, later called the Byzantine Empire, survived longer. But the Western Empire grew weaker and eventually collapsed in 476 AD.\n\nThe fall of Rome didn\u2019t happen overnight. It was a slow process caused by many factors. Still, its legacy lives on. Roman laws, architecture, and ideas continue to influence the world today.",
+    "questions": [
+      {
+        "q": "Word meaning \u2014 What does 'instability' mean in the passage?",
+        "choices": [
+          "Strength",
+          "Uncertainty and change",
+          "Growth",
+          "Peace"
+        ],
+        "a": 1,
+        "explanation": "Instability refers to frequent changes and lack of steady leadership."
+      },
+      {
+        "q": "Word meaning \u2014 What does 'invincible' mean in the passage?",
+        "choices": [
+          "Unable to be defeated",
+          "Very large",
+          "Old and wise",
+          "Quick to act"
+        ],
+        "a": 0,
+        "explanation": "Invincible means too strong to be beaten or overcome."
+      },
+      {
+        "q": "Why did the Roman Empire struggle to manage its size?",
+        "choices": [
+          "It had too many emperors",
+          "People refused to follow laws",
+          "Communication and control were difficult",
+          "The army was too strong"
+        ],
+        "a": 2,
+        "explanation": "The empire was too large, making communication and control difficult."
+      },
+      {
+        "q": "What can we infer about the effect of corruption on the Roman government?",
+        "choices": [
+          "It made people richer",
+          "It helped the army",
+          "It weakened trust and leadership",
+          "It improved trade"
+        ],
+        "a": 2,
+        "explanation": "Corruption caused citizens to lose trust and weakened leadership."
+      },
+      {
+        "q": "Why did the division of the empire make things worse?",
+        "choices": [
+          "It made the Western Empire weaker",
+          "It created more emperors",
+          "It helped the Eastern Empire grow",
+          "It stopped invasions"
+        ],
+        "a": 0,
+        "explanation": "The Western Empire became weaker and eventually collapsed."
+      },
+      {
+        "q": "What does the passage suggest about Rome\u2019s legacy?",
+        "choices": [
+          "It was forgotten",
+          "It only affected Europe",
+          "It ended with the fall",
+          "It still influences the world"
+        ],
+        "a": 3,
+        "explanation": "Roman ideas and achievements continue to influence modern society."
+      }
+    ]
+  },
+  {
+    "title": "The Discovery of Penicillin",
+    "text": "In 1928, a scientist named Alexander Fleming made a discovery that changed medicine forever. While studying bacteria in his lab, he noticed something unusual. One of his petri dishes had mold growing on it, and the bacteria around the mold had disappeared. This mold was later identified as Penicillium notatum, and it produced a substance called penicillin.\n\nFleming realized that penicillin could kill harmful bacteria. This was a major breakthrough because, at the time, infections like pneumonia and strep throat were often deadly. Before antibiotics, doctors had few ways to treat bacterial diseases.\n\nAlthough Fleming discovered penicillin, it took years before it could be used as medicine. Other scientists, including Howard Florey and Ernst Chain, worked to turn penicillin into a drug that could be mass-produced. During World War II, penicillin saved thousands of lives by treating infected wounds and illnesses.\n\nPenicillin was the first true antibiotic\u2014a medicine that kills bacteria without harming the body. Its discovery led to the development of many other antibiotics. These drugs have helped fight diseases and made surgeries safer.\n\nHowever, over time, some bacteria have become resistant to antibiotics. This means they no longer respond to the drugs. Scientists now work to find new medicines and encourage people to use antibiotics carefully.\n\nThe discovery of penicillin is a reminder of how science can change the world. A simple observation in a lab led to a powerful tool that continues to save lives.",
+    "questions": [
+      {
+        "q": "Word meaning \u2014 What does 'breakthrough' mean in the passage?",
+        "choices": [
+          "A mistake",
+          "A type of medicine",
+          "A broken object",
+          "A sudden discovery"
+        ],
+        "a": 3,
+        "explanation": "A breakthrough is a major discovery or advancement."
+      },
+      {
+        "q": "Word meaning \u2014 What does 'resistant' mean in the passage?",
+        "choices": [
+          "Easy to treat",
+          "Able to fight back",
+          "Very weak",
+          "Quick to heal"
+        ],
+        "a": 1,
+        "explanation": "Resistant means able to survive or fight against something."
+      },
+      {
+        "q": "Why was penicillin important during World War II?",
+        "choices": [
+          "It cured deadly infections",
+          "It helped soldiers fight",
+          "It was used as food",
+          "It made weapons stronger"
+        ],
+        "a": 0,
+        "explanation": "Penicillin treated infections and saved lives during the war."
+      },
+      {
+        "q": "What can we infer about Fleming\u2019s discovery?",
+        "choices": [
+          "It was planned carefully",
+          "It happened by accident",
+          "It was ignored",
+          "It was made during surgery"
+        ],
+        "a": 1,
+        "explanation": "Fleming noticed the mold by chance, leading to the discovery."
+      },
+      {
+        "q": "Why do scientists encourage careful use of antibiotics?",
+        "choices": [
+          "To make them cheaper",
+          "To avoid side effects",
+          "To prevent resistance",
+          "To help doctors"
+        ],
+        "a": 2,
+        "explanation": "Overuse can lead to bacteria becoming resistant."
+      },
+      {
+        "q": "What does the passage suggest about science?",
+        "choices": [
+          "It is always perfect",
+          "It only helps in war",
+          "It can lead to life-saving discoveries",
+          "It is only for doctors"
+        ],
+        "a": 2,
+        "explanation": "Science can lead to discoveries that save lives."
+      }
+    ]
+  },
+  {
+    "title": "The Village Beneath the Sea",
+    "text": `When explorer Marina Solis dove into the deep waters off the coast of the Azura Islands, she expected coral reefs, shipwrecks, and maybe a few curious dolphins. What she didn’t expect was to find a glowing tunnel beneath a rocky ledge, pulsing with soft blue light. Her curiosity got the better of her, and she swam inside.
+
+The tunnel led to a vast underwater cavern, and at its center was something astonishing: a village. Not ruins, not statues, but a living, breathing community of people. They moved gracefully through the water, wearing shimmering suits that allowed them to breathe and speak. Their homes were made of translucent shells and glowing stones, arranged in spirals and circles like underwater crop circles.
+
+Marina was spotted quickly, but instead of fear or hostility, the villagers welcomed her. One of them, a tall woman named Lira, swam forward and offered Marina a breathing shell. As soon as Marina placed it over her mouth, she could breathe easily and even speak.
+
+“Welcome to Nerida, the village beneath the sea,” Lira said with a smile.
+
+Marina learned that the Neridans had lived underwater for generations. They were descendants of surface dwellers who had chosen to adapt to the ocean after a massive storm centuries ago. Over time, they developed technologies that allowed them to live in harmony with the sea. They farmed seaweed, raised gentle manta rays, and used jellyfish light to illuminate their homes.
+
+But what fascinated Marina most were their traditions.
+
+Every full moon, the Neridans held a ceremony called the Dance of the Currents. It wasn’t just a celebration—it was a way to communicate with the ocean itself. The villagers would gather in the central plaza, where currents naturally swirled. They danced in patterns that mimicked the flow of water, and the ocean responded. Sometimes it brought schools of fish, other times it shifted the tides to protect the village from storms.
+
+Another tradition was the Shell Song. Each Neridan had a personal shell that recorded their voice and memories. When someone passed away, their shell was placed in the Echo Garden, a quiet place where the shells whispered stories of the past. Marina found it haunting and beautiful.
+
+As Marina spent more time in Nerida, she noticed something else: the villagers never argued. Disagreements were solved through a ritual called the Ripple Circle. People would sit in a circle, and each person would speak while holding a small orb filled with water. When the orb was passed, the next person would speak. No interruptions, no shouting. The idea was that just as ripples in water spread gently, so should ideas and emotions.
+
+Marina documented everything, knowing that the surface world would be amazed. But she also felt protective of Nerida. It was a place of peace, balance, and wonder. Before she left, Lira gave her a small shell.
+
+“This is your memory shell,” she said. “It will remind you of what you saw, and what you felt.”
+
+Back on her boat, Marina held the shell close. It pulsed gently, like a heartbeat. She knew she had discovered something extraordinary—but more importantly, she had learned that even in the deepest places, humanity could thrive in harmony with nature.`,
+  "questions": [
+    {
+      "q": "Word meaning — What does 'translucent' mean in the passage?",
+      "choices": [
+        "Completely solid",
+        "Able to reflect light",
+        "Allowing light to pass through but not clear",
+        "Covered in water"
+      ],
+      "a": 2,
+      "explanation": "Translucent means allowing light to pass through, but not completely clear, like the Neridan homes."
+    },
+    {
+      "q": "Word meaning — What does 'ritual' mean in the passage?",
+      "choices": [
+        "A random event",
+        "A special set of actions done regularly",
+        "A dangerous activity",
+        "A type of dance"
+      ],
+      "a": 1,
+      "explanation": "A ritual is a set of actions performed for a special purpose, like the Ripple Circle or Dance of the Currents."
+    },
+    {
+      "q": "Why did Marina feel protective of Nerida?",
+      "choices": [
+        "She wanted to live there",
+        "She feared the villagers",
+        "She respected their peaceful way of life",
+        "She thought they were in danger"
+      ],
+      "a": 2,
+      "explanation": "Marina admired the Neridans' peaceful traditions and harmony with nature, making her feel protective."
+    },
+    {
+      "q": "What can we infer about the Neridans' relationship with the ocean?",
+      "choices": [
+        "They avoid ocean creatures",
+        "They fear the ocean's power",
+        "They live in conflict with the sea",
+        "They live in harmony and communicate with it"
+      ],
+      "a": 3,
+      "explanation": "The Neridans use dance and rituals to communicate with the ocean, showing a deep connection and harmony."
+    },
+    {
+      "q": "What was the purpose of the Ripple Circle tradition?",
+      "choices": [
+        "To celebrate the moon",
+        "To solve disagreements peacefully",
+        "To teach children how to swim",
+        "To honor ancestors"
+      ],
+      "a": 1,
+      "explanation": "The Ripple Circle was used to resolve conflicts calmly, with each person speaking in turn."
+    },
+    {
+      "q": "What does the Shell Song tradition reveal about Neridan culture?",
+      "choices": [
+        "They forget the past",
+        "They value personal memories and history",
+        "They use shells for decoration",
+        "They fear death"
+      ],
+      "a": 1,
+      "explanation": "The Shell Song shows that Neridans preserve voices and memories, honoring those who have passed."
+    }
+  ]
+  },
+  {
+    "title": "The Human Genome Project",
+    "text": `In the late 20th century, scientists around the world began a project that would change how we understand life itself. This project was called the Human Genome Project, and its goal was to map all the genes in the human body.
+
+Genes are tiny instructions inside our cells. They tell our bodies how to grow, what color our eyes will be, and even how we respond to food or medicine. These instructions are written in a special code made of four letters: A, T, C, and G. The Human Genome Project aimed to read every part of this code.
+
+It was a huge task. The human genome contains over 3 billion letters! No single scientist or country could do it alone. Teams from the United States, the United Kingdom, Japan, France, Germany, and China worked together. They used powerful computers and new technologies to read the genetic code faster than ever before.
+
+The project began in 1990 and finished in 2003. When it was done, scientists had a complete map of the human genome. This map helps doctors understand diseases better. For example, if someone has a gene that increases their risk for a certain illness, doctors can watch for signs early or suggest changes in diet or lifestyle.
+
+The Human Genome Project also raised important questions. Should people know all their genetic risks? What if insurance companies used this information unfairly? Scientists and lawmakers had to think carefully about how to protect people’s privacy.
+
+Even today, the Human Genome Project continues to help researchers. It opened the door to personalized medicine, where treatments are designed based on a person’s unique genes. It also helps scientists study how humans are related to other species, like chimpanzees or even ancient humans.
+
+The Human Genome Project was one of the greatest scientific efforts in history. It showed that when people work together across borders, they can unlock the secrets of life.`,
+  "questions": [
+    {
+      "q": "Word meaning — What does 'genome' mean in the passage?",
+      "choices": [
+        "A type of medicine",
+        "A map of all the genes in a living thing",
+        "A computer program",
+        "A disease"
+      ],
+      "a": 1,
+      "explanation": "The genome is the complete set of genes in a living organism."
+    },
+    {
+      "q": "Word meaning — What does 'personalized medicine' mean?",
+      "choices": [
+        "Medicine made for everyone",
+        "Medicine based on a person's genes",
+        "Medicine from plants",
+        "Medicine that cures all diseases"
+      ],
+      "a": 1,
+      "explanation": "Personalized medicine is designed to match a person's unique genetic makeup."
+    },
+    {
+      "q": "Why was the Human Genome Project important?",
+      "choices": [
+        "It helped build new computers",
+        "It created new countries",
+        "It helped scientists understand human genes",
+        "It stopped all diseases"
+      ],
+      "a": 2,
+      "explanation": "The project helped scientists understand how genes affect health and development."
+    },
+    {
+      "q": "What can we infer about teamwork in the Human Genome Project?",
+      "choices": [
+        "It was not needed",
+        "It slowed down the project",
+        "It helped scientists succeed",
+        "It caused problems"
+      ],
+      "a": 2,
+      "explanation": "Scientists from many countries worked together, showing the power of teamwork."
+    },
+    {
+      "q": "What concern did the project raise?",
+      "choices": [
+        "How to read books faster",
+        "How to protect people's genetic privacy",
+        "How to build stronger computers",
+        "How to stop teamwork"
+      ],
+      "a": 1,
+      "explanation": "The project raised questions about how genetic information should be used and protected."
+    },
+    {
+      "q": "How does the Human Genome Project help doctors today?",
+      "choices": [
+        "It teaches them to swim",
+        "It helps them design treatments based on genes",
+        "It helps them build hospitals",
+        "It helps them write books"
+      ],
+      "a": 1,
+      "explanation": "Doctors use genetic information to create treatments that fit each person's needs."
+    }
+  ]
+  },
+  {
+    "title": "The Industrial Revolution",
+    "text": `Before the 1700s, most people lived in small villages and worked on farms. They made clothes by hand and used animals to help with heavy work. But everything changed during a time called the Industrial Revolution.
+
+The Industrial Revolution began in Britain and spread to other countries. It was a period when machines started doing work that people used to do by hand. Factories were built, and people moved to cities to find jobs. Instead of spinning thread at home, workers used large machines that could make cloth much faster.
+
+One of the most important inventions was the steam engine. It used steam from boiling water to power machines. This made it possible to run trains, which could carry goods and people across long distances. Roads and railways were built, and trade grew quickly.
+
+The Industrial Revolution also changed how people lived. Cities became crowded, and many families lived in small apartments. Children often worked in factories, and the work could be dangerous. Over time, laws were made to protect workers and improve conditions.
+
+Not all changes were bad. New inventions made life easier. People could buy clothes and tools for lower prices. Education improved, and more people learned to read and write. Scientists and inventors created new machines, and the world became more connected.
+
+But the Industrial Revolution also caused problems. Pollution increased as factories burned coal. Rivers and air became dirty. Some people became very rich, while others stayed poor. These changes led to debates about fairness and how to care for the planet.
+
+The Industrial Revolution was a time of great change. It showed how inventions can improve life—but also how important it is to think about the effects of progress.`,
+  "questions": [
+    {
+      "q": "Word meaning — What does 'Industrial Revolution' mean?",
+      "choices": [
+        "A war between factories",
+        "A time when machines changed how people worked",
+        "A holiday for workers",
+        "A type of steam engine"
+      ],
+      "a": 1,
+      "explanation": "The Industrial Revolution was a period when machines replaced hand labor and changed society."
+    },
+    {
+      "q": "Word meaning — What does 'pollution' mean in the passage?",
+      "choices": [
+        "Clean air",
+        "New inventions",
+        "Dirty air and water caused by factories",
+        "Crowded cities"
+      ],
+      "a": 2,
+      "explanation": "Pollution refers to the harmful effects on air and water caused by industrial activity."
+    },
+    {
+      "q": "Why did people move to cities during the Industrial Revolution?",
+      "choices": [
+        "To find jobs in factories",
+        "To escape the steam engines",
+        "To live in the countryside",
+        "To become farmers"
+      ],
+      "a": 0,
+      "explanation": "People moved to cities to work in factories where machines were used."
+    },
+    {
+      "q": "What can we infer about working conditions during this time?",
+      "choices": [
+        "They were safe and easy",
+        "They were dangerous and crowded",
+        "They were fun for children",
+        "They were only for rich people"
+      ],
+      "a": 1,
+      "explanation": "Many workers, including children, worked in unsafe and crowded conditions."
+    },
+    {
+      "q": "What was one positive effect of the Industrial Revolution?",
+      "choices": [
+        "More pollution",
+        "Higher prices",
+        "Improved education",
+        "Less trade"
+      ],
+      "a": 2,
+      "explanation": "Education improved, and more people learned to read and write."
+    },
+    {
+      "q": "What does the passage suggest about progress?",
+      "choices": [
+        "It always helps everyone",
+        "It should be stopped",
+        "It must be balanced with care",
+        "It only helps machines"
+      ],
+      "a": 2,
+      "explanation": "The passage suggests that progress can be good but must be managed responsibly."
+    }
+  ]
+  }
+];
+
+
+
+
+
+/* ===== State & UI elements ===== */
+let page = 0;
+const totalPages = passages.length;
+const answers = {}; // store selected original index per question, e.g., 'p0q1': 2
+
+const passageHeader = document.getElementById('passageHeader');
+const passageText = document.getElementById('passageText');
+const qsContainer = document.getElementById('questionsContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const feedback = document.getElementById('feedback');
+const qHeader = document.getElementById('qHeader');
+
+const renderedQuestionNodes = {}; // track rendered nodes for inserting explanations
+
+/* Render page */
+function renderPage(idx) {
+  const p = passages[idx];
+  passageHeader.textContent = `Passage ${idx+1} of ${totalPages} — ${p.title}`;
+  passageText.textContent = p.text;
+  qsContainer.innerHTML = '';
+  qHeader.textContent = `Questions — Passage ${idx+1}`;
+  // clear rendered map
+  for (const k in renderedQuestionNodes) delete renderedQuestionNodes[k];
+
+  p.questions.forEach((q, qi) => {
+    const qKey = `p${idx}q${qi}`;
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.id = qKey;
+
+    const qTitle = document.createElement('div');
+    qTitle.className = 'qtext';
+    qTitle.textContent = `Q${qi+1}. ${q.q}`;
+    qDiv.appendChild(qTitle);
+
+    // Shuffle display order but keep original indices
+    const choiceObjs = q.choices.map((c, i) => ({ text: c, origIndex: i }));
+    shuffle(choiceObjs);
+
+    const labels = [];
+    choiceObjs.forEach((ch, ci) => {
+      const id = `${qKey}c${ci}`;
+      const label = document.createElement('label');
+      label.className = 'option';
+      label.htmlFor = id;
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = qKey;
+      radio.id = id;
+      radio.value = ch.origIndex; // store original index for grading
+
+      if (answers[qKey] !== undefined && answers[qKey] === ch.origIndex) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener('change', () => {
+        answers[qKey] = Number(radio.value);
+      });
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(ch.text));
+      qDiv.appendChild(label);
+      labels.push(label);
+    });
+
+    qsContainer.appendChild(qDiv);
+    renderedQuestionNodes[qKey] = { container: qDiv, labels: labels, questionObj: q };
+  });
+
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === totalPages - 1;
+  submitBtn.style.display = (idx === totalPages - 1) ? 'inline-block' : 'none';
+  feedback.innerHTML = '';
+}
+
+/* Grading and explanations insertion */
+function gradeAllAndShow() {
+  let total = 0, score = 0;
+  const fullReview = document.createElement('div');
+
+  passages.forEach((p, pi) => {
+    const passBlock = document.createElement('div');
+    passBlock.style.marginBottom = '12px';
+    const passTitle = document.createElement('div');
+    passTitle.style.fontWeight = '700';
+    passTitle.textContent = `Passage ${pi+1}: ${p.title}`;
+    passBlock.appendChild(passTitle);
+
+    p.questions.forEach((q, qi) => {
+      total++;
+      const key = `p${pi}q${qi}`;
+      const chosen = answers[key] !== undefined ? Number(answers[key]) : null;
+      const isCorrect = chosen === q.a;
+      if (isCorrect) score++;
+
+      // If this question is currently visible, insert explanation directly under it
+      const rendered = renderedQuestionNodes[key];
+      if (rendered && rendered.container) {
+        const oldExpl = rendered.container.querySelector('.explanation');
+        if (oldExpl) oldExpl.remove();
+
+        const expl = document.createElement('div');
+        expl.className = 'explanation';
+
+        const status = document.createElement('div');
+        status.style.fontWeight = '700';
+        status.style.marginBottom = '6px';
+        if (isCorrect) {
+          status.textContent = `✅ Correct — You chose: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+          status.style.color = 'var(--good-text)';
+        } else {
+          status.textContent = `❌ ${chosen === null ? 'Unanswered' : 'Incorrect'} — Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}; Correct: ${q.choices[q.a]}`;
+          status.style.color = 'var(--bad-text)';
+        }
+        expl.appendChild(status);
+
+        const expt = document.createElement('div');
+        expt.textContent = q.explanation || '';
+        expl.appendChild(expt);
+
+        rendered.container.appendChild(expl);
+
+        // highlight labels
+        rendered.labels.forEach(lbl => {
+          const inp = lbl.querySelector('input[type=radio]');
+          if (!inp) return;
+          const val = Number(inp.value);
+          if (val === q.a) {
+            lbl.style.border = '1px solid #bfe6c8';
+            lbl.style.background = '#f0fff4';
+          }
+          if (chosen !== null && val === chosen && chosen !== q.a) {
+            lbl.style.border = '1px solid #ffd6d6';
+            lbl.style.background = '#fff6f6';
+          }
+        });
+      }
+
+      // Build full-review item
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      const qn = document.createElement('div');
+      qn.className = 'qtext';
+      qn.textContent = `Passage ${pi+1} — Q${qi+1}. ${q.q}`;
+      item.appendChild(qn);
+
+      const your = document.createElement('div');
+      your.style.marginTop = '6px';
+      your.textContent = `Your answer: ${chosen === null ? 'Unanswered' : q.choices[chosen]}`;
+      item.appendChild(your);
+
+      const correctDiv = document.createElement('div');
+      correctDiv.style.marginTop = '6px';
+      correctDiv.textContent = `Correct answer: ${q.choices[q.a]}`;
+      item.appendChild(correctDiv);
+
+      const explanDiv = document.createElement('div');
+      explanDiv.style.marginTop = '6px';
+      explanDiv.textContent = q.explanation || '';
+      item.appendChild(explanDiv);
+
+      passBlock.appendChild(item);
+    });
+
+    fullReview.appendChild(passBlock);
+  });
+
+  feedback.innerHTML = '';
+  const scoreBox = document.createElement('div');
+  scoreBox.className = 'resultBox';
+  scoreBox.innerHTML = `<div style="font-weight:700">Score: ${score} / ${total}</div><div class="small" style="margin-top:6px">Explanations appear beneath visible questions; full review follows.</div>`;
+  feedback.appendChild(scoreBox);
+  feedback.appendChild(fullReview);
+
+  disableAllInputs();
+  feedback.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* disable inputs and nav */
+function disableAllInputs() {
+  const radios = document.querySelectorAll('input[type=radio]');
+  radios.forEach(r => r.disabled = true);
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+  submitBtn.disabled = true;
+}
+
+/* Events */
+prevBtn.addEventListener('click', () => {
+  if (page > 0) {
+    page--;
+    renderPage(page);
+  }
+});
+nextBtn.addEventListener('click', () => {
+  if (page < totalPages - 1) {
+    page++;
+    renderPage(page);
+  }
+});
+submitBtn.addEventListener('click', () => {
+  if (!confirm("Submit answers and view explanations? You won't be able to change answers afterward.")) return;
+  gradeAllAndShow();
+});
+
+/* Init */
+renderPage(page);
+
+</script>
+</body>
+</html>
